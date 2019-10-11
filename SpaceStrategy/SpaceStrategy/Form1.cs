@@ -12,6 +12,7 @@ namespace SpaceStrategy
 {
     public partial class Form1 : Form
     {
+        private List<string> planetsList = new List<string>();
         public Form1()
         {
             InitializeComponent();
@@ -25,7 +26,8 @@ namespace SpaceStrategy
         private void button1_Click(object sender, EventArgs e)
         {
             string inputValue = textBox1.Text;
-            label1.Text = inputValue;
+            planetsList.Add(inputValue);
+            label1.Text = inputValue + " " + planetsList.Count;
         }
     }
 }
