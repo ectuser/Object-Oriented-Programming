@@ -10,9 +10,53 @@ using System.Windows.Forms;
 
 namespace SpaceStrategy
 {
+
+
+
     public partial class Form1 : Form
     {
-        private List<string> planetsList = new List<string>();
+        abstract class GameObject { }
+        abstract class PlanetObject { }
+        class SpaceCoordinates
+        {
+            public float x;
+            public float y;
+        }
+        class Planet : GameObject
+        {
+            private int radius;
+            public string name; // need to fix public -> private
+            private int ID;
+            private SpaceCoordinates coordinates;
+            private List<Colony> ColonyList = new List<Colony>();
+
+            public Planet(string name, int ID)
+            {
+                this.name = name;
+                this.ID = ID;
+            }
+
+            private void CreateColony(string name)
+            {
+                Colony tempColony = new Colony(name);
+                ColonyList.Add(tempColony);
+            }
+        }
+        class Colony : PlanetObject
+        {
+            private string name;
+            private int money;
+
+            // Constructor
+            public Colony(string name)
+            {
+                this.name = name;
+            }
+        }
+
+
+        // Form and main events
+        private List<Planet> planetsList = new List<Planet>();
         public Form1()
         {
             InitializeComponent();
@@ -25,9 +69,34 @@ namespace SpaceStrategy
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string inputValue = textBox1.Text;
-            planetsList.Add(inputValue);
-            label1.Text = inputValue + " " + planetsList.Count;
+            string planetName = PlanetsInput.Text;
+            PlanetsInput.Text = "";
+            CreatePlanet(planetName);
+            //planetsList.Add(planetName);
+            //label1.Text += ;
+            //PlanetsSelectList.Items.Add(planetName);
+        }
+        private void CreatePlanet(string name)
+        {
+            Planet tempPlanet = new Planet(name, planetsList.Count);
+            planetsList.Add(tempPlanet);
+            UpdateWindowList();
+        }
+        private void UpdateWindowList()
+        {
+            //PlanetsSelectList.DataSource = null;
+            PlanetsSelectList.Items.Clear();
+            for (int i = 0; i < planetsList.Count; i++)
+            {
+                PlanetsSelectList.Items.Add(planetsList[i].name); // need to fix name
+            }
+
+        }
+
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
