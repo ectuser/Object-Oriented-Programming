@@ -25,7 +25,7 @@ namespace SpaceStrategy
         class Planet : GameObject
         {
             private int radius;
-            public string name; // need to fix public -> private
+            private string name;
             private int ID;
             private SpaceCoordinates coordinates;
             private List<Colony> ColonyList = new List<Colony>();
@@ -41,7 +41,17 @@ namespace SpaceStrategy
                 Colony tempColony = new Colony(name);
                 ColonyList.Add(tempColony);
             }
+            public string GetName()
+            {
+                return name;
+            }
+            public int GetID()
+            {
+                return ID;
+            }
         }
+
+
         class Colony : PlanetObject
         {
             private string name;
@@ -72,6 +82,9 @@ namespace SpaceStrategy
             string planetName = PlanetsInput.Text;
             PlanetsInput.Text = "";
             CreatePlanet(planetName);
+            //string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
+            //label1.Text = text;
+            //PlanetsSelectList.getSelectedItem();
             //planetsList.Add(planetName);
             //label1.Text += ;
             //PlanetsSelectList.Items.Add(planetName);
@@ -86,15 +99,41 @@ namespace SpaceStrategy
         {
             //PlanetsSelectList.DataSource = null;
             PlanetsSelectList.Items.Clear();
-            for (int i = 0; i < planetsList.Count; i++)
-            {
-                PlanetsSelectList.Items.Add(planetsList[i].name); // need to fix name
-            }
+
+            // need fix
+            ListViewItem item1 = new ListViewItem("Something");
+            item1.SubItems.Add("SubItem1a");
+            item1.SubItems.Add("SubItem1b");
+            item1.SubItems.Add("SubItem1c");
+
+            ListViewItem item2 = new ListViewItem("Something2");
+            item2.SubItems.Add("SubItem2a");
+            item2.SubItems.Add("SubItem2b");
+            item2.SubItems.Add("SubItem2c");
+
+            ListViewItem item3 = new ListViewItem("Something3");
+            item3.SubItems.Add("SubItem3a");
+            item3.SubItems.Add("SubItem3b");
+            item3.SubItems.Add("SubItem3c");
+
+            PlanetsSelectList.Items.AddRange(new ListViewItem[] { item1, item2, item3 });
+            //for (int i = 0; i < planetsList.Count; i++)
+            //{
+
+            //}
+        }
+
+        private void RemovePlanetButton_Click(object sender, EventArgs e)
+        {
 
         }
 
+        private void PlanetsInput_TextChanged(object sender, EventArgs e)
+        {
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }
