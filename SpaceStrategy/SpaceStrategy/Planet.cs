@@ -10,14 +10,12 @@ namespace SpaceStrategy
     {
         private int radius;
         private string name;
-        private int ID;
         private SpaceCoordinates coordinates;
         private List<Colony> ColonyList = new List<Colony>();
 
-        public Planet(string name, int ID)
+        public Planet(string name)
         {
             this.name = name;
-            this.ID = ID;
         }
 
         private void CreateColony(string name)
@@ -28,10 +26,6 @@ namespace SpaceStrategy
         public string GetName()
         {
             return name;
-        }
-        public int GetID()
-        {
-            return ID;
         }
     }
 }

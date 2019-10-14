@@ -38,7 +38,7 @@ namespace SpaceStrategy
         }
         private void CreatePlanet(string name)
         {
-            Planet tempPlanet = new Planet(name, planetsList.Count);
+            Planet tempPlanet = new Planet(name);
             planetsList.Add(tempPlanet);
             UpdateWindowList();
         }
@@ -46,33 +46,21 @@ namespace SpaceStrategy
         {
             //PlanetsSelectList.DataSource = null;
             PlanetsSelectList.Items.Clear();
+            for (int i = 0; i < planetsList.Count(); i++)
+            {
+                PlanetsSelectList.Items.Add(planetsList[i].GetName());
+            }
 
-            // need fix
-            ListViewItem item1 = new ListViewItem("Something");
-            item1.SubItems.Add("SubItem1a");
-            item1.SubItems.Add("SubItem1b");
-            item1.SubItems.Add("SubItem1c");
-
-            ListViewItem item2 = new ListViewItem("Something2");
-            item2.SubItems.Add("SubItem2a");
-            item2.SubItems.Add("SubItem2b");
-            item2.SubItems.Add("SubItem2c");
-
-            ListViewItem item3 = new ListViewItem("Something3");
-            item3.SubItems.Add("SubItem3a");
-            item3.SubItems.Add("SubItem3b");
-            item3.SubItems.Add("SubItem3c");
-
-            PlanetsSelectList.Items.AddRange(new ListViewItem[] { item1, item2, item3 });
-            //for (int i = 0; i < planetsList.Count; i++)
-            //{
-
-            //}
         }
 
         private void RemovePlanetButton_Click(object sender, EventArgs e)
         {
-
+            string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
+            
+            int index = planetsList.FindIndex(i => i.GetName() == text);
+            label1.Text = index.ToString();
+            planetsList.RemoveAt(index);
+            UpdateWindowList();
         }
 
         private void PlanetsInput_TextChanged(object sender, EventArgs e)
