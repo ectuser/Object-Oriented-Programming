@@ -8,7 +8,7 @@ namespace SpaceStrategy
 {
     class Colony : PlanetObject
     {
-        private string name;
+        public string name { get; }
         private int money;
 
         // Constructor
