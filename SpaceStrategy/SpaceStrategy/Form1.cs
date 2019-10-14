@@ -10,61 +10,8 @@ using System.Windows.Forms;
 
 namespace SpaceStrategy
 {
-
-
-
     public partial class Form1 : Form
     {
-        abstract class GameObject { }
-        abstract class PlanetObject { }
-        class SpaceCoordinates
-        {
-            public float x;
-            public float y;
-        }
-        class Planet : GameObject
-        {
-            private int radius;
-            private string name;
-            private int ID;
-            private SpaceCoordinates coordinates;
-            private List<Colony> ColonyList = new List<Colony>();
-
-            public Planet(string name, int ID)
-            {
-                this.name = name;
-                this.ID = ID;
-            }
-
-            private void CreateColony(string name)
-            {
-                Colony tempColony = new Colony(name);
-                ColonyList.Add(tempColony);
-            }
-            public string GetName()
-            {
-                return name;
-            }
-            public int GetID()
-            {
-                return ID;
-            }
-        }
-
-
-        class Colony : PlanetObject
-        {
-            private string name;
-            private int money;
-
-            // Constructor
-            public Colony(string name)
-            {
-                this.name = name;
-            }
-        }
-
-
         // Form and main events
         private List<Planet> planetsList = new List<Planet>();
         public Form1()
