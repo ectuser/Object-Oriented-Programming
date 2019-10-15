@@ -9,12 +9,21 @@ namespace SpaceStrategy
     class Colony : PlanetObject
     {
         public string name { get; }
+        private List<Building> buildingsList = new List<Building>();
         private int money;
 
         // Constructor
         public Colony(string name)
         {
             this.name = name;
+        }
+        private void createBuilding(string type)
+        {
+            if (buildingsList.All(x => x.id != buildingsList.Count()))
+            {
+                Building newBuilding = new Building(type, buildingsList.Count());
+                buildingsList.Add(newBuilding);
+            }
         }
     }
 }

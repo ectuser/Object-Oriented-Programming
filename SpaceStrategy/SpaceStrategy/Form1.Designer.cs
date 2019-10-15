@@ -37,6 +37,10 @@
             this.ColonyInput = new System.Windows.Forms.TextBox();
             this.CreateColonyButton = new System.Windows.Forms.Button();
             this.RemoveColonyButton = new System.Windows.Forms.Button();
+            this.BuildingsSelectList = new System.Windows.Forms.ListBox();
+            this.BuildingInput = new System.Windows.Forms.TextBox();
+            this.CreateBuildingButton = new System.Windows.Forms.Button();
+            this.RemoveBuildingButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // PlanetButton
@@ -124,11 +128,50 @@
             this.RemoveColonyButton.UseVisualStyleBackColor = true;
             this.RemoveColonyButton.Click += new System.EventHandler(this.RemoveColonyButton_Click);
             // 
+            // BuildingsSelectList
+            // 
+            this.BuildingsSelectList.FormattingEnabled = true;
+            this.BuildingsSelectList.ItemHeight = 16;
+            this.BuildingsSelectList.Location = new System.Drawing.Point(520, 27);
+            this.BuildingsSelectList.Name = "BuildingsSelectList";
+            this.BuildingsSelectList.Size = new System.Drawing.Size(213, 260);
+            this.BuildingsSelectList.TabIndex = 12;
+            this.BuildingsSelectList.SelectedIndexChanged += new System.EventHandler(this.BuildingsSelectList_SelectedIndexChanged);
+            // 
+            // BuildingInput
+            // 
+            this.BuildingInput.Location = new System.Drawing.Point(520, 319);
+            this.BuildingInput.Name = "BuildingInput";
+            this.BuildingInput.Size = new System.Drawing.Size(213, 22);
+            this.BuildingInput.TabIndex = 13;
+            // 
+            // CreateBuildingButton
+            // 
+            this.CreateBuildingButton.Location = new System.Drawing.Point(520, 347);
+            this.CreateBuildingButton.Name = "CreateBuildingButton";
+            this.CreateBuildingButton.Size = new System.Drawing.Size(213, 23);
+            this.CreateBuildingButton.TabIndex = 14;
+            this.CreateBuildingButton.Text = "Create Building";
+            this.CreateBuildingButton.UseVisualStyleBackColor = true;
+            // 
+            // RemoveBuildingButton
+            // 
+            this.RemoveBuildingButton.Location = new System.Drawing.Point(520, 376);
+            this.RemoveBuildingButton.Name = "RemoveBuildingButton";
+            this.RemoveBuildingButton.Size = new System.Drawing.Size(213, 23);
+            this.RemoveBuildingButton.TabIndex = 15;
+            this.RemoveBuildingButton.Text = "Remove Building";
+            this.RemoveBuildingButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(980, 448);
+            this.Controls.Add(this.RemoveBuildingButton);
+            this.Controls.Add(this.CreateBuildingButton);
+            this.Controls.Add(this.BuildingInput);
+            this.Controls.Add(this.BuildingsSelectList);
             this.Controls.Add(this.RemoveColonyButton);
             this.Controls.Add(this.CreateColonyButton);
             this.Controls.Add(this.ColonyInput);
@@ -150,13 +193,17 @@
 
         private System.Windows.Forms.Button PlanetButton;
         private System.Windows.Forms.TextBox PlanetsInput;
-        private System.Windows.Forms.Label StatusBar;
         private System.Windows.Forms.Button RemovePlanetButton;
         private System.Windows.Forms.ListBox PlanetsSelectList;
         private System.Windows.Forms.ListBox ColoniesSelectList;
         private System.Windows.Forms.TextBox ColonyInput;
         private System.Windows.Forms.Button CreateColonyButton;
         private System.Windows.Forms.Button RemoveColonyButton;
+        public System.Windows.Forms.Label StatusBar;
+        private System.Windows.Forms.ListBox BuildingsSelectList;
+        private System.Windows.Forms.TextBox BuildingInput;
+        private System.Windows.Forms.Button CreateBuildingButton;
+        private System.Windows.Forms.Button RemoveBuildingButton;
     }
 }
 

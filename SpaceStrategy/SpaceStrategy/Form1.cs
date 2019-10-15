@@ -38,7 +38,7 @@ namespace SpaceStrategy
         }
         private void CreatePlanet(string name)
         {
-            if (checkUniqueName(name))
+            if (planetsList.All(x => x.name != name))
             {
                 Planet tempPlanet = new Planet(name);
                 planetsList.Add(tempPlanet);
@@ -47,7 +47,7 @@ namespace SpaceStrategy
             else
             {
                 //Console.WriteLine("Planet with this name already exists");
-                showStatus("Planet with this name already exists");
+                showStatus("Planet with this name already exists", StatusBar);
             }
         }
         // Update lists
@@ -57,7 +57,7 @@ namespace SpaceStrategy
             PlanetsSelectList.Items.Clear();
             for (int i = 0; i < planetsList.Count(); i++)
             {
-                PlanetsSelectList.Items.Add(planetsList[i].GetName());
+                PlanetsSelectList.Items.Add(planetsList[i].name);
             }
 
         }
@@ -76,7 +76,7 @@ namespace SpaceStrategy
         {
             string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
             
-            int index = planetsList.FindIndex(i => i.GetName() == text);
+            int index = planetsList.FindIndex(i => i.name == text);
             planetsList.RemoveAt(index);
             UpdateWindowPlanetsList();
         }
@@ -93,13 +93,20 @@ namespace SpaceStrategy
 
         private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //string text = ColoniesSelectList.SelectedItem.ToString();
+            //Colony colony = DefinePlanetByName(text);
+            //if (planet.GetName() != "error")
+            //{
+            //    ShowColonies(planet);
+            //}
+            //Console.WriteLine(text);
         }
 
         private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             string text = PlanetsSelectList.SelectedItem.ToString();
             Planet planet = DefinePlanetByName(text);
-            if (planet.GetName() != "error")
+            if (planet.name != "error")
             {
                 ShowColonies(planet);
             }
@@ -118,13 +125,13 @@ namespace SpaceStrategy
         {
             for (int i = 0; i < planetsList.Count; i++)
             {
-                if (planetsList[i].GetName() == name)
+                if (planetsList[i].name == name)
                 {
                     return planetsList[i];
                 }
             }
             //Console.WriteLine("error");
-            showStatus("error");
+            showStatus("error", StatusBar);
             return new Planet("error");
         }
 
@@ -133,7 +140,7 @@ namespace SpaceStrategy
             if (PlanetsSelectList.SelectedIndex == -1)
             {
                 //Console.WriteLine("Select at least one planet");
-                showStatus("Select at least one planet");
+                showStatus("Select at least one planet", StatusBar);
             }
             else
             {
@@ -154,20 +161,14 @@ namespace SpaceStrategy
             tempPlanet.RemoveColony(colonyName);
             UpdateWindowColoniesList(tempPlanet);
         }
-        private bool checkUniqueName(string newName)
-        {
-            for (int i = 0; i < planetsList.Count(); i++)
-            {
-                if (planetsList[i].GetName() == newName)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        private void showStatus(string text)
+        public static void showStatus(string text, Label StatusBar)
         {
             StatusBar.Text = text;
+        }
+
+        private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

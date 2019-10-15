@@ -9,32 +9,37 @@ namespace SpaceStrategy
     class Planet
     {
         private int radius;
-        private string name;
+        public string name { get; }
         private SpaceCoordinates coordinates;
         public List<Colony> ColonyList = new List<Colony>();
 
         public Planet(string name)
         {
             this.name = name;
+            //radius = random.Next(0, 5);
         }
 
         public void CreateColony(string name)
         {
-            Colony tempColony = new Colony(name);
-            ColonyList.Add(tempColony);
+            if (ColonyList.All(x => x.name != name))
+            {
+                Colony tempColony = new Colony(name);
+                ColonyList.Add(tempColony);
+            }
         }
         public void RemoveColony(string name)
         {
             int index = ColonyList.FindIndex(i => i.name == name);
             ColonyList.RemoveAt(index);
         }
-        public string GetName()
-        {
-            return name;
-        }
         public List<Colony> GetColonies()
         {
             return ColonyList;
+        }
+
+        public static explicit operator Planet(List<object> v)
+        {
+            throw new NotImplementedException();
         }
     }
 }
