@@ -30,7 +30,7 @@
         {
             this.PlanetButton = new System.Windows.Forms.Button();
             this.PlanetsInput = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.StatusBar = new System.Windows.Forms.Label();
             this.RemovePlanetButton = new System.Windows.Forms.Button();
             this.PlanetsSelectList = new System.Windows.Forms.ListBox();
             this.ColoniesSelectList = new System.Windows.Forms.ListBox();
@@ -57,15 +57,15 @@
             this.PlanetsInput.TabIndex = 1;
             this.PlanetsInput.TextChanged += new System.EventHandler(this.PlanetsInput_TextChanged);
             // 
-            // label1
+            // StatusBar
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(91, 400);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(46, 17);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "label1";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
+            this.StatusBar.AutoSize = true;
+            this.StatusBar.Location = new System.Drawing.Point(91, 400);
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(48, 17);
+            this.StatusBar.TabIndex = 5;
+            this.StatusBar.Text = "Status";
+            this.StatusBar.Click += new System.EventHandler(this.label1_Click);
             // 
             // RemovePlanetButton
             // 
@@ -135,7 +135,7 @@
             this.Controls.Add(this.ColoniesSelectList);
             this.Controls.Add(this.PlanetsSelectList);
             this.Controls.Add(this.RemovePlanetButton);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.PlanetsInput);
             this.Controls.Add(this.PlanetButton);
             this.Name = "Form1";
@@ -150,7 +150,7 @@
 
         private System.Windows.Forms.Button PlanetButton;
         private System.Windows.Forms.TextBox PlanetsInput;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label StatusBar;
         private System.Windows.Forms.Button RemovePlanetButton;
         private System.Windows.Forms.ListBox PlanetsSelectList;
         private System.Windows.Forms.ListBox ColoniesSelectList;

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    abstract class PlanetObject
+    class Building : PlanetObject
     {
-        protected PlanetCoordinates objectCoordinates;
+        private string type;
     }
 }

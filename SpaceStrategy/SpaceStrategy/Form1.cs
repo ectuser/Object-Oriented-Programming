@@ -38,9 +38,17 @@ namespace SpaceStrategy
         }
         private void CreatePlanet(string name)
         {
-            Planet tempPlanet = new Planet(name);
-            planetsList.Add(tempPlanet);
-            UpdateWindowPlanetsList();
+            if (checkUniqueName(name))
+            {
+                Planet tempPlanet = new Planet(name);
+                planetsList.Add(tempPlanet);
+                UpdateWindowPlanetsList();
+            }
+            else
+            {
+                //Console.WriteLine("Planet with this name already exists");
+                showStatus("Planet with this name already exists");
+            }
         }
         // Update lists
         private void UpdateWindowPlanetsList()
@@ -91,9 +99,11 @@ namespace SpaceStrategy
         {
             string text = PlanetsSelectList.SelectedItem.ToString();
             Planet planet = DefinePlanetByName(text);
-            ShowColonies(planet);
+            if (planet.GetName() != "error")
+            {
+                ShowColonies(planet);
+            }
             //Console.WriteLine(text);
-            label1.Text = text;
         }
         private void ShowColonies(Planet planet)
         {
@@ -113,7 +123,8 @@ namespace SpaceStrategy
                     return planetsList[i];
                 }
             }
-            Console.WriteLine("error");
+            //Console.WriteLine("error");
+            showStatus("error");
             return new Planet("error");
         }
 
@@ -121,7 +132,8 @@ namespace SpaceStrategy
         {
             if (PlanetsSelectList.SelectedIndex == -1)
             {
-                Console.WriteLine("Select at least one planet");
+                //Console.WriteLine("Select at least one planet");
+                showStatus("Select at least one planet");
             }
             else
             {
@@ -141,6 +153,21 @@ namespace SpaceStrategy
             Planet tempPlanet = DefinePlanetByName(planetName);
             tempPlanet.RemoveColony(colonyName);
             UpdateWindowColoniesList(tempPlanet);
+        }
+        private bool checkUniqueName(string newName)
+        {
+            for (int i = 0; i < planetsList.Count(); i++)
+            {
+                if (planetsList[i].GetName() == newName)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        private void showStatus(string text)
+        {
+            StatusBar.Text = text;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace SpaceStrategy
 {
     class SpaceCoordinates
     {
-        public float x;
-        public float y;
+        public double x;
+        public double y;
     }
 }
