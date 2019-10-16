@@ -17,13 +17,17 @@ namespace SpaceStrategy
         {
             this.name = name;
         }
-        private void createBuilding(string type)
+        public void createBuilding(string type)
         {
             if (buildingsList.All(x => x.id != buildingsList.Count()))
             {
                 Building newBuilding = new Building(type, buildingsList.Count());
                 buildingsList.Add(newBuilding);
             }
+        }
+        public List<Building> GetBuildings()
+        {
+            return buildingsList;
         }
     }
 }

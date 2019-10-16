@@ -93,13 +93,38 @@ namespace SpaceStrategy
 
         private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //string text = ColoniesSelectList.SelectedItem.ToString();
-            //Colony colony = DefinePlanetByName(text);
-            //if (planet.GetName() != "error")
-            //{
-            //    ShowColonies(planet);
-            //}
+            string text = ColoniesSelectList.SelectedItem.ToString();
+            string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+            Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
+            if (tempColony.name != "error")
+            {
+                ShowBuildings(tempColony);
+            }
             //Console.WriteLine(text);
+        }
+        private Colony DefineColonyByName(string name, List<Colony> list)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (planetsList[i].name == name)
+                {
+                    return list[i];
+                }
+            }
+            //Console.WriteLine("error");
+            showStatus("error", StatusBar);
+            return new Colony("error");
+        }
+
+        private void ShowBuildings(Colony colony)
+        {
+            BuildingsSelectList.Items.Clear();
+            List<Building> list = colony.GetBuildings();
+            for (int i = 0; i < list.Count; i++)
+            {
+                ColoniesSelectList.Items.Add(list[i].id);
+            }
         }
 
         private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
@@ -111,15 +136,6 @@ namespace SpaceStrategy
                 ShowColonies(planet);
             }
             //Console.WriteLine(text);
-        }
-        private void ShowColonies(Planet planet)
-        {
-            ColoniesSelectList.Items.Clear();
-            List<Colony> list = planet.GetColonies();
-            for (int i = 0; i < list.Count; i++)
-            {
-                ColoniesSelectList.Items.Add(list[i].name);
-            }
         }
         private Planet DefinePlanetByName(string name)
         {
@@ -134,7 +150,15 @@ namespace SpaceStrategy
             showStatus("error", StatusBar);
             return new Planet("error");
         }
-
+        private void ShowColonies(Planet planet)
+        {
+            ColoniesSelectList.Items.Clear();
+            List<Colony> list = planet.GetColonies();
+            for (int i = 0; i < list.Count; i++)
+            {
+                ColoniesSelectList.Items.Add(list[i].name);
+            }
+        }
         private void CreateColonyButton_Click(object sender, EventArgs e)
         {
             if (PlanetsSelectList.SelectedIndex == -1)
@@ -169,6 +193,40 @@ namespace SpaceStrategy
         private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void CreateBuildingButton_Click(object sender, EventArgs e)
+        {
+            if (ColoniesSelectList.SelectedIndex == -1)
+            {
+                //Console.WriteLine("Select at least one planet");
+                showStatus("Select at least one planet", StatusBar);
+            }
+            else
+            {
+                string planetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(planetName);
+                string colonyName = ColoniesSelectList.SelectedItem.ToString();
+                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies());
+                string buildingType = BuildingInput.Text;
+                BuildingInput.Text = "";
+                tempColony.createBuilding(buildingType);
+                UpdateWindowBuildingsList(tempColony);
+            }
+        }
+        private void UpdateWindowBuildingsList(Colony colony)
+        {
+            BuildingsSelectList.Items.Clear();
+            List<Building> tempList = colony.GetBuildings();
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                BuildingsSelectList.Items.Add(tempList[i].id);
+            }
+        }
+
+        private void BuildingInput_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
