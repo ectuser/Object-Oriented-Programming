@@ -37,9 +37,9 @@ namespace SpaceStrategy
             return ColonyList;
         }
 
-        public static explicit operator Planet(List<object> v)
-        {
-            throw new NotImplementedException();
-        }
+        //public static explicit operator Planet(List<object> v)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

@@ -61,15 +61,6 @@ namespace SpaceStrategy
             }
 
         }
-        private void UpdateWindowColoniesList(Planet planet)
-        {
-            ColoniesSelectList.Items.Clear();
-            List<Colony> tempList = planet.GetColonies(); 
-            for (int i = 0; i < tempList.Count(); i++)
-            {
-                ColoniesSelectList.Items.Add(tempList[i].name);
-            }
-        }
         // Update Lists end
 
         private void RemovePlanetButton_Click(object sender, EventArgs e)
@@ -103,11 +94,20 @@ namespace SpaceStrategy
             }
             //Console.WriteLine(text);
         }
+        private void ShowBuildings(Colony colony)
+        {
+            BuildingsSelectList.Items.Clear();
+            List<Building> list = colony.GetBuildings();
+            for (int i = 0; i < list.Count; i++)
+            {
+                BuildingsSelectList.Items.Add(list[i].id);
+            }
+        }
         private Colony DefineColonyByName(string name, List<Colony> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (planetsList[i].name == name)
+                if (list[i].name == name)
                 {
                     return list[i];
                 }
@@ -117,18 +117,10 @@ namespace SpaceStrategy
             return new Colony("error");
         }
 
-        private void ShowBuildings(Colony colony)
-        {
-            BuildingsSelectList.Items.Clear();
-            List<Building> list = colony.GetBuildings();
-            for (int i = 0; i < list.Count; i++)
-            {
-                ColoniesSelectList.Items.Add(list[i].id);
-            }
-        }
 
         private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            BuildingsSelectList.Items.Clear(); // clear buildings list
             string text = PlanetsSelectList.SelectedItem.ToString();
             Planet planet = DefinePlanetByName(text);
             if (planet.name != "error")
@@ -174,6 +166,15 @@ namespace SpaceStrategy
                 ColonyInput.Text = "";
                 planet.CreateColony(colonyName);
                 UpdateWindowColoniesList(planet);
+            }
+        }
+        private void UpdateWindowColoniesList(Planet planet)
+        {
+            ColoniesSelectList.Items.Clear();
+            List<Colony> tempList = planet.GetColonies();
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                ColoniesSelectList.Items.Add(tempList[i].name);
             }
         }
 

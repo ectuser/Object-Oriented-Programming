@@ -19,10 +19,15 @@ namespace SpaceStrategy
         }
         public void createBuilding(string type)
         {
-            if (buildingsList.All(x => x.id != buildingsList.Count()))
+            Building newBuilding = new Building(type, buildingsList.Count());
+            buildingsList.Add(newBuilding);
+            ShowBuildings();
+        }
+        private void ShowBuildings()
+        {
+            for (int i = 0; i < buildingsList.Count(); i++)
             {
-                Building newBuilding = new Building(type, buildingsList.Count());
-                buildingsList.Add(newBuilding);
+                Console.WriteLine(buildingsList[i].id);
             }
         }
         public List<Building> GetBuildings()
