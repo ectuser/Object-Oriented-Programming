@@ -8,14 +8,14 @@ namespace SpaceStrategy
 {
     class Colony : PlanetObject
     {
-        public string name { get; }
+        public string Name { get; }
         private List<Building> buildingsList = new List<Building>();
-        public int money { get; }
+        public int Money { get; }
 
         // Constructor
         public Colony(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
         public void CreateBuilding(string type)
         {
@@ -27,7 +27,7 @@ namespace SpaceStrategy
         {
             for (int i = 0; i < buildingsList.Count(); i++)
             {
-                Console.WriteLine(buildingsList[i].id);
+                Console.WriteLine(buildingsList[i].Id);
             }
         }
         public List<Building> GetBuildings()

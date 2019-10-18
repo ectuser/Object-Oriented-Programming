@@ -8,13 +8,13 @@ namespace SpaceStrategy
 {
     class Building : PlanetObject
     {
-        public string type { get; }
-        public int id { get; }
+        public string Type { get; }
+        public int Id { get; }
 
         public Building(string type, int id)
         {
-            this.type = type;
-            this.id = id;
+            this.Type = type;
+            this.Id = id;
         }
     }
 }

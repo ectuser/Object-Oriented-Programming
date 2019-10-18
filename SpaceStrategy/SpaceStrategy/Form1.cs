@@ -39,7 +39,7 @@ namespace SpaceStrategy
         }
         private void CreatePlanet(string name)
         {
-            if (planetsList.All(x => x.name != name))
+            if (planetsList.All(x => x.Name != name))
             {
                 Planet tempPlanet = new Planet(name);
                 planetsList.Add(tempPlanet);
@@ -51,24 +51,22 @@ namespace SpaceStrategy
                 ShowStatus("Planet with this name already exists");
             }
         }
-        // Update lists
         private void UpdateWindowPlanetsList()
         {
             //PlanetsSelectList.DataSource = null;
             PlanetsSelectList.Items.Clear();
             for (int i = 0; i < planetsList.Count(); i++)
             {
-                PlanetsSelectList.Items.Add(planetsList[i].name);
+                PlanetsSelectList.Items.Add(planetsList[i].Name);
             }
 
         }
-        // Update Lists end
 
         private void RemovePlanetButton_Click(object sender, EventArgs e)
         {
             string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
             
-            int index = planetsList.FindIndex(i => i.name == text);
+            int index = planetsList.FindIndex(i => i.Name == text);
             planetsList.RemoveAt(index);
             UpdateWindowPlanetsList();
         }
@@ -89,7 +87,7 @@ namespace SpaceStrategy
             string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
             Planet tempPlanet = DefinePlanetByName(tempPlanetName);
             Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
-            if (tempColony.name != "error")
+            if (tempColony.Name != "error")
             {
                 ShowBuildings(tempColony);
             }
@@ -102,14 +100,14 @@ namespace SpaceStrategy
             List<Building> list = colony.GetBuildings();
             for (int i = 0; i < list.Count; i++)
             {
-                BuildingsSelectList.Items.Add(list[i].id);
+                BuildingsSelectList.Items.Add(list[i].Id);
             }
         }
         private Colony DefineColonyByName(string name, List<Colony> list)
         {
             for (int i = 0; i < list.Count; i++)
             {
-                if (list[i].name == name)
+                if (list[i].Name == name)
                 {
                     return list[i];
                 }
@@ -125,7 +123,7 @@ namespace SpaceStrategy
             BuildingsSelectList.Items.Clear(); // clear buildings list
             string text = PlanetsSelectList.SelectedItem.ToString();
             Planet planet = DefinePlanetByName(text);
-            if (planet.name != "error")
+            if (planet.Name != "error")
             {
                 ShowColonies(planet);
             }
@@ -136,7 +134,7 @@ namespace SpaceStrategy
         {
             for (int i = 0; i < planetsList.Count; i++)
             {
-                if (planetsList[i].name == name)
+                if (planetsList[i].Name == name)
                 {
                     return planetsList[i];
                 }
@@ -151,7 +149,7 @@ namespace SpaceStrategy
             List<Colony> list = planet.GetColonies();
             for (int i = 0; i < list.Count; i++)
             {
-                ColoniesSelectList.Items.Add(list[i].name);
+                ColoniesSelectList.Items.Add(list[i].Name);
             }
         }
         private void CreateColonyButton_Click(object sender, EventArgs e)
@@ -177,7 +175,7 @@ namespace SpaceStrategy
             List<Colony> tempList = planet.GetColonies();
             for (int i = 0; i < tempList.Count(); i++)
             {
-                ColoniesSelectList.Items.Add(tempList[i].name);
+                ColoniesSelectList.Items.Add(tempList[i].Name);
             }
         }
 
@@ -216,7 +214,7 @@ namespace SpaceStrategy
         {
             for (int i = 0; i < list.Count(); i++)
             {
-                if (list[i].id == id)
+                if (list[i].Id == id)
                 {
                     return list[i];
                 }
@@ -249,7 +247,7 @@ namespace SpaceStrategy
             List<Building> tempList = colony.GetBuildings();
             for (int i = 0; i < tempList.Count(); i++)
             {
-                BuildingsSelectList.Items.Add(tempList[i].id);
+                BuildingsSelectList.Items.Add(tempList[i].Id);
             }
         }
 
@@ -266,8 +264,8 @@ namespace SpaceStrategy
         private void ShowPlanetData(Planet planet)
         {
             string data = "";
-            string nameData = "Name : " + planet.name + "\n";
-            string radiusData = "Radius : " + planet.radius + "\n";
+            string nameData = "Name : " + planet.Name + "\n";
+            string radiusData = "Radius : " + planet.Radius + "\n";
             string coordinatesData = "Coordinates : x : " + planet.coordinates.x + ", y : " + planet.coordinates.y + "\n";
             string coloniesData = "Number of colonies: " + planet.GetColonies().Count();
             data = nameData + radiusData + coordinatesData + coloniesData;
@@ -276,8 +274,8 @@ namespace SpaceStrategy
         private void ShowColoniesData(Colony colony)
         {
             string data = "";
-            string nameData = "Name : " + colony.name + "\n";
-            string moneyData = "Money : " + colony.money + "\n";
+            string nameData = "Name : " + colony.Name + "\n";
+            string moneyData = "Money : " + colony.Money + "\n";
             string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             data = nameData + moneyData + buildingsData;
             ColonyInfoData.Text = data;
@@ -285,8 +283,8 @@ namespace SpaceStrategy
         private void ShowBuildingsData(Building building)
         {
             string data = "";
-            string idData = "ID : " + building.id + "\n";
-            string typeData = "Type : " + building.type + "\n";
+            string idData = "ID : " + building.Id + "\n";
+            string typeData = "Type : " + building.Type + "\n";
             //string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             data = idData + typeData;
             BuildingInfoData.Text = data;
