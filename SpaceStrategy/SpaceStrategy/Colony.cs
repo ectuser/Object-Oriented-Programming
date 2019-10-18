@@ -17,7 +17,7 @@ namespace SpaceStrategy
         {
             this.name = name;
         }
-        public void createBuilding(string type)
+        public void CreateBuilding(string type)
         {
             Building newBuilding = new Building(type, buildingsList.Count());
             buildingsList.Add(newBuilding);

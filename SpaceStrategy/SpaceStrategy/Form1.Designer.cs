@@ -176,6 +176,7 @@
             this.label1.Size = new System.Drawing.Size(96, 17);
             this.label1.TabIndex = 16;
             this.label1.Text = "Planet Names";
+            this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // label2
             // 
@@ -199,7 +200,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(980, 448);
+            this.ClientSize = new System.Drawing.Size(969, 608);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);

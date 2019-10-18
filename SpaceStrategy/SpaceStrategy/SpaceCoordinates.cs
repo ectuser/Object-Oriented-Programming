@@ -10,5 +10,12 @@ namespace SpaceStrategy
     {
         public int x;
         public int y;
+
+
+        public SpaceCoordinates(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
     }
 }

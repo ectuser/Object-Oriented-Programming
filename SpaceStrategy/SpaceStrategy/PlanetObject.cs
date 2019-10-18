@@ -9,5 +9,11 @@ namespace SpaceStrategy
     abstract class PlanetObject
     {
         protected PlanetCoordinates objectCoordinates;
+
+        public PlanetObject()
+        {
+            Random rnd = new Random();
+            objectCoordinates = new PlanetCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
+        }
     }
 }

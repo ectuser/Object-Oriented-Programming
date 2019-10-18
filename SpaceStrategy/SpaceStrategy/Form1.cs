@@ -14,6 +14,7 @@ namespace SpaceStrategy
     {
         // Form and main events
         private List<Planet> planetsList = new List<Planet>();
+
         public Form1()
         {
             InitializeComponent();
@@ -47,7 +48,7 @@ namespace SpaceStrategy
             else
             {
                 //Console.WriteLine("Planet with this name already exists");
-                showStatus("Planet with this name already exists", StatusBar);
+                ShowStatus("Planet with this name already exists");
             }
         }
         // Update lists
@@ -113,7 +114,7 @@ namespace SpaceStrategy
                 }
             }
             //Console.WriteLine("error");
-            showStatus("error", StatusBar);
+            ShowStatus("error");
             return new Colony("error");
         }
 
@@ -139,7 +140,7 @@ namespace SpaceStrategy
                 }
             }
             //Console.WriteLine("error");
-            showStatus("error", StatusBar);
+            ShowStatus("error");
             return new Planet("error");
         }
         private void ShowColonies(Planet planet)
@@ -156,7 +157,7 @@ namespace SpaceStrategy
             if (PlanetsSelectList.SelectedIndex == -1)
             {
                 //Console.WriteLine("Select at least one planet");
-                showStatus("Select at least one planet", StatusBar);
+                ShowStatus("Select at least one planet");
             }
             else
             {
@@ -186,7 +187,7 @@ namespace SpaceStrategy
             tempPlanet.RemoveColony(colonyName);
             UpdateWindowColoniesList(tempPlanet);
         }
-        public static void showStatus(string text, Label StatusBar)
+        private void ShowStatus(string text)
         {
             StatusBar.Text = text;
         }
@@ -201,7 +202,7 @@ namespace SpaceStrategy
             if (ColoniesSelectList.SelectedIndex == -1)
             {
                 //Console.WriteLine("Select at least one planet");
-                showStatus("Select at least one planet", StatusBar);
+                ShowStatus("Select at least one planet");
             }
             else
             {
@@ -211,7 +212,7 @@ namespace SpaceStrategy
                 Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies());
                 string buildingType = BuildingInput.Text;
                 BuildingInput.Text = "";
-                tempColony.createBuilding(buildingType);
+                tempColony.CreateBuilding(buildingType);
                 UpdateWindowBuildingsList(tempColony);
             }
         }
@@ -226,6 +227,11 @@ namespace SpaceStrategy
         }
 
         private void BuildingInput_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
         {
 
         }

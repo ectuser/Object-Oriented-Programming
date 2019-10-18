@@ -10,13 +10,15 @@ namespace SpaceStrategy
     {
         private int radius;
         public string name { get; }
-        private SpaceCoordinates coordinates;
+        private readonly SpaceCoordinates coordinates; // check for a future
         public List<Colony> ColonyList = new List<Colony>();
 
         public Planet(string name)
         {
             this.name = name;
-            //radius = random.Next(0, 5);
+            Random rnd = new Random();
+            radius = rnd.Next(0, 5);
+            coordinates = new SpaceCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
         }
 
         public void CreateColony(string name)
