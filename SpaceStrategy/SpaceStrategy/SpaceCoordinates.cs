@@ -8,14 +8,14 @@ namespace SpaceStrategy
 {
     class SpaceCoordinates
     {
-        public int x;
-        public int y;
+        public int X { get; }
+        public int Y { get; }
 
 
         public SpaceCoordinates(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
     }
 }

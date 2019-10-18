@@ -14,10 +14,13 @@ namespace SpaceStrategy
     {
         // Form and main events
         private List<Planet> planetsList = new List<Planet>();
+        public static IList<string> resourceTypes;
 
         public Form1()
         {
             InitializeComponent();
+            string[] resourceTypesRaw = { "wood", "stone", "food" };
+            resourceTypes = new List<string>(resourceTypesRaw);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -83,16 +86,19 @@ namespace SpaceStrategy
 
         private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string text = ColoniesSelectList.SelectedItem.ToString();
-            string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-            Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-            Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
-            if (tempColony.Name != "error")
+            if (ColoniesSelectList.SelectedItem != null)
             {
-                ShowBuildings(tempColony);
+                string text = ColoniesSelectList.SelectedItem.ToString();
+                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
+                if (tempColony.Name != "error")
+                {
+                    ShowBuildings(tempColony);
+                }
+                ShowColoniesData(tempColony);
+                //Console.WriteLine(text);
             }
-            ShowColoniesData(tempColony);
-            //Console.WriteLine(text);
         }
         private void ShowBuildings(Colony colony)
         {
@@ -121,14 +127,17 @@ namespace SpaceStrategy
         private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             BuildingsSelectList.Items.Clear(); // clear buildings list
-            string text = PlanetsSelectList.SelectedItem.ToString();
-            Planet planet = DefinePlanetByName(text);
-            if (planet.Name != "error")
+            if (PlanetsSelectList.SelectedItem != null)
             {
-                ShowColonies(planet);
+                string text = PlanetsSelectList.SelectedItem.ToString();
+                Planet planet = DefinePlanetByName(text);
+                if (planet.Name != "error")
+                {
+                    ShowColonies(planet);
+                }
+                ShowPlanetData(planet);
+                //Console.WriteLine(text);   
             }
-            ShowPlanetData(planet);
-            //Console.WriteLine(text);
         }
         private Planet DefinePlanetByName(string name)
         {
@@ -194,20 +203,21 @@ namespace SpaceStrategy
 
         private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string text = ColoniesSelectList.SelectedItem.ToString();
-            string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-            Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-            Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
-
-            string idText = BuildingsSelectList.SelectedItem.ToString();
-            int id;
-
-            if (Int32.TryParse(idText, out id))
+            if (BuildingsSelectList.SelectedItem != null)
             {
-                Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings());
-                ShowBuildingsData(tempBuilding);
-            }
+                string text = ColoniesSelectList.SelectedItem.ToString();
+                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
 
+                string idText = BuildingsSelectList.SelectedItem.ToString();
+
+                if (int.TryParse(idText, out int id))
+                {
+                    Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings());
+                    ShowBuildingsData(tempBuilding);
+                }
+            }
         }
 
         private Building DefineBuildingByID(int id, List<Building> list)
@@ -266,7 +276,7 @@ namespace SpaceStrategy
             string data = "";
             string nameData = "Name : " + planet.Name + "\n";
             string radiusData = "Radius : " + planet.Radius + "\n";
-            string coordinatesData = "Coordinates : x : " + planet.coordinates.x + ", y : " + planet.coordinates.y + "\n";
+            string coordinatesData = "Coordinates : x : " + planet.coordinates.X + ", y : " + planet.coordinates.Y + "\n";
             string coloniesData = "Number of colonies: " + planet.GetColonies().Count();
             data = nameData + radiusData + coordinatesData + coloniesData;
             PlanetInfoData.Text = data;

@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class Building : PlanetObject
+    class HeapResource : PlanetObject
     {
+        public int Amount { get; }
         public string Type { get; }
-        public int Id { get; }
 
-        public Building(string type, int id)
+        public HeapResource(int amount, string type)
         {
+            Amount = amount;
             Type = type;
-            Id = id;
         }
     }
 }

@@ -12,13 +12,15 @@ namespace SpaceStrategy
         public string Name { get; }
         public readonly SpaceCoordinates coordinates; // check for a future
         private List<Colony> ColonyList = new List<Colony>();
+        private readonly List<HeapResource> heapResources;
 
         public Planet(string name)
         {
-            this.Name = name;
+            Name = name;
             Random rnd = new Random();
             Radius = rnd.Next(0, 5);
             coordinates = new SpaceCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
+            heapResources = new List<HeapResource>(SetResources());
         }
 
         public void CreateColony(string name)
@@ -37,6 +39,20 @@ namespace SpaceStrategy
         public List<Colony> GetColonies()
         {
             return ColonyList;
+        }
+        private List<HeapResource> SetResources()
+        {
+            List<HeapResource> heaps = new List<HeapResource>();
+            Random rnd = new Random();
+            int heapsAmount = rnd.Next(1, 10);
+            for (int i = 0; i < heapsAmount; i++)
+            {
+                int amount = rnd.Next(100, 1000);
+                int typeInt = rnd.Next(0, 3);
+                HeapResource heap = new HeapResource(amount, Form1.resourceTypes[typeInt]);
+                heaps.Add(heap);
+            }
+            return heaps;
         }
 
         //public static explicit operator Planet(List<object> v)
