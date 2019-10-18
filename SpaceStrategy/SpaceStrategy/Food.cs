@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    abstract class Resource
+    class Food : Resource
     {
         public string Type { get; }
+
+        public Food(string type)
+        {
+            Type = type;
+        }
     }
 }

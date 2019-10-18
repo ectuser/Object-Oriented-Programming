@@ -54,10 +54,5 @@ namespace SpaceStrategy
             }
             return heaps;
         }
-
-        //public static explicit operator Planet(List<object> v)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

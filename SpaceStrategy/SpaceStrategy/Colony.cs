@@ -10,12 +10,19 @@ namespace SpaceStrategy
     {
         public string Name { get; }
         private List<Building> buildingsList = new List<Building>();
+        Dictionary<string, int> storage;
         public int Money { get; }
 
         // Constructor
         public Colony(string name)
         {
-            this.Name = name;
+            Name = name;
+            storage = new Dictionary<string, int>
+            {
+                { "wood", 100 },
+                { "stone", 100 },
+                { "food", 100 }
+            };
         }
         public void CreateBuilding(string type)
         {
