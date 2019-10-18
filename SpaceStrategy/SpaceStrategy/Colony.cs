@@ -10,7 +10,7 @@ namespace SpaceStrategy
     {
         public string name { get; }
         private List<Building> buildingsList = new List<Building>();
-        private int money;
+        public int money { get; }
 
         // Constructor
         public Colony(string name)

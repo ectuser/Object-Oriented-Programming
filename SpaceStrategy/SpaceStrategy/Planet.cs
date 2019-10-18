@@ -8,10 +8,10 @@ namespace SpaceStrategy
 {
     class Planet
     {
-        private int radius;
+        public int radius { get; }
         public string name { get; }
-        private readonly SpaceCoordinates coordinates; // check for a future
-        public List<Colony> ColonyList = new List<Colony>();
+        public readonly SpaceCoordinates coordinates; // check for a future
+        private List<Colony> ColonyList = new List<Colony>();
 
         public Planet(string name)
         {

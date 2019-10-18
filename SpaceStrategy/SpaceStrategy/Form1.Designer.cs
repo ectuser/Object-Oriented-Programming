@@ -44,6 +44,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.PlanetInfoTitle = new System.Windows.Forms.Label();
+            this.PlanetInfoData = new System.Windows.Forms.Label();
+            this.ColonyInfoData = new System.Windows.Forms.Label();
+            this.ColonyInfoTitle = new System.Windows.Forms.Label();
+            this.BuildingInfoData = new System.Windows.Forms.Label();
+            this.BuildingInfoTitle = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // PlanetButton
@@ -196,11 +202,71 @@
             this.label3.TabIndex = 18;
             this.label3.Text = "Building ID";
             // 
+            // PlanetInfoTitle
+            // 
+            this.PlanetInfoTitle.AutoSize = true;
+            this.PlanetInfoTitle.Location = new System.Drawing.Point(12, 437);
+            this.PlanetInfoTitle.Name = "PlanetInfoTitle";
+            this.PlanetInfoTitle.Size = new System.Drawing.Size(83, 17);
+            this.PlanetInfoTitle.TabIndex = 19;
+            this.PlanetInfoTitle.Text = "Planet info: ";
+            // 
+            // PlanetInfoData
+            // 
+            this.PlanetInfoData.AutoSize = true;
+            this.PlanetInfoData.Location = new System.Drawing.Point(12, 454);
+            this.PlanetInfoData.Name = "PlanetInfoData";
+            this.PlanetInfoData.Size = new System.Drawing.Size(80, 17);
+            this.PlanetInfoData.TabIndex = 20;
+            this.PlanetInfoData.Text = "Planet data";
+            // 
+            // ColonyInfoData
+            // 
+            this.ColonyInfoData.AutoSize = true;
+            this.ColonyInfoData.Location = new System.Drawing.Point(262, 454);
+            this.ColonyInfoData.Name = "ColonyInfoData";
+            this.ColonyInfoData.Size = new System.Drawing.Size(83, 17);
+            this.ColonyInfoData.TabIndex = 22;
+            this.ColonyInfoData.Text = "Colony data";
+            // 
+            // ColonyInfoTitle
+            // 
+            this.ColonyInfoTitle.AutoSize = true;
+            this.ColonyInfoTitle.Location = new System.Drawing.Point(262, 437);
+            this.ColonyInfoTitle.Name = "ColonyInfoTitle";
+            this.ColonyInfoTitle.Size = new System.Drawing.Size(82, 17);
+            this.ColonyInfoTitle.TabIndex = 21;
+            this.ColonyInfoTitle.Text = "Colony info:";
+            // 
+            // BuildingInfoData
+            // 
+            this.BuildingInfoData.AutoSize = true;
+            this.BuildingInfoData.Location = new System.Drawing.Point(520, 454);
+            this.BuildingInfoData.Name = "BuildingInfoData";
+            this.BuildingInfoData.Size = new System.Drawing.Size(90, 17);
+            this.BuildingInfoData.TabIndex = 24;
+            this.BuildingInfoData.Text = "Building data";
+            // 
+            // BuildingInfoTitle
+            // 
+            this.BuildingInfoTitle.AutoSize = true;
+            this.BuildingInfoTitle.Location = new System.Drawing.Point(520, 437);
+            this.BuildingInfoTitle.Name = "BuildingInfoTitle";
+            this.BuildingInfoTitle.Size = new System.Drawing.Size(89, 17);
+            this.BuildingInfoTitle.TabIndex = 23;
+            this.BuildingInfoTitle.Text = "Building info:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(969, 608);
+            this.Controls.Add(this.BuildingInfoData);
+            this.Controls.Add(this.BuildingInfoTitle);
+            this.Controls.Add(this.ColonyInfoData);
+            this.Controls.Add(this.ColonyInfoTitle);
+            this.Controls.Add(this.PlanetInfoData);
+            this.Controls.Add(this.PlanetInfoTitle);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -243,6 +309,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label PlanetInfoTitle;
+        private System.Windows.Forms.Label PlanetInfoData;
+        private System.Windows.Forms.Label ColonyInfoData;
+        private System.Windows.Forms.Label ColonyInfoTitle;
+        private System.Windows.Forms.Label BuildingInfoData;
+        private System.Windows.Forms.Label BuildingInfoTitle;
     }
 }
 

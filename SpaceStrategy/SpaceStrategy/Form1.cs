@@ -93,6 +93,7 @@ namespace SpaceStrategy
             {
                 ShowBuildings(tempColony);
             }
+            ShowColoniesData(tempColony);
             //Console.WriteLine(text);
         }
         private void ShowBuildings(Colony colony)
@@ -128,6 +129,7 @@ namespace SpaceStrategy
             {
                 ShowColonies(planet);
             }
+            ShowPlanetData(planet);
             //Console.WriteLine(text);
         }
         private Planet DefinePlanetByName(string name)
@@ -194,7 +196,32 @@ namespace SpaceStrategy
 
         private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
+            string text = ColoniesSelectList.SelectedItem.ToString();
+            string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+            Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
+
+            string idText = BuildingsSelectList.SelectedItem.ToString();
+            int id;
+
+            if (Int32.TryParse(idText, out id))
+            {
+                Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings());
+                ShowBuildingsData(tempBuilding);
+            }
+
+        }
+
+        private Building DefineBuildingByID(int id, List<Building> list)
+        {
+            for (int i = 0; i < list.Count(); i++)
+            {
+                if (list[i].id == id)
+                {
+                    return list[i];
+                }
+            }
+            return new Building("error", 0);
         }
 
         private void CreateBuildingButton_Click(object sender, EventArgs e)
@@ -234,6 +261,35 @@ namespace SpaceStrategy
         private void label1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void ShowPlanetData(Planet planet)
+        {
+            string data = "";
+            string nameData = "Name : " + planet.name + "\n";
+            string radiusData = "Radius : " + planet.radius + "\n";
+            string coordinatesData = "Coordinates : x : " + planet.coordinates.x + ", y : " + planet.coordinates.y + "\n";
+            string coloniesData = "Number of colonies: " + planet.GetColonies().Count();
+            data = nameData + radiusData + coordinatesData + coloniesData;
+            PlanetInfoData.Text = data;
+        }
+        private void ShowColoniesData(Colony colony)
+        {
+            string data = "";
+            string nameData = "Name : " + colony.name + "\n";
+            string moneyData = "Money : " + colony.money + "\n";
+            string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
+            data = nameData + moneyData + buildingsData;
+            ColonyInfoData.Text = data;
+        }
+        private void ShowBuildingsData(Building building)
+        {
+            string data = "";
+            string idData = "ID : " + building.id + "\n";
+            string typeData = "Type : " + building.type + "\n";
+            //string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
+            data = idData + typeData;
+            BuildingInfoData.Text = data;
         }
     }
 }
