@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    public abstract class Resource
+    class Sawmill : Building
     {
-        public string Type { get; }
-        public Resource(string type)
+
+        public Sawmill(string type, int id) : base(type, id)
         {
-            Type = type;
         }
     }
 }

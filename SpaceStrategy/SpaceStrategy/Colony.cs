@@ -10,19 +10,16 @@ namespace SpaceStrategy
     {
         public string Name { get; }
         private List<Building> buildingsList = new List<Building>();
-        Dictionary<string, int> storage;
+        //Dictionary<string, int> storage;
         public int Money { get; }
+        private List<HeapResource> storage;
 
         // Constructor
         public Colony(string name)
         {
             Name = name;
-            storage = new Dictionary<string, int>
-            {
-                { "wood", 100 },
-                { "stone", 100 },
-                { "food", 100 }
-            };
+            HeapResource[] tempList = { new HeapResource(100, new Wood("wood")), new HeapResource(100, new Stone("stone")), new HeapResource(100, new Food("food")) };
+            storage = new List<HeapResource>(tempList);
         }
         public void CreateBuilding(string type)
         {
@@ -45,6 +42,10 @@ namespace SpaceStrategy
         public List<Building> GetBuildings()
         {
             return buildingsList;
+        }
+        public List<HeapResource> GetStorage()
+        {
+            return storage;
         }
     }
 }

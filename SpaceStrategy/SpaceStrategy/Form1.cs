@@ -21,7 +21,6 @@ namespace SpaceStrategy
             InitializeComponent();
             Resource[] resourceTypesRaw = { new Wood("wood"), new Stone("stone"), new Food("food")};
             resourceTypes = new List<Resource>(resourceTypesRaw);
-            Console.WriteLine(resourceTypes);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -34,12 +33,6 @@ namespace SpaceStrategy
             string planetName = PlanetsInput.Text;
             PlanetsInput.Text = "";
             CreatePlanet(planetName);
-            //string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
-            //label1.Text = text;
-            //PlanetsSelectList.getSelectedItem();
-            //planetsList.Add(planetName);
-            //label1.Text += ;
-            //PlanetsSelectList.Items.Add(planetName);
         }
         private void CreatePlanet(string name)
         {
@@ -294,7 +287,13 @@ namespace SpaceStrategy
             string nameData = "Name : " + colony.Name + "\n";
             string moneyData = "Money : " + colony.Money + "\n";
             string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
-            data = nameData + moneyData + buildingsData;
+            string resourcesData = "Resources : \n";
+            List<HeapResource> tempList = colony.GetStorage();
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                resourcesData += tempList[i].Amount + " of " + tempList[i].Type + "\n";
+            }
+            data = nameData + moneyData + buildingsData + resourcesData;
             ColonyInfoData.Text = data;
         }
         private void ShowBuildingsData(Building building)

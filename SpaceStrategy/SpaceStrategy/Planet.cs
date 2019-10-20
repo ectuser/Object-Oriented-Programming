@@ -11,8 +11,8 @@ namespace SpaceStrategy
         public int Radius { get; }
         public string Name { get; }
         public readonly SpaceCoordinates coordinates; // check for a future
-        private List<Colony> ColonyList = new List<Colony>();
-        private readonly List<HeapResource> heapResources;
+        private List<Colony> colonyList = new List<Colony>();
+        private readonly List<HeapResource> heapsOfResources;
 
         public Planet(string name)
         {
@@ -20,26 +20,25 @@ namespace SpaceStrategy
             Random rnd = new Random();
             Radius = rnd.Next(0, 5);
             coordinates = new SpaceCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
-            heapResources = new List<HeapResource>(SetResources());
-            ShowResources();
+            heapsOfResources = new List<HeapResource>(SetResources());
         }
 
         public void CreateColony(string name)
         {
-            if (ColonyList.All(x => x.Name != name))
+            if (colonyList.All(x => x.Name != name))
             {
                 Colony tempColony = new Colony(name);
-                ColonyList.Add(tempColony);
+                colonyList.Add(tempColony);
             }
         }
         public void RemoveColony(string name)
         {
-            int index = ColonyList.FindIndex(i => i.Name == name);
-            ColonyList.RemoveAt(index);
+            int index = colonyList.FindIndex(i => i.Name == name);
+            colonyList.RemoveAt(index);
         }
         public List<Colony> GetColonies()
         {
-            return ColonyList;
+            return colonyList;
         }
         private List<HeapResource> SetResources()
         {
@@ -50,7 +49,6 @@ namespace SpaceStrategy
             {
                 int amount = rnd.Next(100, 1000);
                 int typeInt = rnd.Next(0, 3);
-                //Console.WriteLine(Form1.resourceTypes[typeInt].Type);
                 HeapResource heap = new HeapResource(amount, Form1.resourceTypes[typeInt]);
                 heaps.Add(heap);
             }
@@ -58,15 +56,7 @@ namespace SpaceStrategy
         }
         public List<HeapResource> GetResources()
         {
-            return heapResources;
-        }
-        private void ShowResources()
-        {
-            for (int i = 0; i < heapResources.Count(); i++)
-            {
-                Console.WriteLine(heapResources[i].Amount);
-                Console.WriteLine(heapResources[i].Type);
-            }
+            return heapsOfResources;
         }
     }
 }
