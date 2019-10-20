@@ -206,7 +206,7 @@
             // PlanetInfoTitle
             // 
             this.PlanetInfoTitle.AutoSize = true;
-            this.PlanetInfoTitle.Location = new System.Drawing.Point(12, 437);
+            this.PlanetInfoTitle.Location = new System.Drawing.Point(12, 416);
             this.PlanetInfoTitle.Name = "PlanetInfoTitle";
             this.PlanetInfoTitle.Size = new System.Drawing.Size(83, 17);
             this.PlanetInfoTitle.TabIndex = 19;
@@ -215,7 +215,7 @@
             // PlanetInfoData
             // 
             this.PlanetInfoData.AutoSize = true;
-            this.PlanetInfoData.Location = new System.Drawing.Point(12, 454);
+            this.PlanetInfoData.Location = new System.Drawing.Point(12, 433);
             this.PlanetInfoData.Name = "PlanetInfoData";
             this.PlanetInfoData.Size = new System.Drawing.Size(80, 17);
             this.PlanetInfoData.TabIndex = 20;
@@ -224,7 +224,7 @@
             // ColonyInfoData
             // 
             this.ColonyInfoData.AutoSize = true;
-            this.ColonyInfoData.Location = new System.Drawing.Point(262, 454);
+            this.ColonyInfoData.Location = new System.Drawing.Point(262, 433);
             this.ColonyInfoData.Name = "ColonyInfoData";
             this.ColonyInfoData.Size = new System.Drawing.Size(83, 17);
             this.ColonyInfoData.TabIndex = 22;
@@ -233,7 +233,7 @@
             // ColonyInfoTitle
             // 
             this.ColonyInfoTitle.AutoSize = true;
-            this.ColonyInfoTitle.Location = new System.Drawing.Point(262, 437);
+            this.ColonyInfoTitle.Location = new System.Drawing.Point(262, 416);
             this.ColonyInfoTitle.Name = "ColonyInfoTitle";
             this.ColonyInfoTitle.Size = new System.Drawing.Size(82, 17);
             this.ColonyInfoTitle.TabIndex = 21;
@@ -242,7 +242,7 @@
             // BuildingInfoData
             // 
             this.BuildingInfoData.AutoSize = true;
-            this.BuildingInfoData.Location = new System.Drawing.Point(520, 454);
+            this.BuildingInfoData.Location = new System.Drawing.Point(520, 433);
             this.BuildingInfoData.Name = "BuildingInfoData";
             this.BuildingInfoData.Size = new System.Drawing.Size(90, 17);
             this.BuildingInfoData.TabIndex = 24;
@@ -251,7 +251,7 @@
             // BuildingInfoTitle
             // 
             this.BuildingInfoTitle.AutoSize = true;
-            this.BuildingInfoTitle.Location = new System.Drawing.Point(520, 437);
+            this.BuildingInfoTitle.Location = new System.Drawing.Point(520, 416);
             this.BuildingInfoTitle.Name = "BuildingInfoTitle";
             this.BuildingInfoTitle.Size = new System.Drawing.Size(89, 17);
             this.BuildingInfoTitle.TabIndex = 23;
@@ -261,7 +261,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(969, 608);
+            this.ClientSize = new System.Drawing.Size(968, 902);
             this.Controls.Add(this.BuildingInfoData);
             this.Controls.Add(this.BuildingInfoTitle);
             this.Controls.Add(this.ColonyInfoData);

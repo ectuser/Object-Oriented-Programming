@@ -56,6 +56,10 @@ namespace SpaceStrategy
             }
             return heaps;
         }
+        public List<HeapResource> GetResources()
+        {
+            return heapResources;
+        }
         private void ShowResources()
         {
             for (int i = 0; i < heapResources.Count(); i++)

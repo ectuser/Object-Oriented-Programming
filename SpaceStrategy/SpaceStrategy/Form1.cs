@@ -278,8 +278,14 @@ namespace SpaceStrategy
             string nameData = "Name : " + planet.Name + "\n";
             string radiusData = "Radius : " + planet.Radius + "\n";
             string coordinatesData = "Coordinates : x : " + planet.coordinates.X + ", y : " + planet.coordinates.Y + "\n";
-            string coloniesData = "Number of colonies: " + planet.GetColonies().Count();
-            data = nameData + radiusData + coordinatesData + coloniesData;
+            string coloniesData = "Number of colonies: " + planet.GetColonies().Count() + "\n";
+            string resourcesData = "Resource fields on the planet: \n";
+            List<HeapResource> list = planet.GetResources();
+            for (int i = 0; i < list.Count(); i++)
+            {
+                resourcesData += list[i].Amount + " of " + list[i].Type + "\n";
+            }
+            data = nameData + radiusData + coordinatesData + coloniesData + resourcesData;
             PlanetInfoData.Text = data;
         }
         private void ShowColoniesData(Colony colony)
