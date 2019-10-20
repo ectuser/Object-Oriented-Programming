@@ -14,13 +14,13 @@ namespace SpaceStrategy
     {
         // Form and main events
         private List<Planet> planetsList = new List<Planet>();
-        public static IList<string> resourceTypes;
+        public static List<Resource> resourceTypes;
 
         public Form1()
         {
             InitializeComponent();
-            string[] resourceTypesRaw = { "wood", "stone", "food" };
-            resourceTypes = new List<string>(resourceTypesRaw);
+            Resource[] resourceTypesRaw = { new Wood("wood"), new Stone("stone"), new Food("food")};
+            resourceTypes = new List<Resource>(resourceTypesRaw);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -298,6 +298,21 @@ namespace SpaceStrategy
             //string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             data = idData + typeData;
             BuildingInfoData.Text = data;
+        }
+
+        private void RemoveBuildingButton_Click(object sender, EventArgs e)
+        {
+            // need fix
+            string planetName = PlanetsSelectList.SelectedItem.ToString();
+            string colonyName = ColoniesSelectList.SelectedItem.ToString();
+            string idStr = BuildingsSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(planetName);
+            Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies());
+            if (int.TryParse(idStr, out int id))
+            {
+                tempColony.RemoveBuilding(id);
+                UpdateWindowBuildingsList(tempColony);
+            }
         }
     }
 }

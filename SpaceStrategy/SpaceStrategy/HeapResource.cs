@@ -11,10 +11,11 @@ namespace SpaceStrategy
         public int Amount { get; }
         public string Type { get; }
 
-        public HeapResource(int amount, string type)
+        public HeapResource(int amount, Resource resource)
         {
+
             Amount = amount;
-            Type = type;
+            Type = resource.Type;
         }
     }
 }

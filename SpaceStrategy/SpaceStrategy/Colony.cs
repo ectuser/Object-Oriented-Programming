@@ -30,6 +30,11 @@ namespace SpaceStrategy
             buildingsList.Add(newBuilding);
             ShowBuildings();
         }
+        public void RemoveBuilding(int id)
+        {
+            int index = buildingsList.FindIndex(i => i.Id == id);
+            buildingsList.RemoveAt(index);
+        }
         private void ShowBuildings()
         {
             for (int i = 0; i < buildingsList.Count(); i++)

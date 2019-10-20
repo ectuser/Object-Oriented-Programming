@@ -173,6 +173,7 @@
             this.RemoveBuildingButton.TabIndex = 15;
             this.RemoveBuildingButton.Text = "Remove Building";
             this.RemoveBuildingButton.UseVisualStyleBackColor = true;
+            this.RemoveBuildingButton.Click += new System.EventHandler(this.RemoveBuildingButton_Click);
             // 
             // label1
             // 

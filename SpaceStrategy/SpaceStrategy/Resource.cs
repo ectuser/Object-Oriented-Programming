@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    abstract class Resource
+    public abstract class Resource
     {
         public string Type { get; }
     }
