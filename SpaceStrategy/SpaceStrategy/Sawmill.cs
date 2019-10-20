@@ -8,9 +8,9 @@ namespace SpaceStrategy
 {
     class Sawmill : Building
     {
-
         public Sawmill(string type, int id) : base(type, id)
         {
+            Cost = 100;
         }
     }
 }
