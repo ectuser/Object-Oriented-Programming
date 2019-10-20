@@ -21,6 +21,7 @@ namespace SpaceStrategy
             InitializeComponent();
             Resource[] resourceTypesRaw = { new Wood("wood"), new Stone("stone"), new Food("food")};
             resourceTypes = new List<Resource>(resourceTypesRaw);
+            Console.WriteLine(resourceTypes);
         }
 
         private void Form1_Load(object sender, EventArgs e)

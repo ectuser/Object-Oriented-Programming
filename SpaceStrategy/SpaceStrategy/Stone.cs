@@ -8,10 +8,8 @@ namespace SpaceStrategy
 {
     class Stone : Resource
     {
-        public string Type { get; }
-        public Stone(string type)
+        public Stone(string type) : base(type)
         {
-            Type = type;
         }
     }
 }

@@ -8,10 +8,8 @@ namespace SpaceStrategy
 {
     class Wood : Resource
     {
-        public string Type { get; }
-         public Wood(string type)
+        public Wood(string type) : base(type)
         {
-            Type = type;
         }
     }
 }

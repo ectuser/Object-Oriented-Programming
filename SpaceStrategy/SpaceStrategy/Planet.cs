@@ -21,6 +21,7 @@ namespace SpaceStrategy
             Radius = rnd.Next(0, 5);
             coordinates = new SpaceCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
             heapResources = new List<HeapResource>(SetResources());
+            ShowResources();
         }
 
         public void CreateColony(string name)
@@ -49,10 +50,19 @@ namespace SpaceStrategy
             {
                 int amount = rnd.Next(100, 1000);
                 int typeInt = rnd.Next(0, 3);
+                //Console.WriteLine(Form1.resourceTypes[typeInt].Type);
                 HeapResource heap = new HeapResource(amount, Form1.resourceTypes[typeInt]);
                 heaps.Add(heap);
             }
             return heaps;
+        }
+        private void ShowResources()
+        {
+            for (int i = 0; i < heapResources.Count(); i++)
+            {
+                Console.WriteLine(heapResources[i].Amount);
+                Console.WriteLine(heapResources[i].Type);
+            }
         }
     }
 }
