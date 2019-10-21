@@ -19,6 +19,12 @@ namespace SpaceStrategy
             efficiency = 2;
             Id = id;
             ParentColony = colony;
+            ParentPlanet = colony.ParentPlanet;
+        }
+
+        private void ExtractResources()
+        {
+            ParentPlanet.GetResources()[0].Amount -= 5;
         }
       
     }
