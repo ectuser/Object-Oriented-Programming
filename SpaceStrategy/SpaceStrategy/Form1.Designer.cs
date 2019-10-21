@@ -229,6 +229,7 @@
             this.ColonyInfoData.Size = new System.Drawing.Size(83, 17);
             this.ColonyInfoData.TabIndex = 22;
             this.ColonyInfoData.Text = "Colony data";
+            this.ColonyInfoData.Click += new System.EventHandler(this.ColonyInfoData_Click);
             // 
             // ColonyInfoTitle
             // 

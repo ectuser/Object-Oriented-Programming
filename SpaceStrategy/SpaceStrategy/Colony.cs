@@ -6,21 +6,22 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class Colony : PlanetObject
+    class Colony
     {
         public string Name { get; }
         private List<Building> buildingsList = new List<Building>();
         //Dictionary<string, int> storage;
         public int Money { get; private set; }
         private List<HeapResource> storage;
-
+        public Planet ParentPlanet { get; }
         // Constructor
-        public Colony(string name)
+        public Colony(string name, Planet planet)
         {
             Name = name;
             HeapResource[] tempList = { new HeapResource(100, new Wood("wood")), new HeapResource(100, new Stone("stone")), new HeapResource(100, new Food("food")) };
             storage = new List<HeapResource>(tempList);
             Money = 1000;
+            ParentPlanet = planet;
         }
         public void CreateBuilding(Building building)
         {

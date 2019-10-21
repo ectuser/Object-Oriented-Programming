@@ -23,11 +23,11 @@ namespace SpaceStrategy
             heapsOfResources = new List<HeapResource>(SetResources());
         }
 
-        public void CreateColony(string name)
+        public void CreateColony(string name, Planet planet)
         {
             if (colonyList.All(x => x.Name != name))
             {
-                Colony tempColony = new Colony(name);
+                Colony tempColony = new Colony(name, planet);
                 colonyList.Add(tempColony);
             }
         }

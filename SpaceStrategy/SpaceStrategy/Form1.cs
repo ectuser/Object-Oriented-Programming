@@ -89,7 +89,7 @@ namespace SpaceStrategy
                 string text = ColoniesSelectList.SelectedItem.ToString();
                 string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
                 Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
+                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
                 if (tempColony.Name != "error")
                 {
                     ShowBuildings(tempColony);
@@ -107,7 +107,7 @@ namespace SpaceStrategy
                 BuildingsSelectList.Items.Add(list[i].Id);
             }
         }
-        private Colony DefineColonyByName(string name, List<Colony> list)
+        private Colony DefineColonyByName(string name, List<Colony> list, Planet planet)
         {
             for (int i = 0; i < list.Count; i++)
             {
@@ -118,7 +118,7 @@ namespace SpaceStrategy
             }
             //Console.WriteLine("error");
             ShowStatus("error");
-            return new Colony("error");
+            return new Colony("error", planet);
         }
 
 
@@ -172,7 +172,7 @@ namespace SpaceStrategy
                 Planet planet = DefinePlanetByName(planetName);
                 string colonyName = ColonyInput.Text;
                 ColonyInput.Text = "";
-                planet.CreateColony(colonyName);
+                planet.CreateColony(colonyName, planet);
                 UpdateWindowColoniesList(planet);
             }
         }
@@ -206,7 +206,7 @@ namespace SpaceStrategy
                 string text = ColoniesSelectList.SelectedItem.ToString();
                 string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
                 Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies());
+                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
 
                 string idText = BuildingsSelectList.SelectedItem.ToString();
 
@@ -242,7 +242,7 @@ namespace SpaceStrategy
                 string planetName = PlanetsSelectList.SelectedItem.ToString();
                 Planet tempPlanet = DefinePlanetByName(planetName);
                 string colonyName = ColoniesSelectList.SelectedItem.ToString();
-                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies());
+                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
                 string buildingType = BuildingInput.Text;
                 for (int i = 0; i < buildingTypes.Count(); i++)
                 {
@@ -299,6 +299,7 @@ namespace SpaceStrategy
         {
             string data = "";
             string nameData = "Name : " + colony.Name + "\n";
+            string parentPlanet = "Parent planet : " + colony.ParentPlanet.Name + "\n";
             string moneyData = "Money : " + colony.Money + "\n";
             string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             string resourcesData = "Resources : \n";
@@ -307,7 +308,7 @@ namespace SpaceStrategy
             {
                 resourcesData += tempList[i].Amount + " of " + tempList[i].Type + "\n";
             }
-            data = nameData + moneyData + buildingsData + resourcesData;
+            data = nameData + parentPlanet + moneyData + buildingsData + resourcesData;
             ColonyInfoData.Text = data;
         }
         private void ShowBuildingsData(Building building)
@@ -327,12 +328,17 @@ namespace SpaceStrategy
             string colonyName = ColoniesSelectList.SelectedItem.ToString();
             string idStr = BuildingsSelectList.SelectedItem.ToString();
             Planet tempPlanet = DefinePlanetByName(planetName);
-            Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies());
+            Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
             if (int.TryParse(idStr, out int id))
             {
                 tempColony.RemoveBuilding(id);
                 UpdateWindowBuildingsList(tempColony);
             }
+        }
+
+        private void ColonyInfoData_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
