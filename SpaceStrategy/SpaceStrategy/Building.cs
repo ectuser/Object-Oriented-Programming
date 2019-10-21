@@ -12,11 +12,13 @@ namespace SpaceStrategy
         public int Id { get; }
         public int Cost { get; set; }
         public int efficiency { get; } // conventional units of resource / second
+        public Colony ParentColony { get; }
 
-        public Building(int id)
+        public Building(int id, Colony colony)
         {
             efficiency = 2;
             Id = id;
+            ParentColony = colony;
         }
       
     }

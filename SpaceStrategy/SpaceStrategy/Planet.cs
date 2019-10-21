@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class Planet
+    public class Planet
     {
         public int Radius { get; }
         public string Name { get; }

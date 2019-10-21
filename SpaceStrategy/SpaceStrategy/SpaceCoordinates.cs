@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class SpaceCoordinates
+    public class SpaceCoordinates
     {
         public int X { get; }
         public int Y { get; }

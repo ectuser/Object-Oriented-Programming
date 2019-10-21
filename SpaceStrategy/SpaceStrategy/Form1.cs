@@ -23,7 +23,7 @@ namespace SpaceStrategy
             Resource[] resourceTypesRaw = { new Wood("wood"), new Stone("stone"), new Food("food")};
             resourceTypes = new List<Resource>(resourceTypesRaw);
 
-            Building[] buildingTypesRaw = { new Sawmill(0), new Quarry(1), new Pasture(2) };
+            Building[] buildingTypesRaw = { new Sawmill(0, new Colony("example", new Planet("example"))), new Quarry(1, new Colony("example", new Planet("example"))), new Pasture(2, new Colony("example", new Planet("example"))) };
             buildingTypes = new List<Building>(buildingTypesRaw);
         }
 
@@ -212,13 +212,13 @@ namespace SpaceStrategy
 
                 if (int.TryParse(idText, out int id))
                 {
-                    Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings());
-                    ShowBuildingsData(tempBuilding);
+                    Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
+                    ShowBuildingsData(tempBuilding, tempColony);
                 }
             }
         }
 
-        private Building DefineBuildingByID(int id, List<Building> list)
+        private Building DefineBuildingByID(int id, List<Building> list, Colony colony)
         {
             for (int i = 0; i < list.Count(); i++)
             {
@@ -227,7 +227,7 @@ namespace SpaceStrategy
                     return list[i];
                 }
             }
-            return new Building(0);
+            return new Building(0, colony);
         }
 
         private void CreateBuildingButton_Click(object sender, EventArgs e)
@@ -248,7 +248,7 @@ namespace SpaceStrategy
                 {
                     if (buildingTypes[i].Type == buildingType)
                     {
-                        tempColony.CreateBuilding(buildingTypes[i]);
+                        tempColony.CreateBuilding(buildingTypes[i], tempColony);
                         UpdateWindowBuildingsList(tempColony);
                         BuildingInput.Text = "";
                         break;
@@ -311,13 +311,14 @@ namespace SpaceStrategy
             data = nameData + parentPlanet + moneyData + buildingsData + resourcesData;
             ColonyInfoData.Text = data;
         }
-        private void ShowBuildingsData(Building building)
+        private void ShowBuildingsData(Building building, Colony colony)
         {
             string data = "";
             string idData = "ID : " + building.Id + "\n";
             string typeData = "Type : " + building.Type + "\n";
+            string parentColony = "Parent colony: " + colony.Name + "\n";
             //string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
-            data = idData + typeData;
+            data = idData + typeData + parentColony;
             BuildingInfoData.Text = data;
         }
 

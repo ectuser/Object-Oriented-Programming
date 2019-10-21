@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class HeapResource : PlanetObject
+    public class HeapResource : PlanetObject
     {
         public int Amount { get; }
         public string Type { get; }

@@ -8,7 +8,7 @@ namespace SpaceStrategy
 {
     class Pasture : Building
     {
-        public Pasture(int id) : base(id)
+        public Pasture(int id, Colony colony) : base(id, colony)
         {
             Cost = 100;
             Type = "pasture";

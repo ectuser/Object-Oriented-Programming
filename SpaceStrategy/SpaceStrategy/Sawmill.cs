@@ -8,7 +8,7 @@ namespace SpaceStrategy
 {
     class Sawmill : Building
     {
-        public Sawmill(int id) : base(id)
+        public Sawmill(int id, Colony colony) : base(id, colony)
         {
             Cost = 100;
             Type = "sawmill";

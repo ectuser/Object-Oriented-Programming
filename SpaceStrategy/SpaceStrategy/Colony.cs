@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class Colony
+    public class Colony
     {
         public string Name { get; }
         private List<Building> buildingsList = new List<Building>();
@@ -23,10 +23,10 @@ namespace SpaceStrategy
             Money = 1000;
             ParentPlanet = planet;
         }
-        public void CreateBuilding(Building building)
+        public void CreateBuilding(Building building, Colony colony)
         {
             Money -= building.Cost;
-            buildingsList.Add(DefineBuildingType(building));
+            buildingsList.Add(DefineBuildingType(building, colony));
         }
         public void RemoveBuilding(int id)
         {
@@ -41,17 +41,17 @@ namespace SpaceStrategy
         {
             return storage;
         }
-        private Building DefineBuildingType(Building building)
+        private Building DefineBuildingType(Building building, Colony colony)
         {
             // last else need fix
             if (building.Type == "swamill")
-                return new Sawmill(buildingsList.Count());
+                return new Sawmill(buildingsList.Count(), colony);
             else if (building.Type == "quarry")
-                return new Quarry(buildingsList.Count());
+                return new Quarry(buildingsList.Count(), colony);
             else if (building.Type == "pasture")
-                return new Pasture(buildingsList.Count());
+                return new Pasture(buildingsList.Count(), colony);
             else
-                return new Sawmill(buildingsList.Count());
+                return new Sawmill(buildingsList.Count(), colony);
         }
     }
 }

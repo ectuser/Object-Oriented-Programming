@@ -8,7 +8,7 @@ namespace SpaceStrategy
 {
     class Quarry : Building
     {
-        public Quarry(int id) : base(id)
+        public Quarry(int id, Colony colony) : base(id, colony)
         {
             Cost = 100;
             Type = "quarry";
