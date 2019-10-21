@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class Sawmill : Building
+    class Pasture : Building
     {
-        public Sawmill(int id) : base(id)
+        public Pasture(int id) : base(id)
         {
             Cost = 100;
-            Type = "sawmill";
+            Type = "pasture";
         }
     }
 }

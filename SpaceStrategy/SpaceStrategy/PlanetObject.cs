@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    abstract class PlanetObject
+    public abstract class PlanetObject
     {
         protected PlanetCoordinates objectCoordinates;
 

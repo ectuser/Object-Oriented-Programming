@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    class Building : PlanetObject
+    public class Building : PlanetObject
     {
-        public string Type { get; }
+        public string Type { get; protected set; }
         public int Id { get; }
         public int Cost { get; set; }
         public int efficiency; // conventional units of resource / second
 
-        public Building(string type, int id)
+        public Building(int id)
         {
-            Type = type;
             Id = id;
         }
     }

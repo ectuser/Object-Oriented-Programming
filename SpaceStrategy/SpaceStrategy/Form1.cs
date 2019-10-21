@@ -15,12 +15,16 @@ namespace SpaceStrategy
         // Form and main events
         private List<Planet> planetsList = new List<Planet>();
         public static List<Resource> resourceTypes;
+        public static List<Building> buildingTypes;
 
         public Form1()
         {
             InitializeComponent();
             Resource[] resourceTypesRaw = { new Wood("wood"), new Stone("stone"), new Food("food")};
             resourceTypes = new List<Resource>(resourceTypesRaw);
+
+            Building[] buildingTypesRaw = { new Sawmill(0), new Quarry(1), new Pasture(2) };
+            buildingTypes = new List<Building>(buildingTypesRaw);
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -223,7 +227,7 @@ namespace SpaceStrategy
                     return list[i];
                 }
             }
-            return new Building("error", 0);
+            return new Building(0);
         }
 
         private void CreateBuildingButton_Click(object sender, EventArgs e)
@@ -240,6 +244,7 @@ namespace SpaceStrategy
                 string colonyName = ColoniesSelectList.SelectedItem.ToString();
                 Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies());
                 string buildingType = BuildingInput.Text;
+                
                 BuildingInput.Text = "";
                 tempColony.CreateBuilding(buildingType);
                 UpdateWindowBuildingsList(tempColony);
