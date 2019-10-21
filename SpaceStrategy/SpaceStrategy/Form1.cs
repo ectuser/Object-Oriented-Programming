@@ -244,10 +244,19 @@ namespace SpaceStrategy
                 string colonyName = ColoniesSelectList.SelectedItem.ToString();
                 Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies());
                 string buildingType = BuildingInput.Text;
-                
-                BuildingInput.Text = "";
-                tempColony.CreateBuilding(buildingType);
-                UpdateWindowBuildingsList(tempColony);
+                for (int i = 0; i < buildingTypes.Count(); i++)
+                {
+                    if (buildingTypes[i].Type == buildingType)
+                    {
+                        tempColony.CreateBuilding(buildingTypes[i]);
+                        UpdateWindowBuildingsList(tempColony);
+                        BuildingInput.Text = "";
+                        break;
+                    }
+                }
+               
+                //tempColony.CreateBuilding(buildingType);
+                //UpdateWindowBuildingsList(tempColony);
             }
         }
         private void UpdateWindowBuildingsList(Colony colony)

@@ -11,11 +11,13 @@ namespace SpaceStrategy
         public string Type { get; protected set; }
         public int Id { get; }
         public int Cost { get; set; }
-        public int efficiency; // conventional units of resource / second
+        public int efficiency { get; } // conventional units of resource / second
 
         public Building(int id)
         {
+            efficiency = 2;
             Id = id;
         }
+      
     }
 }

@@ -11,7 +11,7 @@ namespace SpaceStrategy
         public string Name { get; }
         private List<Building> buildingsList = new List<Building>();
         //Dictionary<string, int> storage;
-        public int Money { get; }
+        public int Money { get; private set; }
         private List<HeapResource> storage;
 
         // Constructor
@@ -20,24 +20,17 @@ namespace SpaceStrategy
             Name = name;
             HeapResource[] tempList = { new HeapResource(100, new Wood("wood")), new HeapResource(100, new Stone("stone")), new HeapResource(100, new Food("food")) };
             storage = new List<HeapResource>(tempList);
+            Money = 1000;
         }
-        public void CreateBuilding(string type)
+        public void CreateBuilding(Building building)
         {
-            Building newBuilding = new Building(buildingsList.Count());
-            buildingsList.Add(newBuilding);
-            ShowBuildings();
+            Money -= building.Cost;
+            buildingsList.Add(DefineBuildingType(building));
         }
         public void RemoveBuilding(int id)
         {
             int index = buildingsList.FindIndex(i => i.Id == id);
             buildingsList.RemoveAt(index);
-        }
-        private void ShowBuildings()
-        {
-            for (int i = 0; i < buildingsList.Count(); i++)
-            {
-                Console.WriteLine(buildingsList[i].Id);
-            }
         }
         public List<Building> GetBuildings()
         {
@@ -46,6 +39,18 @@ namespace SpaceStrategy
         public List<HeapResource> GetStorage()
         {
             return storage;
+        }
+        private Building DefineBuildingType(Building building)
+        {
+            // last else need fix
+            if (building.Type == "swamill")
+                return new Sawmill(buildingsList.Count());
+            else if (building.Type == "quarry")
+                return new Quarry(buildingsList.Count());
+            else if (building.Type == "pasture")
+                return new Pasture(buildingsList.Count());
+            else
+                return new Sawmill(buildingsList.Count());
         }
     }
 }
