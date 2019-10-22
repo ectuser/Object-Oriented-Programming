@@ -14,6 +14,8 @@ namespace SpaceStrategy
     {
         // Form and main events
         private List<Planet> planetsList = new List<Planet>();
+        private Timer timer1;
+
         public static List<Resource> resourceTypes;
         public static List<Building> buildingTypes;
 
@@ -25,12 +27,15 @@ namespace SpaceStrategy
 
             Building[] buildingTypesRaw = { new Sawmill(0, new Colony("example", new Planet("example"))), new Quarry(1, new Colony("example", new Planet("example"))), new Pasture(2, new Colony("example", new Planet("example"))) };
             buildingTypes = new List<Building>(buildingTypesRaw);
+            InitTimer();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
         }
+
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -340,6 +345,56 @@ namespace SpaceStrategy
         private void ColonyInfoData_Click(object sender, EventArgs e)
         {
 
+        }
+
+        public void InitTimer()
+        {
+            timer1 = new Timer();
+            timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Interval = 2000; // in miliseconds
+            timer1.Start();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ResourceExtraction();
+        }
+
+        private void ResourceExtraction()
+        {
+            for (int i = 0; i < planetsList.Count(); i++)
+            {
+                List<Colony> colonyList = planetsList[i].GetColonies();
+                for (int j = 0; j < colonyList.Count(); j++)
+                {
+                    List<Building> buildingList = colonyList[i].GetBuildings();
+                    for (int h = 0; h < buildingList.Count(); h++)
+                    {
+                        buildingList[h].ExtractResources();
+                    }
+                }
+            }
+        }
+
+        private void UpdateAllData()
+        {
+            // need fix
+            if (ColoniesSelectList.SelectedItem != null)
+            {
+
+            }
+            string text = ColoniesSelectList.SelectedItem.ToString();
+            string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+            string idText = BuildingsSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+            Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+
+            if (int.TryParse(idText, out int id))
+            {
+                Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
+                ShowBuildingsData(tempBuilding, tempColony);
+
+            }
         }
     }
 }

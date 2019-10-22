@@ -41,6 +41,10 @@ namespace SpaceStrategy
         {
             return storage;
         }
+        public void SetStorage(List<HeapResource> newStorage)
+        {
+            storage = newStorage;
+        }
         private Building DefineBuildingType(Building building, Colony colony)
         {
             // last else need fix
