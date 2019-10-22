@@ -358,6 +358,7 @@ namespace SpaceStrategy
         private void timer1_Tick(object sender, EventArgs e)
         {
             ResourceExtraction();
+            //UpdateAllData();
         }
 
         private void ResourceExtraction()
@@ -379,21 +380,28 @@ namespace SpaceStrategy
         private void UpdateAllData()
         {
             // need fix
-            if (ColoniesSelectList.SelectedItem != null)
+            if (PlanetsSelectList.SelectedItem != null)
             {
+                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                ShowPlanetData(tempPlanet);
+                if (ColoniesSelectList.SelectedItem != null)
+                {
+                    string text = ColoniesSelectList.SelectedItem.ToString();
+                    Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+                    ShowColoniesData(tempColony);
+                    if (BuildingsSelectList.SelectedItem != null)
+                    {
+                        string idText = BuildingsSelectList.SelectedItem.ToString();
 
-            }
-            string text = ColoniesSelectList.SelectedItem.ToString();
-            string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-            string idText = BuildingsSelectList.SelectedItem.ToString();
-            Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-            Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+                        if (int.TryParse(idText, out int id))
+                        {
+                            Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
+                            ShowBuildingsData(tempBuilding, tempColony);
 
-            if (int.TryParse(idText, out int id))
-            {
-                Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
-                ShowBuildingsData(tempBuilding, tempColony);
-
+                        }
+                    }
+                }
             }
         }
     }
