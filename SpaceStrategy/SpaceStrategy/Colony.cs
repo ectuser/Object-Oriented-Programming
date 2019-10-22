@@ -12,15 +12,20 @@ namespace SpaceStrategy
         private List<Building> buildingsList = new List<Building>();
         //Dictionary<string, int> storage;
         public int Money { get; private set; }
-        private List<HeapResource> storage;
+        private Dictionary<string, HeapResource> storage;
         public Planet ParentPlanet { get; }
         private int needFood;
         // Constructor
         public Colony(string name, Planet planet)
         {
             Name = name;
-            HeapResource[] tempList = { new HeapResource(100, new Wood("wood")), new HeapResource(100, new Stone("stone")), new HeapResource(100, new Food("food")) };
-            storage = new List<HeapResource>(tempList);
+            //HeapResource[] tempList = { new HeapResource(100, new Wood("wood")), new HeapResource(100, new Stone("stone")), new HeapResource(100, new Food("food")) };
+            storage = new Dictionary<string, HeapResource>
+            {
+                { "wood", new HeapResource(100, new Wood("wood"))},
+                { "stone", new HeapResource(100, new Stone("stone"))},
+                { "food", new HeapResource(100, new Food("food"))}
+            };
             Money = 1000;
             ParentPlanet = planet;
 
@@ -39,11 +44,11 @@ namespace SpaceStrategy
         {
             return buildingsList;
         }
-        public List<HeapResource> GetStorage()
+        public Dictionary<string, HeapResource> GetStorage()
         {
             return storage;
         }
-        public void SetStorage(List<HeapResource> newStorage)
+        public void SetStorage(Dictionary<string, HeapResource> newStorage)
         {
             storage = newStorage;
         }
@@ -62,7 +67,7 @@ namespace SpaceStrategy
         public void UseFood()
         {
             needFood = buildingsList.Count();
-            storage[2].Amount -= needFood;
+            storage["food"].Amount -= needFood;
         }
     }
 }

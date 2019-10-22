@@ -308,10 +308,16 @@ namespace SpaceStrategy
             string moneyData = "Money : " + colony.Money + "\n";
             string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             string resourcesData = "Resources : \n";
-            List<HeapResource> tempList = colony.GetStorage();
-            for (int i = 0; i < tempList.Count(); i++)
+            Dictionary<string, HeapResource> tempList = colony.GetStorage();
+            //for (int i = 0; i < tempList.Count(); i++)
+            //{
+            //    resourcesData += tempList[i].Amount + " of " + tempList[i].Type + "\n";
+            //}
+            foreach (KeyValuePair<string, HeapResource> keyValue in tempList)
             {
-                resourcesData += tempList[i].Amount + " of " + tempList[i].Type + "\n";
+                // keyValue.Value представляет класс Person
+                //Console.WriteLine(keyValue.Key + " - " + keyValue.Value.Name);
+                resourcesData += keyValue.Value.Amount + " of " + keyValue.Key + "\n";
             }
             data = nameData + parentPlanet + moneyData + buildingsData + resourcesData;
             ColonyInfoData.Text = data;
