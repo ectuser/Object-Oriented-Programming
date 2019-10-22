@@ -22,12 +22,13 @@ namespace SpaceStrategy
         public Form1()
         {
             InitializeComponent();
-            Resource[] resourceTypesRaw = { new Wood("wood"), new Stone("stone"), new Food("food")};
+            Resource[] resourceTypesRaw = { new Wood(), new Stone(), new Food()};
             resourceTypes = new List<Resource>(resourceTypesRaw);
 
             Building[] buildingTypesRaw = { new Sawmill(0, new Colony("example", new Planet("example"))), new Quarry(1, new Colony("example", new Planet("example"))), new Pasture(2, new Colony("example", new Planet("example"))) };
             buildingTypes = new List<Building>(buildingTypesRaw);
             InitTimer();
+            ShowMarketStatus();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -418,6 +419,16 @@ namespace SpaceStrategy
                 {
                     planetsList[i].GetColonies()[j].UseFood();
                 }
+            }
+        }
+        private void ShowMarketStatus()
+        {
+            Market market = new Market();
+            Dictionary<Resource, int> prices = market.GetPriceList();
+
+            foreach (KeyValuePair<Resource, int> keyValue in prices)
+            {
+                
             }
         }
     }

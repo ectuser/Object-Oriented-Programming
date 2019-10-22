@@ -8,8 +8,9 @@ namespace SpaceStrategy
 {
     class Food : Resource
     {
-        public Food(string type) : base(type)
+        public Food() : base()
         {
+            Type = "food";
         }
     }
 }

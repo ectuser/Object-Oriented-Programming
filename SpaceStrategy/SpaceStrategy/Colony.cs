@@ -22,10 +22,11 @@ namespace SpaceStrategy
             //HeapResource[] tempList = { new HeapResource(100, new Wood("wood")), new HeapResource(100, new Stone("stone")), new HeapResource(100, new Food("food")) };
             storage = new Dictionary<string, HeapResource>
             {
-                { "wood", new HeapResource(100, new Wood("wood"))},
-                { "stone", new HeapResource(100, new Stone("stone"))},
-                { "food", new HeapResource(100, new Food("food"))}
+                { "wood", new HeapResource(100, new Wood())},
+                { "stone", new HeapResource(100, new Stone())},
+                { "food", new HeapResource(100, new Food())}
             };
+            Console.WriteLine(storage["wood"].Type);
             Money = 1000;
             ParentPlanet = planet;
 

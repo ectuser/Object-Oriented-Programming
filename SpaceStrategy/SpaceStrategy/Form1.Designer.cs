@@ -50,6 +50,8 @@
             this.ColonyInfoTitle = new System.Windows.Forms.Label();
             this.BuildingInfoData = new System.Windows.Forms.Label();
             this.BuildingInfoTitle = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // PlanetButton
@@ -258,11 +260,29 @@
             this.BuildingInfoTitle.TabIndex = 23;
             this.BuildingInfoTitle.Text = "Building info:";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(753, 65);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(134, 34);
+            this.label4.TabIndex = 26;
+            this.label4.Text = "Market\r\nPrice for 5 elements\r\n";
+            // 
+            // panel1
+            // 
+            this.panel1.Location = new System.Drawing.Point(756, 119);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 100);
+            this.panel1.TabIndex = 27;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 902);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.BuildingInfoData);
             this.Controls.Add(this.BuildingInfoTitle);
             this.Controls.Add(this.ColonyInfoData);
@@ -317,6 +337,8 @@
         private System.Windows.Forms.Label ColonyInfoTitle;
         private System.Windows.Forms.Label BuildingInfoData;
         private System.Windows.Forms.Label BuildingInfoTitle;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
