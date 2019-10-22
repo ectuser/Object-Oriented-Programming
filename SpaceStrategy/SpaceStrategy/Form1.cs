@@ -350,15 +350,16 @@ namespace SpaceStrategy
         public void InitTimer()
         {
             timer1 = new Timer();
-            timer1.Tick += new EventHandler(timer1_Tick);
+            timer1.Tick += new EventHandler(TimerTick);
             timer1.Interval = 2000; // in miliseconds
             timer1.Start();
         }
 
-        private void timer1_Tick(object sender, EventArgs e)
+        private void TimerTick(object sender, EventArgs e)
         {
             ResourceExtraction();
-            //UpdateAllData();
+            UpdateAllData();
+            ColoniesUseFood();
         }
 
         private void ResourceExtraction()
@@ -368,7 +369,7 @@ namespace SpaceStrategy
                 List<Colony> colonyList = planetsList[i].GetColonies();
                 for (int j = 0; j < colonyList.Count(); j++)
                 {
-                    List<Building> buildingList = colonyList[i].GetBuildings();
+                    List<Building> buildingList = colonyList[j].GetBuildings();
                     for (int h = 0; h < buildingList.Count(); h++)
                     {
                         buildingList[h].ExtractResources();
@@ -398,9 +399,18 @@ namespace SpaceStrategy
                         {
                             Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
                             ShowBuildingsData(tempBuilding, tempColony);
-
                         }
                     }
+                }
+            }
+        }
+        private void ColoniesUseFood()
+        {
+            for (int i = 0; i < planetsList.Count(); i++)
+            {
+                for (int j = 0; j < planetsList[i].GetColonies().Count(); j++)
+                {
+                    planetsList[i].GetColonies()[j].UseFood();
                 }
             }
         }

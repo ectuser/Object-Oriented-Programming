@@ -14,6 +14,7 @@ namespace SpaceStrategy
         public int Money { get; private set; }
         private List<HeapResource> storage;
         public Planet ParentPlanet { get; }
+        private int needFood;
         // Constructor
         public Colony(string name, Planet planet)
         {
@@ -22,6 +23,7 @@ namespace SpaceStrategy
             storage = new List<HeapResource>(tempList);
             Money = 1000;
             ParentPlanet = planet;
+
         }
         public void CreateBuilding(Building building, Colony colony)
         {
@@ -56,6 +58,11 @@ namespace SpaceStrategy
                 return new Pasture(buildingsList.Count(), colony);
             else
                 return new Sawmill(buildingsList.Count(), colony);
+        }
+        public void UseFood()
+        {
+            needFood = buildingsList.Count();
+            storage[2].Amount -= needFood;
         }
     }
 }

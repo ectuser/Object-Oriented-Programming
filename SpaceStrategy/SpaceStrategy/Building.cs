@@ -28,23 +28,23 @@ namespace SpaceStrategy
             {
                 if (ParentPlanet.GetResources()[i].Type == "wood" && Type == "sawmill" && ParentPlanet.GetResources()[i].Amount > 0)
                 {
-                    ParentPlanet.GetResources()[i].Amount -= 5;
+                    ParentPlanet.GetResources()[i].Amount -= efficiency;
                     List<HeapResource> storage = ParentColony.GetStorage();
-                    storage[0].Amount += 5;
+                    storage[0].Amount += efficiency;
                     ParentColony.SetStorage(storage);
                 }
                 else if (ParentPlanet.GetResources()[i].Type == "stone" && Type == "quarry" && ParentPlanet.GetResources()[i].Amount > 0)
                 {
-                    ParentPlanet.GetResources()[i].Amount -= 5;
+                    ParentPlanet.GetResources()[i].Amount -= efficiency;
                     List<HeapResource> storage = ParentColony.GetStorage();
-                    storage[1].Amount += 5;
+                    storage[1].Amount += efficiency;
                     ParentColony.SetStorage(storage);
                 }
                 else if (ParentPlanet.GetResources()[i].Type == "food" && Type == "pasture" && ParentPlanet.GetResources()[i].Amount > 0)
                 {
-                    ParentPlanet.GetResources()[i].Amount -= 5;
+                    ParentPlanet.GetResources()[i].Amount -= efficiency;
                     List<HeapResource> storage = ParentColony.GetStorage();
-                    storage[2].Amount += 5;
+                    storage[2].Amount += efficiency;
                     ParentColony.SetStorage(storage);
                 }
             }
