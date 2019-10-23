@@ -29,6 +29,7 @@ namespace SpaceStrategy
             buildingTypes = new List<Building>(buildingTypesRaw);
             InitTimer();
             ShowMarketStatus();
+            ResourceListInit();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -77,17 +78,6 @@ namespace SpaceStrategy
             planetsList.RemoveAt(index);
             UpdateWindowPlanetsList();
         }
-
-        private void PlanetsInput_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ColoniesSelectList.SelectedItem != null)
@@ -272,16 +262,6 @@ namespace SpaceStrategy
             }
         }
 
-        private void BuildingInput_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
         private void ShowPlanetData(Planet planet)
         {
             string data = "";
@@ -337,11 +317,6 @@ namespace SpaceStrategy
                 tempColony.RemoveBuilding(id);
                 UpdateWindowBuildingsList(tempColony);
             }
-        }
-
-        private void ColonyInfoData_Click(object sender, EventArgs e)
-        {
-
         }
 
         public void InitTimer()
@@ -431,11 +406,56 @@ namespace SpaceStrategy
                     Location = new Point(60, 30 * yPosition),
                     Text = keyValue.Value.ToString(),
                     Height = 30,
-                    Width = 50
+                    Width = 50,
+                    Tag = keyValue.Key.Type
                 };
-                panel1.Controls.Add(type);
-                panel1.Controls.Add(price);
+                // .Click += new EventHandler(PriceClick);
+
+                MarketPanel.Controls.Add(type);
+                MarketPanel.Controls.Add(price);
                 yPosition += 1;
+            }
+        }
+
+        private void ResourceListInit()
+        {
+            Market market = new Market();
+            Dictionary<Resource, int> prices = market.GetPriceList();
+            foreach (KeyValuePair<Resource, int> keyValue in prices)
+            {
+                string type = keyValue.Key.Type;
+                ResourcesSelectedList.Items.Add(type);
+            }
+        }
+
+        private void BuyResourcesButton_Click(object sender, EventArgs e)
+        {
+            Market market = new Market();
+            Dictionary<Resource, int> prices = market.GetPriceList();
+            if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
+            {
+                string resourceType = ResourcesSelectedList.SelectedItem.ToString();
+                if (PlanetsSelectList.SelectedItem != null)
+                {
+                    string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                    Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                    if (ColoniesSelectList.SelectedItem != null)
+                    {
+                        string text = ColoniesSelectList.SelectedItem.ToString();
+                        Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+
+                        KeyValuePair<Resource, int> pair = market.DefineResourceType(resourceType);
+                        string amountText = ResourceAmountInput.Text;
+                        if (int.TryParse(amountText, out int amount))
+                        {
+                            if (tempColony.Money > pair.Value * amount)
+                            {
+                                int price = pair.Value * amount;
+                                tempColony.BuyResource(pair, amount, price);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

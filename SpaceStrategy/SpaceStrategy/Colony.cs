@@ -70,5 +70,10 @@ namespace SpaceStrategy
             needFood = buildingsList.Count();
             storage["food"].Amount -= needFood;
         }
+        public void BuyResource(KeyValuePair<Resource, int> pair, int amount, int price)
+        {
+            Money -= price;
+            storage[pair.Key.Type].Amount += amount;
+        }
     }
 }

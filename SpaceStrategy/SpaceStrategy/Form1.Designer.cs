@@ -51,7 +51,11 @@
             this.BuildingInfoData = new System.Windows.Forms.Label();
             this.BuildingInfoTitle = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.MarketPanel = new System.Windows.Forms.Panel();
+            this.BuyResourcesButton = new System.Windows.Forms.Button();
+            this.SellResourcesButton = new System.Windows.Forms.Button();
+            this.ResourceAmountInput = new System.Windows.Forms.TextBox();
+            this.ResourcesSelectedList = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // PlanetButton
@@ -70,7 +74,6 @@
             this.PlanetsInput.Name = "PlanetsInput";
             this.PlanetsInput.Size = new System.Drawing.Size(213, 22);
             this.PlanetsInput.TabIndex = 1;
-            this.PlanetsInput.TextChanged += new System.EventHandler(this.PlanetsInput_TextChanged);
             // 
             // StatusBar
             // 
@@ -80,7 +83,6 @@
             this.StatusBar.Size = new System.Drawing.Size(48, 17);
             this.StatusBar.TabIndex = 5;
             this.StatusBar.Text = "Status";
-            this.StatusBar.Click += new System.EventHandler(this.label1_Click);
             // 
             // RemovePlanetButton
             // 
@@ -155,7 +157,6 @@
             this.BuildingInput.Name = "BuildingInput";
             this.BuildingInput.Size = new System.Drawing.Size(213, 22);
             this.BuildingInput.TabIndex = 13;
-            this.BuildingInput.TextChanged += new System.EventHandler(this.BuildingInput_TextChanged);
             // 
             // CreateBuildingButton
             // 
@@ -185,7 +186,6 @@
             this.label1.Size = new System.Drawing.Size(96, 17);
             this.label1.TabIndex = 16;
             this.label1.Text = "Planet Names";
-            this.label1.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // label2
             // 
@@ -231,7 +231,6 @@
             this.ColonyInfoData.Size = new System.Drawing.Size(83, 17);
             this.ColonyInfoData.TabIndex = 22;
             this.ColonyInfoData.Text = "Colony data";
-            this.ColonyInfoData.Click += new System.EventHandler(this.ColonyInfoData_Click);
             // 
             // ColonyInfoTitle
             // 
@@ -265,23 +264,62 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(753, 65);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(134, 34);
+            this.label4.Size = new System.Drawing.Size(187, 51);
             this.label4.TabIndex = 26;
-            this.label4.Text = "Market\r\nPrice for 5 elements\r\n";
+            this.label4.Text = "Market\r\nPrice for 1 resource element\r\n\r\n";
             // 
-            // panel1
+            // MarketPanel
             // 
-            this.panel1.Location = new System.Drawing.Point(756, 119);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 100);
-            this.panel1.TabIndex = 27;
+            this.MarketPanel.Location = new System.Drawing.Point(756, 119);
+            this.MarketPanel.Name = "MarketPanel";
+            this.MarketPanel.Size = new System.Drawing.Size(200, 100);
+            this.MarketPanel.TabIndex = 27;
+            // 
+            // BuyResourcesButton
+            // 
+            this.BuyResourcesButton.Location = new System.Drawing.Point(743, 433);
+            this.BuyResourcesButton.Name = "BuyResourcesButton";
+            this.BuyResourcesButton.Size = new System.Drawing.Size(213, 23);
+            this.BuyResourcesButton.TabIndex = 28;
+            this.BuyResourcesButton.Text = "Buy Resources";
+            this.BuyResourcesButton.UseVisualStyleBackColor = true;
+            this.BuyResourcesButton.Click += new System.EventHandler(this.BuyResourcesButton_Click);
+            // 
+            // SellResourcesButton
+            // 
+            this.SellResourcesButton.Location = new System.Drawing.Point(743, 462);
+            this.SellResourcesButton.Name = "SellResourcesButton";
+            this.SellResourcesButton.Size = new System.Drawing.Size(213, 23);
+            this.SellResourcesButton.TabIndex = 29;
+            this.SellResourcesButton.Text = "Sell Resources";
+            this.SellResourcesButton.UseVisualStyleBackColor = true;
+            // 
+            // ResourceAmountInput
+            // 
+            this.ResourceAmountInput.Location = new System.Drawing.Point(743, 405);
+            this.ResourceAmountInput.Name = "ResourceAmountInput";
+            this.ResourceAmountInput.Size = new System.Drawing.Size(213, 22);
+            this.ResourceAmountInput.TabIndex = 30;
+            // 
+            // ResourcesSelectedList
+            // 
+            this.ResourcesSelectedList.FormattingEnabled = true;
+            this.ResourcesSelectedList.ItemHeight = 16;
+            this.ResourcesSelectedList.Location = new System.Drawing.Point(743, 315);
+            this.ResourcesSelectedList.Name = "ResourcesSelectedList";
+            this.ResourcesSelectedList.Size = new System.Drawing.Size(213, 84);
+            this.ResourcesSelectedList.TabIndex = 31;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 902);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.ResourcesSelectedList);
+            this.Controls.Add(this.ResourceAmountInput);
+            this.Controls.Add(this.SellResourcesButton);
+            this.Controls.Add(this.BuyResourcesButton);
+            this.Controls.Add(this.MarketPanel);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.BuildingInfoData);
             this.Controls.Add(this.BuildingInfoTitle);
@@ -338,7 +376,11 @@
         private System.Windows.Forms.Label BuildingInfoData;
         private System.Windows.Forms.Label BuildingInfoTitle;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel MarketPanel;
+        private System.Windows.Forms.Button BuyResourcesButton;
+        private System.Windows.Forms.Button SellResourcesButton;
+        private System.Windows.Forms.TextBox ResourceAmountInput;
+        private System.Windows.Forms.ListBox ResourcesSelectedList;
     }
 }
 

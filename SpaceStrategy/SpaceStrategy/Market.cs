@@ -24,5 +24,19 @@ namespace SpaceStrategy
         {
             return priceList;
         }
+
+        public KeyValuePair<Resource, int> DefineResourceType(string type)
+        {
+            KeyValuePair<Resource, int> keyValueError = new KeyValuePair<Resource, int>();
+            foreach (KeyValuePair<Resource, int> keyValue in priceList)
+            {
+                keyValueError = keyValue;
+                if (type == keyValue.Key.Type)
+                {
+                    return keyValue;
+                }
+            }
+            return keyValueError;
+        }
     }
 }
