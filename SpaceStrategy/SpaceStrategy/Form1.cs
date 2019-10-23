@@ -122,7 +122,6 @@ namespace SpaceStrategy
                     return list[i];
                 }
             }
-            //Console.WriteLine("error");
             ShowStatus("error");
             return new Colony("error", planet);
         }
@@ -139,8 +138,7 @@ namespace SpaceStrategy
                 {
                     ShowColonies(planet);
                 }
-                ShowPlanetData(planet);
-                //Console.WriteLine(text);   
+                ShowPlanetData(planet); 
             }
         }
         private Planet DefinePlanetByName(string name)
@@ -169,7 +167,6 @@ namespace SpaceStrategy
         {
             if (PlanetsSelectList.SelectedIndex == -1)
             {
-                //Console.WriteLine("Select at least one planet");
                 ShowStatus("Select at least one planet");
             }
             else
@@ -310,14 +307,8 @@ namespace SpaceStrategy
             string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             string resourcesData = "Resources : \n";
             Dictionary<string, HeapResource> tempList = colony.GetStorage();
-            //for (int i = 0; i < tempList.Count(); i++)
-            //{
-            //    resourcesData += tempList[i].Amount + " of " + tempList[i].Type + "\n";
-            //}
             foreach (KeyValuePair<string, HeapResource> keyValue in tempList)
             {
-                // keyValue.Value представляет класс Person
-                //Console.WriteLine(keyValue.Key + " - " + keyValue.Value.Name);
                 resourcesData += keyValue.Value.Amount + " of " + keyValue.Key + "\n";
             }
             data = nameData + parentPlanet + moneyData + buildingsData + resourcesData;
@@ -329,7 +320,6 @@ namespace SpaceStrategy
             string idData = "ID : " + building.Id + "\n";
             string typeData = "Type : " + building.Type + "\n";
             string parentColony = "Parent colony: " + colony.Name + "\n";
-            //string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             data = idData + typeData + parentColony;
             BuildingInfoData.Text = data;
         }
@@ -426,9 +416,26 @@ namespace SpaceStrategy
             Market market = new Market();
             Dictionary<Resource, int> prices = market.GetPriceList();
 
+            int yPosition = 0;
             foreach (KeyValuePair<Resource, int> keyValue in prices)
             {
-                
+                Label type = new Label
+                {
+                    Location = new Point(0, 30 * yPosition),
+                    Text = keyValue.Key.Type,
+                    Height = 30,
+                    Width = 50
+                };
+                Label price = new Label
+                {
+                    Location = new Point(60, 30 * yPosition),
+                    Text = keyValue.Value.ToString(),
+                    Height = 30,
+                    Width = 50
+                };
+                panel1.Controls.Add(type);
+                panel1.Controls.Add(price);
+                yPosition += 1;
             }
         }
     }
