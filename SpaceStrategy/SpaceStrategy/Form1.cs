@@ -66,13 +66,80 @@ namespace SpaceStrategy
             }
         }
         //////////////////// INITS END ////////////////////
-
+        ////////////////// BUTTON CLICKS BEGIN //////////////////
         private void PlanetButton_Cick(object sender, EventArgs e)
         {
             string planetName = PlanetsInput.Text;
             PlanetsInput.Text = "";
             CreatePlanet(planetName);
         }
+        private void CreateBuildingButton_Click(object sender, EventArgs e)
+        {
+            if (ColoniesSelectList.SelectedIndex == -1)
+            {
+                //Console.WriteLine("Select at least one planet");
+                ShowStatus("Select at least one planet");
+            }
+            else
+            {
+                string planetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(planetName);
+                string colonyName = ColoniesSelectList.SelectedItem.ToString();
+                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
+                if (BuildingTypeSelectList.SelectedItem != null)
+                {
+                    string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
+                    for (int i = 0; i < buildingTypes.Count(); i++)
+                    {
+                        if (buildingTypes[i].Type == buildingType)
+                        {
+                            tempColony.CreateBuilding(buildingTypes[i], tempColony);
+                            UpdateWindowBuildingsList(tempColony);
+                            break;
+                        }
+                    }
+                }
+
+                //tempColony.CreateBuilding(buildingType);
+                //UpdateWindowBuildingsList(tempColony);
+            }
+        }
+        private void CreateColonyButton_Click(object sender, EventArgs e)
+        {
+            if (PlanetsSelectList.SelectedIndex == -1)
+            {
+                ShowStatus("Select at least one planet");
+            }
+            else
+            {
+                string planetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet planet = DefinePlanetByName(planetName);
+                string colonyName = ColonyInput.Text;
+                ColonyInput.Text = "";
+                planet.CreateColony(colonyName, planet);
+                UpdateWindowColoniesList(planet);
+            }
+        }
+        private void RemoveColonyButton_Click(object sender, EventArgs e)
+        {
+            string planetName = PlanetsSelectList.SelectedItem.ToString();
+            string colonyName = ColoniesSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(planetName);
+            tempPlanet.RemoveColony(colonyName);
+            UpdateWindowColoniesList(tempPlanet);
+        }
+        private void RemovePlanetButton_Click(object sender, EventArgs e)
+        {
+            string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
+
+            int index = planetsList.FindIndex(i => i.Name == text);
+            planetsList.RemoveAt(index);
+            UpdateWindowPlanetsList();
+        }
+        ////////////////// BUTTON CLICKS END //////////////////
+
+
+        ////////////////// CREATE SOMETHING BEGIN //////////////////
         private void CreatePlanet(string name)
         {
             if (planetsList.All(x => x.Name != name))
@@ -87,6 +154,8 @@ namespace SpaceStrategy
                 ShowStatus("Planet with this name already exists");
             }
         }
+        ////////////////// CREATE SOMETHING END //////////////////
+
         private void UpdateWindowPlanetsList()
         {
             //PlanetsSelectList.DataSource = null;
@@ -96,15 +165,6 @@ namespace SpaceStrategy
                 PlanetsSelectList.Items.Add(planetsList[i].Name);
             }
 
-        }
-
-        private void RemovePlanetButton_Click(object sender, EventArgs e)
-        {
-            string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
-            
-            int index = planetsList.FindIndex(i => i.Name == text);
-            planetsList.RemoveAt(index);
-            UpdateWindowPlanetsList();
         }
         private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -181,22 +241,6 @@ namespace SpaceStrategy
                 ColoniesSelectList.Items.Add(list[i].Name);
             }
         }
-        private void CreateColonyButton_Click(object sender, EventArgs e)
-        {
-            if (PlanetsSelectList.SelectedIndex == -1)
-            {
-                ShowStatus("Select at least one planet");
-            }
-            else
-            {
-                string planetName = PlanetsSelectList.SelectedItem.ToString();
-                Planet planet = DefinePlanetByName(planetName);
-                string colonyName = ColonyInput.Text;
-                ColonyInput.Text = "";
-                planet.CreateColony(colonyName, planet);
-                UpdateWindowColoniesList(planet);
-            }
-        }
         private void UpdateWindowColoniesList(Planet planet)
         {
             ColoniesSelectList.Items.Clear();
@@ -205,15 +249,6 @@ namespace SpaceStrategy
             {
                 ColoniesSelectList.Items.Add(tempList[i].Name);
             }
-        }
-
-        private void RemoveColonyButton_Click(object sender, EventArgs e)
-        {
-            string planetName = PlanetsSelectList.SelectedItem.ToString();
-            string colonyName = ColoniesSelectList.SelectedItem.ToString();
-            Planet tempPlanet = DefinePlanetByName(planetName);
-            tempPlanet.RemoveColony(colonyName);
-            UpdateWindowColoniesList(tempPlanet);
         }
         private void ShowStatus(string text)
         {
@@ -249,38 +284,6 @@ namespace SpaceStrategy
                 }
             }
             return new Building(0, colony);
-        }
-
-        private void CreateBuildingButton_Click(object sender, EventArgs e)
-        {
-            if (ColoniesSelectList.SelectedIndex == -1)
-            {
-                //Console.WriteLine("Select at least one planet");
-                ShowStatus("Select at least one planet");
-            }
-            else
-            {
-                string planetName = PlanetsSelectList.SelectedItem.ToString();
-                Planet tempPlanet = DefinePlanetByName(planetName);
-                string colonyName = ColoniesSelectList.SelectedItem.ToString();
-                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
-                if (BuildingTypeSelectList.SelectedItem != null)
-                {
-                    string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
-                    for (int i = 0; i < buildingTypes.Count(); i++)
-                    {
-                        if (buildingTypes[i].Type == buildingType)
-                        {
-                            tempColony.CreateBuilding(buildingTypes[i], tempColony);
-                            UpdateWindowBuildingsList(tempColony);
-                            break;
-                        }
-                    }
-                }
-               
-                //tempColony.CreateBuilding(buildingType);
-                //UpdateWindowBuildingsList(tempColony);
-            }
         }
         private void UpdateWindowBuildingsList(Colony colony)
         {
