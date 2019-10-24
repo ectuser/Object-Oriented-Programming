@@ -42,7 +42,7 @@ namespace SpaceStrategy
 
         }
 
-        //////////////////// INITS BEGIN ////////////////////
+        /////////////////////////////////////////////////////////////////////// INITS BEGIN ///////////////////////////////////////////////////////////////////////
         public void InitTimer()
         {
             timer1 = new Timer();
@@ -65,8 +65,8 @@ namespace SpaceStrategy
                 ResourcesSelectedList.Items.Add(el["type"].Type);
             }
         }
-        //////////////////// INITS END ////////////////////
-        ////////////////// BUTTON CLICKS BEGIN //////////////////
+        /////////////////////////////////////////////////////////////////////// INITS END ///////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////// BUTTON CLICKS BEGIN ///////////////////////////////////////////////////////////////////////
         private void PlanetButton_Cick(object sender, EventArgs e)
         {
             string planetName = PlanetsInput.Text;
@@ -99,9 +99,6 @@ namespace SpaceStrategy
                         }
                     }
                 }
-
-                //tempColony.CreateBuilding(buildingType);
-                //UpdateWindowBuildingsList(tempColony);
             }
         }
         private void CreateColonyButton_Click(object sender, EventArgs e)
@@ -214,10 +211,10 @@ namespace SpaceStrategy
             }
 
         }
-        ////////////////// BUTTON CLICKS END //////////////////
+        /////////////////////////////////////////////////////////////////////// BUTTON CLICKS END ///////////////////////////////////////////////////////////////////////
 
 
-        ////////////////// CREATE SOMETHING BEGIN //////////////////
+        /////////////////////////////////////////////////////////////////////// CREATE SOMETHING BEGIN ///////////////////////////////////////////////////////////////////////
         private void CreatePlanet(string name)
         {
             if (planetsList.All(x => x.Name != name))
@@ -232,10 +229,10 @@ namespace SpaceStrategy
                 ShowStatus("Planet with this name already exists");
             }
         }
-        ////////////////// CREATE SOMETHING END //////////////////
+        /////////////////////////////////////////////////////////////////////// CREATE SOMETHING END ///////////////////////////////////////////////////////////////////////
 
 
-        ////////////////// SHOW SOMETHING BEGIN //////////////////
+        /////////////////////////////////////////////////////////////////////// SHOW SOMETHING BEGIN ///////////////////////////////////////////////////////////////////////
         private void ShowBuildings(Colony colony)
         {
             BuildingsSelectList.Items.Clear();
@@ -362,8 +359,8 @@ namespace SpaceStrategy
             data = idData + typeData + parentColony;
             BuildingInfoData.Text = data;
         }
-        ////////////////// SHOW SOMETHING END //////////////////
-        ////////////////// EVERY 2 SECONDS DO BEGIN //////////////////
+        /////////////////////////////////////////////////////////////////////// SHOW SOMETHING END ///////////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////////// EVERY 2 SECONDS DO BEGIN ///////////////////////////////////////////////////////////////////////
         private void TimerTick(object sender, EventArgs e)
         {
             ResourceExtraction();
@@ -425,7 +422,10 @@ namespace SpaceStrategy
             }
         }
 
-        ////////////////// EVERY 2 SECONDS DO END //////////////////
+        /////////////////////////////////////////////////////////////////////// EVERY 2 SECONDS DO END ///////////////////////////////////////////////////////////////////////
+
+
+        /////////////////////////////////////////////////////////////////////// UPDATE SHIT BEGIN ///////////////////////////////////////////////////////////////////////
 
         private void UpdateWindowPlanetsList()
         {
@@ -437,6 +437,26 @@ namespace SpaceStrategy
             }
 
         }
+        private void UpdateWindowColoniesList(Planet planet)
+        {
+            ColoniesSelectList.Items.Clear();
+            List<Colony> tempList = planet.GetColonies();
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                ColoniesSelectList.Items.Add(tempList[i].Name);
+            }
+        }
+        private void UpdateWindowBuildingsList(Colony colony)
+        {
+            BuildingsSelectList.Items.Clear();
+            List<Building> tempList = colony.GetBuildings();
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                BuildingsSelectList.Items.Add(tempList[i].Id);
+            }
+        }
+        /////////////////////////////////////////////////////////////////////// UPDATE SHIT END ///////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////// SELECTED LISTS CHANGED BEGIN ///////////////////////////////////////////////////////////////////////
         private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ColoniesSelectList.SelectedItem != null)
@@ -453,20 +473,6 @@ namespace SpaceStrategy
                 //Console.WriteLine(text);
             }
         }
-        private Colony DefineColonyByName(string name, List<Colony> list, Planet planet)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].Name == name)
-                {
-                    return list[i];
-                }
-            }
-            ShowStatus("error");
-            return new Colony("error", planet);
-        }
-
-
         private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             BuildingsSelectList.Items.Clear(); // clear buildings list
@@ -478,32 +484,9 @@ namespace SpaceStrategy
                 {
                     ShowColonies(planet);
                 }
-                ShowPlanetData(planet); 
+                ShowPlanetData(planet);
             }
         }
-        private Planet DefinePlanetByName(string name)
-        {
-            for (int i = 0; i < planetsList.Count; i++)
-            {
-                if (planetsList[i].Name == name)
-                {
-                    return planetsList[i];
-                }
-            }
-            //Console.WriteLine("error");
-            ShowStatus("error");
-            return new Planet("error");
-        }
-        private void UpdateWindowColoniesList(Planet planet)
-        {
-            ColoniesSelectList.Items.Clear();
-            List<Colony> tempList = planet.GetColonies();
-            for (int i = 0; i < tempList.Count(); i++)
-            {
-                ColoniesSelectList.Items.Add(tempList[i].Name);
-            }
-        }
-
         private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (BuildingsSelectList.SelectedItem != null)
@@ -522,6 +505,37 @@ namespace SpaceStrategy
                 }
             }
         }
+        ////////////////////////////////////////////////////////////////////////// SELECTED LISTS CHANGED END ///////////////////////////////////////////////////////////////////////
+        private Colony DefineColonyByName(string name, List<Colony> list, Planet planet)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Name == name)
+                {
+                    return list[i];
+                }
+            }
+            ShowStatus("error");
+            return new Colony("error", planet);
+        }
+
+
+      
+        private Planet DefinePlanetByName(string name)
+        {
+            for (int i = 0; i < planetsList.Count; i++)
+            {
+                if (planetsList[i].Name == name)
+                {
+                    return planetsList[i];
+                }
+            }
+            //Console.WriteLine("error");
+            ShowStatus("error");
+            return new Planet("error");
+        }
+
+       
 
         private Building DefineBuildingByID(int id, List<Building> list, Colony colony)
         {
@@ -533,15 +547,6 @@ namespace SpaceStrategy
                 }
             }
             return new Building(0, colony);
-        }
-        private void UpdateWindowBuildingsList(Colony colony)
-        {
-            BuildingsSelectList.Items.Clear();
-            List<Building> tempList = colony.GetBuildings();
-            for (int i = 0; i < tempList.Count(); i++)
-            {
-                BuildingsSelectList.Items.Add(tempList[i].Id);
-            }
         }
     }
 }
