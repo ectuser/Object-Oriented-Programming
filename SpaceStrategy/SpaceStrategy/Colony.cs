@@ -56,14 +56,22 @@ namespace SpaceStrategy
         private Building DefineBuildingType(Building building, Colony colony)
         {
             // last else need fix
+            int id = _buildingsList.Count();
+            for (int i = 0; i < _buildingsList.Count(); i++)
+            {
+                if (_buildingsList[i].Id == id)
+                {
+                    id++;
+                }
+            }
             if (building.Type == "swamill")
-                return new Sawmill(_buildingsList.Count(), colony);
+                return new Sawmill(id, colony);
             else if (building.Type == "quarry")
-                return new Quarry(_buildingsList.Count(), colony);
+                return new Quarry(id, colony);
             else if (building.Type == "pasture")
-                return new Pasture(_buildingsList.Count(), colony);
+                return new Pasture(id, colony);
             else
-                return new Sawmill(_buildingsList.Count(), new Colony("error", new Planet("error")));
+                return new Sawmill(id, new Colony("error", new Planet("error")));
         }
         public void UseFood()
         {

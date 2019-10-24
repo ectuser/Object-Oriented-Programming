@@ -31,6 +31,10 @@ namespace SpaceStrategy
                 Colony tempColony = new Colony(name, planet);
                 _colonyList.Add(tempColony);
             }
+            else
+            {
+                Form1.ShowStatus("Colony with this name already exists");
+            }
         }
         public void RemoveColony(string name)
         {
@@ -57,6 +61,13 @@ namespace SpaceStrategy
         }
         public List<HeapResource> GetResources()
         {
+            for (int i = 0; i < _heapsOfResources.Count(); i++)
+            {
+                if(_heapsOfResources[i].Type == "wood")
+                {
+                    Console.WriteLine(i.ToString() + ". " + _heapsOfResources[i].Amount);
+                }
+            }
             return _heapsOfResources;
         }
     }

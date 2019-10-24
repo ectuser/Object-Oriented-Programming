@@ -17,6 +17,7 @@ namespace SpaceStrategy
         private Timer timer1;
         private Market _market = new Market();
         private List<Dictionary<string, dynamic>> _prices;
+        public static Label _statusBar;
 
         public static List<Resource> resourceTypes;
         public static List<Building> buildingTypes;
@@ -34,6 +35,7 @@ namespace SpaceStrategy
             ShowMarketStatus();
             BuildingsListInit();
             ResourceListInit();
+            _statusBar = StatusBar;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -315,9 +317,9 @@ namespace SpaceStrategy
                 yPosition++;
             }
         }
-        private void ShowStatus(string text)
+        public static void ShowStatus(string text)
         {
-            StatusBar.Text = text;
+            _statusBar.Text = text;
         }
         private void ShowPlanetData(Planet planet)
         {
@@ -371,6 +373,7 @@ namespace SpaceStrategy
 
         private void ResourceExtraction()
         {
+            // need fix
             for (int i = 0; i < planetsList.Count(); i++)
             {
                 List<Colony> colonyList = planetsList[i].GetColonies();
