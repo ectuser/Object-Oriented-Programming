@@ -66,7 +66,7 @@
             this.PlanetButton.TabIndex = 0;
             this.PlanetButton.Text = "Create Planet";
             this.PlanetButton.UseVisualStyleBackColor = true;
-            this.PlanetButton.Click += new System.EventHandler(this.button1_Click);
+            this.PlanetButton.Click += new System.EventHandler(this.PlanetButton_Cick);
             // 
             // PlanetsInput
             // 

@@ -42,9 +42,32 @@ namespace SpaceStrategy
 
         }
 
+        //////////////////// INITS BEGIN ////////////////////
+        public void InitTimer()
+        {
+            timer1 = new Timer();
+            timer1.Tick += new EventHandler(TimerTick);
+            timer1.Interval = 2000; // in miliseconds
+            timer1.Start();
+        }
+        private void BuildingsListInit()
+        {
+            for (int i = 0; i < buildingTypes.Count(); i++)
+            {
+                BuildingTypeSelectList.Items.Add(buildingTypes[i].Type);
+            }
+        }
+        private void ResourceListInit()
+        {
+            for (int i = 0; i < _prices.Count(); i++)
+            {
+                Dictionary<string, dynamic> el = _prices[i];
+                ResourcesSelectedList.Items.Add(el["type"].Type);
+            }
+        }
+        //////////////////// INITS END ////////////////////
 
-
-        private void button1_Click(object sender, EventArgs e)
+        private void PlanetButton_Cick(object sender, EventArgs e)
         {
             string planetName = PlanetsInput.Text;
             PlanetsInput.Text = "";
@@ -326,14 +349,6 @@ namespace SpaceStrategy
             }
         }
 
-        public void InitTimer()
-        {
-            timer1 = new Timer();
-            timer1.Tick += new EventHandler(TimerTick);
-            timer1.Interval = 2000; // in miliseconds
-            timer1.Start();
-        }
-
         private void TimerTick(object sender, EventArgs e)
         {
             ResourceExtraction();
@@ -455,23 +470,6 @@ namespace SpaceStrategy
                     MarketPanel.Controls.Add(newLabel);
                 }
                 yPosition++;
-            }
-        }
-
-
-        private void BuildingsListInit()
-        {
-            for (int i = 0; i < buildingTypes.Count(); i++)
-            {
-                BuildingTypeSelectList.Items.Add(buildingTypes[i].Type);
-            }
-        }
-        private void ResourceListInit()
-        {
-            for (int i = 0; i < _prices.Count(); i++)
-            {
-                Dictionary<string, dynamic> el = _prices[i];
-                ResourcesSelectedList.Items.Add(el["type"].Type);
             }
         }
 
