@@ -8,25 +8,25 @@ namespace SpaceStrategy
 {
     public class Market
     {
-        private List<Dictionary<string, dynamic>> priceList;
+        private List<Dictionary<string, dynamic>> _priceList;
 
         public Market()
         {
-            priceList = PricesInit();
+            _priceList = PricesInit();
         }
 
         public List<Dictionary<string, dynamic>> GetPriceList()
         {
-            return priceList;
+            return _priceList;
         }
 
         public Dictionary<string, dynamic> DefineResourceType(string type)
         {
-            for (int i = 0; i < priceList.Count(); i++)
+            for (int i = 0; i < _priceList.Count(); i++)
             {
-                if (priceList[i]["type"].Type == type)
+                if (_priceList[i]["type"].Type == type)
                 {
-                    return priceList[i];
+                    return _priceList[i];
                 }
             }
             Dictionary<string, dynamic> error = new Dictionary<string, dynamic>
@@ -66,11 +66,11 @@ namespace SpaceStrategy
         }
         public void SetNewResourceData(Dictionary<string, dynamic> resource)
         {
-            for (int i = 0; i < priceList.Count(); i++)
+            for (int i = 0; i < _priceList.Count(); i++)
             {
-                if (priceList[i]["type"].Type == resource["type"].Type)
+                if (_priceList[i]["type"].Type == resource["type"].Type)
                 {
-                    priceList[i] = resource;
+                    _priceList[i] = resource;
                 }
             }
         }

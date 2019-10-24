@@ -11,8 +11,9 @@ namespace SpaceStrategy
         public int Radius { get; }
         public string Name { get; }
         public readonly SpaceCoordinates coordinates; // check for a future
-        private List<Colony> colonyList = new List<Colony>();
-        private readonly List<HeapResource> heapsOfResources;
+
+        private List<Colony> _colonyList = new List<Colony>();
+        private readonly List<HeapResource> _heapsOfResources;
 
         public Planet(string name)
         {
@@ -20,25 +21,25 @@ namespace SpaceStrategy
             Random rnd = new Random();
             Radius = rnd.Next(0, 5);
             coordinates = new SpaceCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
-            heapsOfResources = new List<HeapResource>(SetResources());
+            _heapsOfResources = new List<HeapResource>(SetResources());
         }
 
         public void CreateColony(string name, Planet planet)
         {
-            if (colonyList.All(x => x.Name != name))
+            if (_colonyList.All(x => x.Name != name))
             {
                 Colony tempColony = new Colony(name, planet);
-                colonyList.Add(tempColony);
+                _colonyList.Add(tempColony);
             }
         }
         public void RemoveColony(string name)
         {
-            int index = colonyList.FindIndex(i => i.Name == name);
-            colonyList.RemoveAt(index);
+            int index = _colonyList.FindIndex(i => i.Name == name);
+            _colonyList.RemoveAt(index);
         }
         public List<Colony> GetColonies()
         {
-            return colonyList;
+            return _colonyList;
         }
         private List<HeapResource> SetResources()
         {
@@ -56,7 +57,7 @@ namespace SpaceStrategy
         }
         public List<HeapResource> GetResources()
         {
-            return heapsOfResources;
+            return _heapsOfResources;
         }
     }
 }

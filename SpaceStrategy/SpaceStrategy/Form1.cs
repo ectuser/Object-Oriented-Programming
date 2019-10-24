@@ -15,12 +15,11 @@ namespace SpaceStrategy
         // Form and main events
         private List<Planet> planetsList = new List<Planet>();
         private Timer timer1;
+        private Market _market = new Market();
+        private List<Dictionary<string, dynamic>> _prices;
 
         public static List<Resource> resourceTypes;
         public static List<Building> buildingTypes;
-
-        private Market _market = new Market();
-        private List<Dictionary<string, dynamic>> _prices;
 
         public Form1()
         {

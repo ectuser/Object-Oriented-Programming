@@ -13,9 +13,5 @@ namespace SpaceStrategy
             Cost = 100;
             Type = "sawmill";
         }
-        public void ExtractResource()
-        {
-
-        }
     }
 }

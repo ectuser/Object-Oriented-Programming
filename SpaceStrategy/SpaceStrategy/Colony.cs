@@ -8,22 +8,25 @@ namespace SpaceStrategy
 {
     public class Colony
     {
-        public string Name { get; }
-        private List<Building> buildingsList = new List<Building>();
+        private List<Building> _buildingsList = new List<Building>();
+        private Dictionary<string, HeapResource> _storage;
+        private int _needFood;
+
+
         public int Money { get; private set; }
-        private Dictionary<string, HeapResource> storage;
         public Planet ParentPlanet { get; }
-        private int needFood;
+        public string Name { get; }
+
         public Colony(string name, Planet planet)
         {
             Name = name;
-            storage = new Dictionary<string, HeapResource>
+            _storage = new Dictionary<string, HeapResource>
             {
                 { "wood", new HeapResource(100, new Wood())},
                 { "stone", new HeapResource(100, new Stone())},
                 { "food", new HeapResource(100, new Food())}
             };
-            Console.WriteLine(storage["wood"].Type);
+            Console.WriteLine(_storage["wood"].Type);
             Money = 1000;
             ParentPlanet = planet;
 
@@ -31,50 +34,50 @@ namespace SpaceStrategy
         public void CreateBuilding(Building building, Colony colony)
         {
             Money -= building.Cost;
-            buildingsList.Add(DefineBuildingType(building, colony));
+            _buildingsList.Add(DefineBuildingType(building, colony));
         }
         public void RemoveBuilding(int id)
         {
-            int index = buildingsList.FindIndex(i => i.Id == id);
-            buildingsList.RemoveAt(index);
+            int index = _buildingsList.FindIndex(i => i.Id == id);
+            _buildingsList.RemoveAt(index);
         }
         public List<Building> GetBuildings()
         {
-            return buildingsList;
+            return _buildingsList;
         }
         public Dictionary<string, HeapResource> GetStorage()
         {
-            return storage;
+            return _storage;
         }
         public void SetStorage(Dictionary<string, HeapResource> newStorage)
         {
-            storage = newStorage;
+            _storage = newStorage;
         }
         private Building DefineBuildingType(Building building, Colony colony)
         {
             // last else need fix
             if (building.Type == "swamill")
-                return new Sawmill(buildingsList.Count(), colony);
+                return new Sawmill(_buildingsList.Count(), colony);
             else if (building.Type == "quarry")
-                return new Quarry(buildingsList.Count(), colony);
+                return new Quarry(_buildingsList.Count(), colony);
             else if (building.Type == "pasture")
-                return new Pasture(buildingsList.Count(), colony);
+                return new Pasture(_buildingsList.Count(), colony);
             else
-                return new Sawmill(buildingsList.Count(), new Colony("error", new Planet("error")));
+                return new Sawmill(_buildingsList.Count(), new Colony("error", new Planet("error")));
         }
         public void UseFood()
         {
-            needFood = buildingsList.Count();
-            storage["food"].Amount -= needFood;
+            _needFood = _buildingsList.Count();
+            _storage["food"].Amount -= _needFood;
         }
         public void BuyResource(Dictionary<string, dynamic> resource, int amount, int price)
         {
             Money -= price;
-            storage[resource["type"].Type].Amount += amount;
+            _storage[resource["type"].Type].Amount += amount;
         }
         public void SellResource(Dictionary<string, dynamic> resource, int amount, int price)
         {
-            storage[resource["type"].Type].Amount -= amount;
+            _storage[resource["type"].Type].Amount -= amount;
             Money += price;
         }
     }
