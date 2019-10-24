@@ -10,16 +10,13 @@ namespace SpaceStrategy
     {
         public string Name { get; }
         private List<Building> buildingsList = new List<Building>();
-        //Dictionary<string, int> storage;
         public int Money { get; private set; }
         private Dictionary<string, HeapResource> storage;
         public Planet ParentPlanet { get; }
         private int needFood;
-        // Constructor
         public Colony(string name, Planet planet)
         {
             Name = name;
-            //HeapResource[] tempList = { new HeapResource(100, new Wood("wood")), new HeapResource(100, new Stone("stone")), new HeapResource(100, new Food("food")) };
             storage = new Dictionary<string, HeapResource>
             {
                 { "wood", new HeapResource(100, new Wood())},
@@ -63,7 +60,7 @@ namespace SpaceStrategy
             else if (building.Type == "pasture")
                 return new Pasture(buildingsList.Count(), colony);
             else
-                return new Sawmill(buildingsList.Count(), colony);
+                return new Sawmill(buildingsList.Count(), new Colony("error", new Planet("error")));
         }
         public void UseFood()
         {

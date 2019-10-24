@@ -149,6 +149,7 @@ namespace SpaceStrategy
 
                         Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType);
                         string amountText = ResourceAmountInput.Text;
+                        ResourceAmountInput.Text = "";
                         if (int.TryParse(amountText, out int amount))
                         {
                             if (tempColony.Money >= resource["buy"] * amount && resource["amount"] >= amount)
@@ -180,6 +181,7 @@ namespace SpaceStrategy
 
                         Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType);
                         string amountText = ResourceAmountInput.Text;
+                        ResourceAmountInput.Text = "";
                         if (int.TryParse(amountText, out int amount))
                         {
                             if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
