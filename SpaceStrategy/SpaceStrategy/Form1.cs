@@ -33,6 +33,7 @@ namespace SpaceStrategy
             _prices = _market.GetPriceList();
             InitTimer();
             ShowMarketStatus();
+            BuildingsListInit();
             ResourceListInit();
         }
 
@@ -240,15 +241,17 @@ namespace SpaceStrategy
                 Planet tempPlanet = DefinePlanetByName(planetName);
                 string colonyName = ColoniesSelectList.SelectedItem.ToString();
                 Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
-                string buildingType = BuildingInput.Text;
-                for (int i = 0; i < buildingTypes.Count(); i++)
+                if (BuildingTypeSelectList.SelectedItem != null)
                 {
-                    if (buildingTypes[i].Type == buildingType)
+                    string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
+                    for (int i = 0; i < buildingTypes.Count(); i++)
                     {
-                        tempColony.CreateBuilding(buildingTypes[i], tempColony);
-                        UpdateWindowBuildingsList(tempColony);
-                        BuildingInput.Text = "";
-                        break;
+                        if (buildingTypes[i].Type == buildingType)
+                        {
+                            tempColony.CreateBuilding(buildingTypes[i], tempColony);
+                            UpdateWindowBuildingsList(tempColony);
+                            break;
+                        }
                     }
                 }
                
@@ -455,6 +458,14 @@ namespace SpaceStrategy
             }
         }
 
+
+        private void BuildingsListInit()
+        {
+            for (int i = 0; i < buildingTypes.Count(); i++)
+            {
+                BuildingTypeSelectList.Items.Add(buildingTypes[i].Type);
+            }
+        }
         private void ResourceListInit()
         {
             for (int i = 0; i < _prices.Count(); i++)
@@ -463,6 +474,7 @@ namespace SpaceStrategy
                 ResourcesSelectedList.Items.Add(el["type"].Type);
             }
         }
+
 
         private void BuyResourcesButton_Click(object sender, EventArgs e)
         {
@@ -482,7 +494,7 @@ namespace SpaceStrategy
                         string amountText = ResourceAmountInput.Text;
                         if (int.TryParse(amountText, out int amount))
                         {
-                            if (tempColony.Money > resource["buy"] * amount && resource["amount"] > amount)
+                            if (tempColony.Money >= resource["buy"] * amount && resource["amount"] >= amount)
                             {
                                 int price = resource["buy"] * amount;
                                 tempColony.BuyResource(resource, amount, price);
@@ -513,7 +525,7 @@ namespace SpaceStrategy
                         string amountText = ResourceAmountInput.Text;
                         if (int.TryParse(amountText, out int amount))
                         {
-                            if (tempColony.GetStorage()[resource["type"].Type].Amount > amount)
+                            if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
                             {
                                 int price = resource["sell"] * amount;
                                 tempColony.SellResource(resource, amount, price);

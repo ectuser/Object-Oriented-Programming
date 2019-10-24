@@ -38,7 +38,6 @@
             this.CreateColonyButton = new System.Windows.Forms.Button();
             this.RemoveColonyButton = new System.Windows.Forms.Button();
             this.BuildingsSelectList = new System.Windows.Forms.ListBox();
-            this.BuildingInput = new System.Windows.Forms.TextBox();
             this.CreateBuildingButton = new System.Windows.Forms.Button();
             this.RemoveBuildingButton = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,6 +55,7 @@
             this.SellResourcesButton = new System.Windows.Forms.Button();
             this.ResourceAmountInput = new System.Windows.Forms.TextBox();
             this.ResourcesSelectedList = new System.Windows.Forms.ListBox();
+            this.BuildingTypeSelectList = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // PlanetButton
@@ -151,16 +151,9 @@
             this.BuildingsSelectList.TabIndex = 12;
             this.BuildingsSelectList.SelectedIndexChanged += new System.EventHandler(this.BuildingsSelectList_SelectedIndexChanged);
             // 
-            // BuildingInput
-            // 
-            this.BuildingInput.Location = new System.Drawing.Point(520, 319);
-            this.BuildingInput.Name = "BuildingInput";
-            this.BuildingInput.Size = new System.Drawing.Size(213, 22);
-            this.BuildingInput.TabIndex = 13;
-            // 
             // CreateBuildingButton
             // 
-            this.CreateBuildingButton.Location = new System.Drawing.Point(520, 347);
+            this.CreateBuildingButton.Location = new System.Drawing.Point(520, 404);
             this.CreateBuildingButton.Name = "CreateBuildingButton";
             this.CreateBuildingButton.Size = new System.Drawing.Size(213, 23);
             this.CreateBuildingButton.TabIndex = 14;
@@ -170,7 +163,7 @@
             // 
             // RemoveBuildingButton
             // 
-            this.RemoveBuildingButton.Location = new System.Drawing.Point(520, 376);
+            this.RemoveBuildingButton.Location = new System.Drawing.Point(520, 433);
             this.RemoveBuildingButton.Name = "RemoveBuildingButton";
             this.RemoveBuildingButton.Size = new System.Drawing.Size(213, 23);
             this.RemoveBuildingButton.TabIndex = 15;
@@ -244,7 +237,7 @@
             // BuildingInfoData
             // 
             this.BuildingInfoData.AutoSize = true;
-            this.BuildingInfoData.Location = new System.Drawing.Point(520, 433);
+            this.BuildingInfoData.Location = new System.Drawing.Point(520, 490);
             this.BuildingInfoData.Name = "BuildingInfoData";
             this.BuildingInfoData.Size = new System.Drawing.Size(90, 17);
             this.BuildingInfoData.TabIndex = 24;
@@ -253,7 +246,7 @@
             // BuildingInfoTitle
             // 
             this.BuildingInfoTitle.AutoSize = true;
-            this.BuildingInfoTitle.Location = new System.Drawing.Point(520, 416);
+            this.BuildingInfoTitle.Location = new System.Drawing.Point(520, 473);
             this.BuildingInfoTitle.Name = "BuildingInfoTitle";
             this.BuildingInfoTitle.Size = new System.Drawing.Size(89, 17);
             this.BuildingInfoTitle.TabIndex = 23;
@@ -311,11 +304,21 @@
             this.ResourcesSelectedList.Size = new System.Drawing.Size(213, 84);
             this.ResourcesSelectedList.TabIndex = 31;
             // 
+            // BuildingTypeSelectList
+            // 
+            this.BuildingTypeSelectList.FormattingEnabled = true;
+            this.BuildingTypeSelectList.ItemHeight = 16;
+            this.BuildingTypeSelectList.Location = new System.Drawing.Point(520, 315);
+            this.BuildingTypeSelectList.Name = "BuildingTypeSelectList";
+            this.BuildingTypeSelectList.Size = new System.Drawing.Size(213, 84);
+            this.BuildingTypeSelectList.TabIndex = 32;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1281, 902);
+            this.Controls.Add(this.BuildingTypeSelectList);
             this.Controls.Add(this.ResourcesSelectedList);
             this.Controls.Add(this.ResourceAmountInput);
             this.Controls.Add(this.SellResourcesButton);
@@ -333,7 +336,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.RemoveBuildingButton);
             this.Controls.Add(this.CreateBuildingButton);
-            this.Controls.Add(this.BuildingInput);
             this.Controls.Add(this.BuildingsSelectList);
             this.Controls.Add(this.RemoveColonyButton);
             this.Controls.Add(this.CreateColonyButton);
@@ -364,7 +366,6 @@
         private System.Windows.Forms.Button RemoveColonyButton;
         public System.Windows.Forms.Label StatusBar;
         private System.Windows.Forms.ListBox BuildingsSelectList;
-        private System.Windows.Forms.TextBox BuildingInput;
         private System.Windows.Forms.Button CreateBuildingButton;
         private System.Windows.Forms.Button RemoveBuildingButton;
         private System.Windows.Forms.Label label1;
@@ -382,6 +383,7 @@
         private System.Windows.Forms.Button SellResourcesButton;
         private System.Windows.Forms.TextBox ResourceAmountInput;
         private System.Windows.Forms.ListBox ResourcesSelectedList;
+        private System.Windows.Forms.ListBox BuildingTypeSelectList;
     }
 }
 
