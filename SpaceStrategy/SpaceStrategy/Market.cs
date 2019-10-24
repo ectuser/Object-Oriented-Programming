@@ -8,35 +8,71 @@ namespace SpaceStrategy
 {
     public class Market
     {
-        private Dictionary<Resource, int> priceList;
+        private List<Dictionary<string, dynamic>> priceList;
 
         public Market()
         {
-            priceList = new Dictionary<Resource, int>
-            {
-                { new Wood(), 5 },
-                { new Stone(), 5 },
-                { new Food(), 5 }
-            };
+            priceList = PricesInit();
         }
 
-        public Dictionary<Resource, int> GetPriceList()
+        public List<Dictionary<string, dynamic>> GetPriceList()
         {
             return priceList;
         }
 
-        public KeyValuePair<Resource, int> DefineResourceType(string type)
+        public Dictionary<string, dynamic> DefineResourceType(string type)
         {
-            KeyValuePair<Resource, int> keyValueError = new KeyValuePair<Resource, int>();
-            foreach (KeyValuePair<Resource, int> keyValue in priceList)
+            for (int i = 0; i < priceList.Count(); i++)
             {
-                keyValueError = keyValue;
-                if (type == keyValue.Key.Type)
+                if (priceList[i]["type"].Type == type)
                 {
-                    return keyValue;
+                    return priceList[i];
                 }
             }
-            return keyValueError;
+            Dictionary<string, dynamic> error = new Dictionary<string, dynamic>
+            {
+                { "error", "error" }
+            };
+            return error;
+        }
+
+
+        private List<Dictionary<string, dynamic>> PricesInit()
+        {
+            List<Dictionary<string, dynamic>> list = new List<Dictionary<string, dynamic>>();
+            Dictionary<string, dynamic> wood = new Dictionary<string, dynamic>
+            {
+                { "type", new Wood() },
+                { "amount", 100 },
+                { "buy", 5 },
+                { "sell", 5 }
+            };
+            Dictionary<string, dynamic> stone = new Dictionary<string, dynamic>
+            {
+                { "type", new Stone() },
+                { "amount", 100 },
+                { "buy", 5 },
+                { "sell", 5 }
+            };
+            Dictionary<string, dynamic> food = new Dictionary<string, dynamic>
+            {
+                { "type", new Food() },
+                { "amount", 100 },
+                { "buy", 5 },
+                { "sell", 5 }
+            };
+            list.Add(wood); list.Add(stone); list.Add(food);
+            return list;
+        }
+        public void SetNewResourceData(Dictionary<string, dynamic> resource)
+        {
+            for (int i = 0; i < priceList.Count(); i++)
+            {
+                if (priceList[i]["type"].Type == resource["type"].Type)
+                {
+                    priceList[i] = resource;
+                }
+            }
         }
     }
 }

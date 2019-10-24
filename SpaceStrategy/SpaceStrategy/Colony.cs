@@ -70,10 +70,15 @@ namespace SpaceStrategy
             needFood = buildingsList.Count();
             storage["food"].Amount -= needFood;
         }
-        public void BuyResource(KeyValuePair<Resource, int> pair, int amount, int price)
+        public void BuyResource(Dictionary<string, dynamic> resource, int amount, int price)
         {
             Money -= price;
-            storage[pair.Key.Type].Amount += amount;
+            storage[resource["type"].Type].Amount += amount;
+        }
+        public void SellResource(Dictionary<string, dynamic> resource, int amount, int price)
+        {
+            storage[resource["type"].Type].Amount -= amount;
+            Money += price;
         }
     }
 }

@@ -19,6 +19,9 @@ namespace SpaceStrategy
         public static List<Resource> resourceTypes;
         public static List<Building> buildingTypes;
 
+        private Market _market = new Market();
+        private List<Dictionary<string, dynamic>> _prices;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +30,7 @@ namespace SpaceStrategy
 
             Building[] buildingTypesRaw = { new Sawmill(0, new Colony("example", new Planet("example"))), new Quarry(1, new Colony("example", new Planet("example"))), new Pasture(2, new Colony("example", new Planet("example"))) };
             buildingTypes = new List<Building>(buildingTypesRaw);
+            _prices = _market.GetPriceList();
             InitTimer();
             ShowMarketStatus();
             ResourceListInit();
@@ -352,6 +356,7 @@ namespace SpaceStrategy
 
         private void UpdateAllData()
         {
+            ShowMarketStatus();
             // need fix
             if (PlanetsSelectList.SelectedItem != null)
             {
@@ -388,50 +393,79 @@ namespace SpaceStrategy
         }
         private void ShowMarketStatus()
         {
-            Market market = new Market();
-            Dictionary<Resource, int> prices = market.GetPriceList();
-
+            MarketPanel.Controls.Clear();
+            _prices = _market.GetPriceList();
             int yPosition = 0;
-            foreach (KeyValuePair<Resource, int> keyValue in prices)
+            Label typeColumn = new Label
             {
-                Label type = new Label
-                {
-                    Location = new Point(0, 30 * yPosition),
-                    Text = keyValue.Key.Type,
-                    Height = 30,
-                    Width = 50
-                };
-                Label price = new Label
-                {
-                    Location = new Point(60, 30 * yPosition),
-                    Text = keyValue.Value.ToString(),
-                    Height = 30,
-                    Width = 50,
-                    Tag = keyValue.Key.Type
-                };
-                // .Click += new EventHandler(PriceClick);
+                Location = new Point(0, 30 * yPosition),
+                Text = "Type",
+                Height = 30,
+                Width = 50
+            };
+            Label amountColumn = new Label
+            {
+                Location = new Point(60, 30 * yPosition),
+                Text = "Amount",
+                Height = 30,
+                Width = 50
+            };
+            Label buyColumn = new Label
+            {
+                Location = new Point(120, 30 * yPosition),
+                Text = "Buy",
+                Height = 30,
+                Width = 50
+            };
+            Label sellColumn = new Label
+            {
+                Location = new Point(180, 30 * yPosition),
+                Text = "Sell",
+                Height = 30,
+                Width = 50
+            };
 
-                MarketPanel.Controls.Add(type);
-                MarketPanel.Controls.Add(price);
-                yPosition += 1;
+            MarketPanel.Controls.Add(typeColumn);
+            MarketPanel.Controls.Add(amountColumn);
+            MarketPanel.Controls.Add(buyColumn);
+            MarketPanel.Controls.Add(sellColumn);
+            yPosition += 1;
+            for (int i = 0; i < _prices.Count(); i++)
+            {
+                int xPosition = 0;
+                Dictionary<string, dynamic> el = _prices[i];
+                foreach(KeyValuePair<string, dynamic> keyValue in el)
+                {
+                    Label newLabel = new Label();
+                    newLabel.Location = new Point(xPosition * 60, 30 * yPosition);
+                    if (keyValue.Key == "type")
+                    {
+                        newLabel.Text = keyValue.Value.Type;
+                    }
+                    else
+                    {
+                        newLabel.Text = keyValue.Value.ToString();
+                    }
+                    newLabel.Height = 30;
+                    newLabel.Width = 50;
+                    xPosition++;
+                    MarketPanel.Controls.Add(newLabel);
+                }
+                yPosition++;
             }
         }
 
         private void ResourceListInit()
         {
-            Market market = new Market();
-            Dictionary<Resource, int> prices = market.GetPriceList();
-            foreach (KeyValuePair<Resource, int> keyValue in prices)
+            for (int i = 0; i < _prices.Count(); i++)
             {
-                string type = keyValue.Key.Type;
-                ResourcesSelectedList.Items.Add(type);
+                Dictionary<string, dynamic> el = _prices[i];
+                ResourcesSelectedList.Items.Add(el["type"].Type);
             }
         }
 
         private void BuyResourcesButton_Click(object sender, EventArgs e)
         {
-            Market market = new Market();
-            Dictionary<Resource, int> prices = market.GetPriceList();
             if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
             {
                 string resourceType = ResourcesSelectedList.SelectedItem.ToString();
@@ -444,19 +478,55 @@ namespace SpaceStrategy
                         string text = ColoniesSelectList.SelectedItem.ToString();
                         Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
 
-                        KeyValuePair<Resource, int> pair = market.DefineResourceType(resourceType);
+                        Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType);
                         string amountText = ResourceAmountInput.Text;
                         if (int.TryParse(amountText, out int amount))
                         {
-                            if (tempColony.Money > pair.Value * amount)
+                            if (tempColony.Money > resource["buy"] * amount && resource["amount"] > amount)
                             {
-                                int price = pair.Value * amount;
-                                tempColony.BuyResource(pair, amount, price);
+                                int price = resource["buy"] * amount;
+                                tempColony.BuyResource(resource, amount, price);
+                                resource["amount"] -= amount;
+                                _market.SetNewResourceData(resource);
                             }
                         }
                     }
                 }
             }
         }
+
+        private void SellResourcesButton_Click(object sender, EventArgs e)
+        {
+            if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
+            {
+                string resourceType = ResourcesSelectedList.SelectedItem.ToString();
+                if (PlanetsSelectList.SelectedItem != null)
+                {
+                    string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                    Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                    if (ColoniesSelectList.SelectedItem != null)
+                    {
+                        string text = ColoniesSelectList.SelectedItem.ToString();
+                        Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+
+                        Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType);
+                        string amountText = ResourceAmountInput.Text;
+                        if (int.TryParse(amountText, out int amount))
+                        {
+                            if (tempColony.GetStorage()[resource["type"].Type].Amount > amount)
+                            {
+                                int price = resource["sell"] * amount;
+                                tempColony.SellResource(resource, amount, price);
+                                resource["amount"] += amount;
+                                _market.SetNewResourceData(resource);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+
     }
 }

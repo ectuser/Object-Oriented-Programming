@@ -272,7 +272,7 @@
             // 
             this.MarketPanel.Location = new System.Drawing.Point(756, 119);
             this.MarketPanel.Name = "MarketPanel";
-            this.MarketPanel.Size = new System.Drawing.Size(200, 100);
+            this.MarketPanel.Size = new System.Drawing.Size(513, 190);
             this.MarketPanel.TabIndex = 27;
             // 
             // BuyResourcesButton
@@ -293,6 +293,7 @@
             this.SellResourcesButton.TabIndex = 29;
             this.SellResourcesButton.Text = "Sell Resources";
             this.SellResourcesButton.UseVisualStyleBackColor = true;
+            this.SellResourcesButton.Click += new System.EventHandler(this.SellResourcesButton_Click);
             // 
             // ResourceAmountInput
             // 
@@ -314,7 +315,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(968, 902);
+            this.ClientSize = new System.Drawing.Size(1281, 902);
             this.Controls.Add(this.ResourcesSelectedList);
             this.Controls.Add(this.ResourceAmountInput);
             this.Controls.Add(this.SellResourcesButton);
