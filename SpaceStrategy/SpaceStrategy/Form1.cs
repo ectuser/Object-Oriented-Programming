@@ -136,347 +136,6 @@ namespace SpaceStrategy
             planetsList.RemoveAt(index);
             UpdateWindowPlanetsList();
         }
-        ////////////////// BUTTON CLICKS END //////////////////
-
-
-        ////////////////// CREATE SOMETHING BEGIN //////////////////
-        private void CreatePlanet(string name)
-        {
-            if (planetsList.All(x => x.Name != name))
-            {
-                Planet tempPlanet = new Planet(name);
-                planetsList.Add(tempPlanet);
-                UpdateWindowPlanetsList();
-            }
-            else
-            {
-                //Console.WriteLine("Planet with this name already exists");
-                ShowStatus("Planet with this name already exists");
-            }
-        }
-        ////////////////// CREATE SOMETHING END //////////////////
-
-        private void UpdateWindowPlanetsList()
-        {
-            //PlanetsSelectList.DataSource = null;
-            PlanetsSelectList.Items.Clear();
-            for (int i = 0; i < planetsList.Count(); i++)
-            {
-                PlanetsSelectList.Items.Add(planetsList[i].Name);
-            }
-
-        }
-        private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (ColoniesSelectList.SelectedItem != null)
-            {
-                string text = ColoniesSelectList.SelectedItem.ToString();
-                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
-                if (tempColony.Name != "error")
-                {
-                    ShowBuildings(tempColony);
-                }
-                ShowColoniesData(tempColony);
-                //Console.WriteLine(text);
-            }
-        }
-        private void ShowBuildings(Colony colony)
-        {
-            BuildingsSelectList.Items.Clear();
-            List<Building> list = colony.GetBuildings();
-            for (int i = 0; i < list.Count; i++)
-            {
-                BuildingsSelectList.Items.Add(list[i].Id);
-            }
-        }
-        private Colony DefineColonyByName(string name, List<Colony> list, Planet planet)
-        {
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].Name == name)
-                {
-                    return list[i];
-                }
-            }
-            ShowStatus("error");
-            return new Colony("error", planet);
-        }
-
-
-        private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            BuildingsSelectList.Items.Clear(); // clear buildings list
-            if (PlanetsSelectList.SelectedItem != null)
-            {
-                string text = PlanetsSelectList.SelectedItem.ToString();
-                Planet planet = DefinePlanetByName(text);
-                if (planet.Name != "error")
-                {
-                    ShowColonies(planet);
-                }
-                ShowPlanetData(planet); 
-            }
-        }
-        private Planet DefinePlanetByName(string name)
-        {
-            for (int i = 0; i < planetsList.Count; i++)
-            {
-                if (planetsList[i].Name == name)
-                {
-                    return planetsList[i];
-                }
-            }
-            //Console.WriteLine("error");
-            ShowStatus("error");
-            return new Planet("error");
-        }
-        private void ShowColonies(Planet planet)
-        {
-            ColoniesSelectList.Items.Clear();
-            List<Colony> list = planet.GetColonies();
-            for (int i = 0; i < list.Count; i++)
-            {
-                ColoniesSelectList.Items.Add(list[i].Name);
-            }
-        }
-        private void UpdateWindowColoniesList(Planet planet)
-        {
-            ColoniesSelectList.Items.Clear();
-            List<Colony> tempList = planet.GetColonies();
-            for (int i = 0; i < tempList.Count(); i++)
-            {
-                ColoniesSelectList.Items.Add(tempList[i].Name);
-            }
-        }
-        private void ShowStatus(string text)
-        {
-            StatusBar.Text = text;
-        }
-
-        private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (BuildingsSelectList.SelectedItem != null)
-            {
-                string text = ColoniesSelectList.SelectedItem.ToString();
-                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
-
-                string idText = BuildingsSelectList.SelectedItem.ToString();
-
-                if (int.TryParse(idText, out int id))
-                {
-                    Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
-                    ShowBuildingsData(tempBuilding, tempColony);
-                }
-            }
-        }
-
-        private Building DefineBuildingByID(int id, List<Building> list, Colony colony)
-        {
-            for (int i = 0; i < list.Count(); i++)
-            {
-                if (list[i].Id == id)
-                {
-                    return list[i];
-                }
-            }
-            return new Building(0, colony);
-        }
-        private void UpdateWindowBuildingsList(Colony colony)
-        {
-            BuildingsSelectList.Items.Clear();
-            List<Building> tempList = colony.GetBuildings();
-            for (int i = 0; i < tempList.Count(); i++)
-            {
-                BuildingsSelectList.Items.Add(tempList[i].Id);
-            }
-        }
-
-        private void ShowPlanetData(Planet planet)
-        {
-            string data = "";
-            string nameData = "Name : " + planet.Name + "\n";
-            string radiusData = "Radius : " + planet.Radius + "\n";
-            string coordinatesData = "Coordinates : x : " + planet.coordinates.X + ", y : " + planet.coordinates.Y + "\n";
-            string coloniesData = "Number of colonies: " + planet.GetColonies().Count() + "\n";
-            string resourcesData = "Resource fields on the planet: \n";
-            List<HeapResource> list = planet.GetResources();
-            for (int i = 0; i < list.Count(); i++)
-            {
-                resourcesData += list[i].Amount + " of " + list[i].Type + "\n";
-            }
-            data = nameData + radiusData + coordinatesData + coloniesData + resourcesData;
-            PlanetInfoData.Text = data;
-        }
-        private void ShowColoniesData(Colony colony)
-        {
-            string data = "";
-            string nameData = "Name : " + colony.Name + "\n";
-            string parentPlanet = "Parent planet : " + colony.ParentPlanet.Name + "\n";
-            string moneyData = "Money : " + colony.Money + "\n";
-            string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
-            string resourcesData = "Resources : \n";
-            Dictionary<string, HeapResource> tempList = colony.GetStorage();
-            foreach (KeyValuePair<string, HeapResource> keyValue in tempList)
-            {
-                resourcesData += keyValue.Value.Amount + " of " + keyValue.Key + "\n";
-            }
-            data = nameData + parentPlanet + moneyData + buildingsData + resourcesData;
-            ColonyInfoData.Text = data;
-        }
-        private void ShowBuildingsData(Building building, Colony colony)
-        {
-            string data = "";
-            string idData = "ID : " + building.Id + "\n";
-            string typeData = "Type : " + building.Type + "\n";
-            string parentColony = "Parent colony: " + colony.Name + "\n";
-            data = idData + typeData + parentColony;
-            BuildingInfoData.Text = data;
-        }
-
-        private void RemoveBuildingButton_Click(object sender, EventArgs e)
-        {
-            // need fix
-            string planetName = PlanetsSelectList.SelectedItem.ToString();
-            string colonyName = ColoniesSelectList.SelectedItem.ToString();
-            string idStr = BuildingsSelectList.SelectedItem.ToString();
-            Planet tempPlanet = DefinePlanetByName(planetName);
-            Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
-            if (int.TryParse(idStr, out int id))
-            {
-                tempColony.RemoveBuilding(id);
-                UpdateWindowBuildingsList(tempColony);
-            }
-        }
-
-        private void TimerTick(object sender, EventArgs e)
-        {
-            ResourceExtraction();
-            UpdateAllData();
-            ColoniesUseFood();
-        }
-
-        private void ResourceExtraction()
-        {
-            for (int i = 0; i < planetsList.Count(); i++)
-            {
-                List<Colony> colonyList = planetsList[i].GetColonies();
-                for (int j = 0; j < colonyList.Count(); j++)
-                {
-                    List<Building> buildingList = colonyList[j].GetBuildings();
-                    for (int h = 0; h < buildingList.Count(); h++)
-                    {
-                        buildingList[h].ExtractResources();
-                    }
-                }
-            }
-        }
-
-        private void UpdateAllData()
-        {
-            ShowMarketStatus();
-            // need fix
-            if (PlanetsSelectList.SelectedItem != null)
-            {
-                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-                ShowPlanetData(tempPlanet);
-                if (ColoniesSelectList.SelectedItem != null)
-                {
-                    string text = ColoniesSelectList.SelectedItem.ToString();
-                    Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
-                    ShowColoniesData(tempColony);
-                    if (BuildingsSelectList.SelectedItem != null)
-                    {
-                        string idText = BuildingsSelectList.SelectedItem.ToString();
-
-                        if (int.TryParse(idText, out int id))
-                        {
-                            Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
-                            ShowBuildingsData(tempBuilding, tempColony);
-                        }
-                    }
-                }
-            }
-        }
-        private void ColoniesUseFood()
-        {
-            for (int i = 0; i < planetsList.Count(); i++)
-            {
-                for (int j = 0; j < planetsList[i].GetColonies().Count(); j++)
-                {
-                    planetsList[i].GetColonies()[j].UseFood();
-                }
-            }
-        }
-        private void ShowMarketStatus()
-        {
-            MarketPanel.Controls.Clear();
-            _prices = _market.GetPriceList();
-            int yPosition = 0;
-            Label typeColumn = new Label
-            {
-                Location = new Point(0, 30 * yPosition),
-                Text = "Type",
-                Height = 30,
-                Width = 50
-            };
-            Label amountColumn = new Label
-            {
-                Location = new Point(60, 30 * yPosition),
-                Text = "Amount",
-                Height = 30,
-                Width = 50
-            };
-            Label buyColumn = new Label
-            {
-                Location = new Point(120, 30 * yPosition),
-                Text = "Buy",
-                Height = 30,
-                Width = 50
-            };
-            Label sellColumn = new Label
-            {
-                Location = new Point(180, 30 * yPosition),
-                Text = "Sell",
-                Height = 30,
-                Width = 50
-            };
-
-            MarketPanel.Controls.Add(typeColumn);
-            MarketPanel.Controls.Add(amountColumn);
-            MarketPanel.Controls.Add(buyColumn);
-            MarketPanel.Controls.Add(sellColumn);
-            yPosition += 1;
-            for (int i = 0; i < _prices.Count(); i++)
-            {
-                int xPosition = 0;
-                Dictionary<string, dynamic> el = _prices[i];
-                foreach(KeyValuePair<string, dynamic> keyValue in el)
-                {
-                    Label newLabel = new Label();
-                    newLabel.Location = new Point(xPosition * 60, 30 * yPosition);
-                    if (keyValue.Key == "type")
-                    {
-                        newLabel.Text = keyValue.Value.Type;
-                    }
-                    else
-                    {
-                        newLabel.Text = keyValue.Value.ToString();
-                    }
-                    newLabel.Height = 30;
-                    newLabel.Width = 50;
-                    xPosition++;
-                    MarketPanel.Controls.Add(newLabel);
-                }
-                yPosition++;
-            }
-        }
-
-
         private void BuyResourcesButton_Click(object sender, EventArgs e)
         {
             if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
@@ -538,8 +197,351 @@ namespace SpaceStrategy
                 }
             }
         }
+        private void RemoveBuildingButton_Click(object sender, EventArgs e)
+        {
+            string planetName = PlanetsSelectList.SelectedItem.ToString();
+            string colonyName = ColoniesSelectList.SelectedItem.ToString();
+            if (BuildingsSelectList.SelectedItem != null)
+            {
+                string idStr = BuildingsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(planetName);
+                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
+                if (int.TryParse(idStr, out int id))
+                {
+                    tempColony.RemoveBuilding(id);
+                    UpdateWindowBuildingsList(tempColony);
+                }
+            }
+
+        }
+        ////////////////// BUTTON CLICKS END //////////////////
 
 
+        ////////////////// CREATE SOMETHING BEGIN //////////////////
+        private void CreatePlanet(string name)
+        {
+            if (planetsList.All(x => x.Name != name))
+            {
+                Planet tempPlanet = new Planet(name);
+                planetsList.Add(tempPlanet);
+                UpdateWindowPlanetsList();
+            }
+            else
+            {
+                //Console.WriteLine("Planet with this name already exists");
+                ShowStatus("Planet with this name already exists");
+            }
+        }
+        ////////////////// CREATE SOMETHING END //////////////////
 
+
+        ////////////////// SHOW SOMETHING BEGIN //////////////////
+        private void ShowBuildings(Colony colony)
+        {
+            BuildingsSelectList.Items.Clear();
+            List<Building> list = colony.GetBuildings();
+            for (int i = 0; i < list.Count; i++)
+            {
+                BuildingsSelectList.Items.Add(list[i].Id);
+            }
+        }
+        private void ShowColonies(Planet planet)
+        {
+            ColoniesSelectList.Items.Clear();
+            List<Colony> list = planet.GetColonies();
+            for (int i = 0; i < list.Count; i++)
+            {
+                ColoniesSelectList.Items.Add(list[i].Name);
+            }
+        }
+        private void ShowMarketStatus()
+        {
+            MarketPanel.Controls.Clear();
+            _prices = _market.GetPriceList();
+            int yPosition = 0;
+            Label typeColumn = new Label
+            {
+                Location = new Point(0, 30 * yPosition),
+                Text = "Type",
+                Height = 30,
+                Width = 50
+            };
+            Label amountColumn = new Label
+            {
+                Location = new Point(60, 30 * yPosition),
+                Text = "Amount",
+                Height = 30,
+                Width = 50
+            };
+            Label buyColumn = new Label
+            {
+                Location = new Point(120, 30 * yPosition),
+                Text = "Buy",
+                Height = 30,
+                Width = 50
+            };
+            Label sellColumn = new Label
+            {
+                Location = new Point(180, 30 * yPosition),
+                Text = "Sell",
+                Height = 30,
+                Width = 50
+            };
+
+            MarketPanel.Controls.Add(typeColumn);
+            MarketPanel.Controls.Add(amountColumn);
+            MarketPanel.Controls.Add(buyColumn);
+            MarketPanel.Controls.Add(sellColumn);
+            yPosition += 1;
+            for (int i = 0; i < _prices.Count(); i++)
+            {
+                int xPosition = 0;
+                Dictionary<string, dynamic> el = _prices[i];
+                foreach (KeyValuePair<string, dynamic> keyValue in el)
+                {
+                    Label newLabel = new Label();
+                    newLabel.Location = new Point(xPosition * 60, 30 * yPosition);
+                    if (keyValue.Key == "type")
+                    {
+                        newLabel.Text = keyValue.Value.Type;
+                    }
+                    else
+                    {
+                        newLabel.Text = keyValue.Value.ToString();
+                    }
+                    newLabel.Height = 30;
+                    newLabel.Width = 50;
+                    xPosition++;
+                    MarketPanel.Controls.Add(newLabel);
+                }
+                yPosition++;
+            }
+        }
+        private void ShowStatus(string text)
+        {
+            StatusBar.Text = text;
+        }
+        private void ShowPlanetData(Planet planet)
+        {
+            string data = "";
+            string nameData = "Name : " + planet.Name + "\n";
+            string radiusData = "Radius : " + planet.Radius + "\n";
+            string coordinatesData = "Coordinates : x : " + planet.coordinates.X + ", y : " + planet.coordinates.Y + "\n";
+            string coloniesData = "Number of colonies: " + planet.GetColonies().Count() + "\n";
+            string resourcesData = "Resource fields on the planet: \n";
+            List<HeapResource> list = planet.GetResources();
+            for (int i = 0; i < list.Count(); i++)
+            {
+                resourcesData += list[i].Amount + " of " + list[i].Type + "\n";
+            }
+            data = nameData + radiusData + coordinatesData + coloniesData + resourcesData;
+            PlanetInfoData.Text = data;
+        }
+        private void ShowColoniesData(Colony colony)
+        {
+            string data = "";
+            string nameData = "Name : " + colony.Name + "\n";
+            string parentPlanet = "Parent planet : " + colony.ParentPlanet.Name + "\n";
+            string moneyData = "Money : " + colony.Money + "\n";
+            string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
+            string resourcesData = "Resources : \n";
+            Dictionary<string, HeapResource> tempList = colony.GetStorage();
+            foreach (KeyValuePair<string, HeapResource> keyValue in tempList)
+            {
+                resourcesData += keyValue.Value.Amount + " of " + keyValue.Key + "\n";
+            }
+            data = nameData + parentPlanet + moneyData + buildingsData + resourcesData;
+            ColonyInfoData.Text = data;
+        }
+        private void ShowBuildingsData(Building building, Colony colony)
+        {
+            string data = "";
+            string idData = "ID : " + building.Id + "\n";
+            string typeData = "Type : " + building.Type + "\n";
+            string parentColony = "Parent colony: " + colony.Name + "\n";
+            data = idData + typeData + parentColony;
+            BuildingInfoData.Text = data;
+        }
+        ////////////////// SHOW SOMETHING END //////////////////
+        ////////////////// EVERY 2 SECONDS DO BEGIN //////////////////
+        private void TimerTick(object sender, EventArgs e)
+        {
+            ResourceExtraction();
+            UpdateAllData();
+            ColoniesUseFood();
+        }
+
+        private void ResourceExtraction()
+        {
+            for (int i = 0; i < planetsList.Count(); i++)
+            {
+                List<Colony> colonyList = planetsList[i].GetColonies();
+                for (int j = 0; j < colonyList.Count(); j++)
+                {
+                    List<Building> buildingList = colonyList[j].GetBuildings();
+                    for (int h = 0; h < buildingList.Count(); h++)
+                    {
+                        buildingList[h].ExtractResources();
+                    }
+                }
+            }
+        }
+
+        private void UpdateAllData()
+        {
+            ShowMarketStatus();
+            // need fix
+            if (PlanetsSelectList.SelectedItem != null)
+            {
+                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                ShowPlanetData(tempPlanet);
+                if (ColoniesSelectList.SelectedItem != null)
+                {
+                    string text = ColoniesSelectList.SelectedItem.ToString();
+                    Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+                    ShowColoniesData(tempColony);
+                    if (BuildingsSelectList.SelectedItem != null)
+                    {
+                        string idText = BuildingsSelectList.SelectedItem.ToString();
+
+                        if (int.TryParse(idText, out int id))
+                        {
+                            Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
+                            ShowBuildingsData(tempBuilding, tempColony);
+                        }
+                    }
+                }
+            }
+        }
+        private void ColoniesUseFood()
+        {
+            for (int i = 0; i < planetsList.Count(); i++)
+            {
+                for (int j = 0; j < planetsList[i].GetColonies().Count(); j++)
+                {
+                    planetsList[i].GetColonies()[j].UseFood();
+                }
+            }
+        }
+
+        ////////////////// EVERY 2 SECONDS DO END //////////////////
+
+        private void UpdateWindowPlanetsList()
+        {
+            //PlanetsSelectList.DataSource = null;
+            PlanetsSelectList.Items.Clear();
+            for (int i = 0; i < planetsList.Count(); i++)
+            {
+                PlanetsSelectList.Items.Add(planetsList[i].Name);
+            }
+
+        }
+        private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ColoniesSelectList.SelectedItem != null)
+            {
+                string text = ColoniesSelectList.SelectedItem.ToString();
+                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+                if (tempColony.Name != "error")
+                {
+                    ShowBuildings(tempColony);
+                }
+                ShowColoniesData(tempColony);
+                //Console.WriteLine(text);
+            }
+        }
+        private Colony DefineColonyByName(string name, List<Colony> list, Planet planet)
+        {
+            for (int i = 0; i < list.Count; i++)
+            {
+                if (list[i].Name == name)
+                {
+                    return list[i];
+                }
+            }
+            ShowStatus("error");
+            return new Colony("error", planet);
+        }
+
+
+        private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BuildingsSelectList.Items.Clear(); // clear buildings list
+            if (PlanetsSelectList.SelectedItem != null)
+            {
+                string text = PlanetsSelectList.SelectedItem.ToString();
+                Planet planet = DefinePlanetByName(text);
+                if (planet.Name != "error")
+                {
+                    ShowColonies(planet);
+                }
+                ShowPlanetData(planet); 
+            }
+        }
+        private Planet DefinePlanetByName(string name)
+        {
+            for (int i = 0; i < planetsList.Count; i++)
+            {
+                if (planetsList[i].Name == name)
+                {
+                    return planetsList[i];
+                }
+            }
+            //Console.WriteLine("error");
+            ShowStatus("error");
+            return new Planet("error");
+        }
+        private void UpdateWindowColoniesList(Planet planet)
+        {
+            ColoniesSelectList.Items.Clear();
+            List<Colony> tempList = planet.GetColonies();
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                ColoniesSelectList.Items.Add(tempList[i].Name);
+            }
+        }
+
+        private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (BuildingsSelectList.SelectedItem != null)
+            {
+                string text = ColoniesSelectList.SelectedItem.ToString();
+                string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+                Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+
+                string idText = BuildingsSelectList.SelectedItem.ToString();
+
+                if (int.TryParse(idText, out int id))
+                {
+                    Building tempBuilding = DefineBuildingByID(id, tempColony.GetBuildings(), tempColony);
+                    ShowBuildingsData(tempBuilding, tempColony);
+                }
+            }
+        }
+
+        private Building DefineBuildingByID(int id, List<Building> list, Colony colony)
+        {
+            for (int i = 0; i < list.Count(); i++)
+            {
+                if (list[i].Id == id)
+                {
+                    return list[i];
+                }
+            }
+            return new Building(0, colony);
+        }
+        private void UpdateWindowBuildingsList(Colony colony)
+        {
+            BuildingsSelectList.Items.Clear();
+            List<Building> tempList = colony.GetBuildings();
+            for (int i = 0; i < tempList.Count(); i++)
+            {
+                BuildingsSelectList.Items.Add(tempList[i].Id);
+            }
+        }
     }
 }
