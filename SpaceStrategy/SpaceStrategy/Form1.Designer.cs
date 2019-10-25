@@ -276,7 +276,7 @@
             this.BuyResourcesButton.TabIndex = 28;
             this.BuyResourcesButton.Text = "Buy Resources";
             this.BuyResourcesButton.UseVisualStyleBackColor = true;
-            this.BuyResourcesButton.Click += new System.EventHandler(this.BuyResourcesButton_Click);
+            this.BuyResourcesButton.Click += new System.EventHandler(this.BuySellButton_Click);
             // 
             // SellResourcesButton
             // 
@@ -286,7 +286,7 @@
             this.SellResourcesButton.TabIndex = 29;
             this.SellResourcesButton.Text = "Sell Resources";
             this.SellResourcesButton.UseVisualStyleBackColor = true;
-            this.SellResourcesButton.Click += new System.EventHandler(this.SellResourcesButton_Click);
+            this.SellResourcesButton.Click += new System.EventHandler(this.BuySellButton_Click);
             // 
             // ResourceAmountInput
             // 

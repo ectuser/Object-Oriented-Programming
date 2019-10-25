@@ -20,17 +20,19 @@ namespace SpaceStrategy
         }
         private void CreateBuildingButton_Click(object sender, EventArgs e)
         {
+            // check that there's selected colony
             if (ColoniesSelectList.SelectedIndex == -1)
             {
-                //Console.WriteLine("Select at least one planet");
                 ShowStatus("Select at least one planet");
             }
             else
             {
+                // Define some shit like Planets and Colonies to create Building for a particular colony
                 string planetName = PlanetsSelectList.SelectedItem.ToString();
                 Planet tempPlanet = DefinePlanetByName(planetName);
                 string colonyName = ColoniesSelectList.SelectedItem.ToString();
                 Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
+                // Same check as before
                 if (BuildingTypeSelectList.SelectedItem != null)
                 {
                     string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
@@ -43,6 +45,10 @@ namespace SpaceStrategy
                             break;
                         }
                     }
+                }
+                else
+                {
+                    ShowStatus("Select at least 1 type of building");
                 }
             }
         }
@@ -78,7 +84,37 @@ namespace SpaceStrategy
             planetsList.RemoveAt(index);
             UpdateWindowPlanetsList();
         }
-        private void BuyResourcesButton_Click(object sender, EventArgs e)
+
+        private void BuyResourcesButton_Click(string amountText, Colony tempColony, Dictionary<string, dynamic> resource)
+        {
+            if (int.TryParse(amountText, out int amount))
+            {
+                if (tempColony.Money >= resource["buy"] * amount && resource["amount"] >= amount)
+                {
+                    int price = resource["buy"] * amount;
+                    tempColony.BuyResource(resource, amount, price);
+                    resource["amount"] -= amount;
+                    _market.SetNewResourceData(resource);
+                }
+            }
+        }
+
+        private void SellResourcesButton_Click(string amountText, Colony tempColony, Dictionary<string, dynamic> resource)
+        {
+            if (int.TryParse(amountText, out int amount))
+            {
+                if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
+                {
+                    int price = resource["sell"] * amount;
+                    tempColony.SellResource(resource, amount, price);
+                    resource["amount"] += amount;
+                    _market.SetNewResourceData(resource);
+                }
+            }
+                
+        }
+
+        private void BuySellButton_Click(object sender, EventArgs e)
         {
             if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
             {
@@ -95,52 +131,23 @@ namespace SpaceStrategy
                         Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType);
                         string amountText = ResourceAmountInput.Text;
                         ResourceAmountInput.Text = "";
-                        if (int.TryParse(amountText, out int amount))
+
+                        var btn = (Button)sender;
+                        string name = (btn.Name);
+                        if (name == "BuyResourcesButton")
                         {
-                            if (tempColony.Money >= resource["buy"] * amount && resource["amount"] >= amount)
-                            {
-                                int price = resource["buy"] * amount;
-                                tempColony.BuyResource(resource, amount, price);
-                                resource["amount"] -= amount;
-                                _market.SetNewResourceData(resource);
-                            }
+                            BuyResourcesButton_Click(amountText, tempColony, resource);
                         }
+                        else if (name == "SellResourcesButton")
+                        {
+                            SellResourcesButton_Click(amountText, tempColony, resource);
+                        }
+
                     }
                 }
             }
         }
-
-        private void SellResourcesButton_Click(object sender, EventArgs e)
-        {
-            if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
-            {
-                string resourceType = ResourcesSelectedList.SelectedItem.ToString();
-                if (PlanetsSelectList.SelectedItem != null)
-                {
-                    string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-                    Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-                    if (ColoniesSelectList.SelectedItem != null)
-                    {
-                        string text = ColoniesSelectList.SelectedItem.ToString();
-                        Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
-
-                        Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType);
-                        string amountText = ResourceAmountInput.Text;
-                        ResourceAmountInput.Text = "";
-                        if (int.TryParse(amountText, out int amount))
-                        {
-                            if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
-                            {
-                                int price = resource["sell"] * amount;
-                                tempColony.SellResource(resource, amount, price);
-                                resource["amount"] += amount;
-                                _market.SetNewResourceData(resource);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        
         private void RemoveBuildingButton_Click(object sender, EventArgs e)
         {
             string planetName = PlanetsSelectList.SelectedItem.ToString();

@@ -61,10 +61,6 @@ namespace SpaceStrategy
         }
         public List<HeapResource> GetResources()
         {
-            //for (int i = 0; i < _heapsOfResources.Count(); i++)
-            //{
-            //    Console.WriteLine(i.ToString() + " . " + _heapsOfResources[i].Type + " . " + _heapsOfResources[i].Amount);
-            //}
             return _heapsOfResources;
         }
     }

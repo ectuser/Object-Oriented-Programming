@@ -16,7 +16,7 @@ namespace SpaceStrategy
         private List<Planet> planetsList = new List<Planet>();
         private Timer timer1;
         private Market _market = new Market();
-        private List<Dictionary<string, dynamic>> _prices;
+        private List<Dictionary<string, dynamic>> _prices; // prices for resources
         public static Label _statusBar;
 
         public static List<Resource> resourceTypes;
@@ -25,6 +25,8 @@ namespace SpaceStrategy
         public Form1()
         {
             InitializeComponent();
+
+            // Define which types resources and buildings could be
             Resource[] resourceTypesRaw = { new Wood(), new Stone(), new Food()};
             resourceTypes = new List<Resource>(resourceTypesRaw);
 
@@ -32,11 +34,13 @@ namespace SpaceStrategy
             buildingTypes = new List<Building>(buildingTypesRaw);
 
             _prices = _market.GetPriceList();
-            InitTimer();
             ShowMarketStatus();
+
+            // Some start inits:
+            InitTimer();
             BuildingsListInit();
             ResourceListInit();
-            _statusBar = StatusBar;
+            _statusBar = StatusBar; // This thing is used to show status or some errors
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -45,6 +49,7 @@ namespace SpaceStrategy
         }
         private void CreatePlanet(string name)
         {
+            // Check that there's no Planet with the same name
             if (planetsList.All(x => x.Name != name))
             {
                 Planet tempPlanet = new Planet(name);
