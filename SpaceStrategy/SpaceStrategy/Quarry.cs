@@ -12,6 +12,7 @@ namespace SpaceStrategy
         {
             Cost = 100;
             Type = "quarry";
+            ResourceExtractionType = "stone";
         }
     }
 }

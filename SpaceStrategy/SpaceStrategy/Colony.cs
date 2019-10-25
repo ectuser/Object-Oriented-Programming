@@ -71,7 +71,10 @@ namespace SpaceStrategy
             else if (building.Type == "pasture")
                 return new Pasture(id, colony);
             else
+            {
+                Console.WriteLine("CAN'T DEFINE BUILDING BY TYPE!");
                 return new Sawmill(id, new Colony("error", new Planet("error")));
+            }
         }
         public void UseFood()
         {
