@@ -28,7 +28,7 @@ namespace SpaceStrategy
             Resource[] resourceTypesRaw = { new Wood(), new Stone(), new Food()};
             resourceTypes = new List<Resource>(resourceTypesRaw);
 
-            Building[] buildingTypesRaw = { new Sawmill(0, new Colony("example", new Planet("example"))), new Quarry(1, new Colony("example", new Planet("example"))), new Pasture(2, new Colony("example", new Planet("example"))) };
+            Building[] buildingTypesRaw = { new Sawmill(1, new Colony("example", new Planet("example"))), new Quarry(2, new Colony("example", new Planet("example"))), new Pasture(3, new Colony("example", new Planet("example"))) };
             buildingTypes = new List<Building>(buildingTypesRaw);
             _prices = _market.GetPriceList();
             InitTimer();

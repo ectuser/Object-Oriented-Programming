@@ -64,7 +64,7 @@ namespace SpaceStrategy
                     id++;
                 }
             }
-            if (building.Type == "swamill")
+            if (building.Type == "sawmill")
                 return new Sawmill(id, colony);
             else if (building.Type == "quarry")
                 return new Quarry(id, colony);

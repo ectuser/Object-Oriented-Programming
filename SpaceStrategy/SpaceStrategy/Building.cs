@@ -27,12 +27,10 @@ namespace SpaceStrategy
             // need fix
             for (int i = 0; i < ParentPlanet.GetResources().Count(); i++)
             {
-                
+                Console.WriteLine(ParentPlanet.Name + " " + ParentColony.Name);
                 if (ParentPlanet.GetResources()[i].Type == "wood" && Type == "sawmill" && ParentPlanet.GetResources()[i].Amount > 0)
                 {
-                    //Console.WriteLine("here1 " + ParentPlanet.GetResources()[i].Amount.ToString());
                     ParentPlanet.GetResources()[i].Amount -= efficiency;
-                    //Console.WriteLine("here2 " + ParentPlanet.GetResources()[i].Amount.ToString());
                     Dictionary<string, HeapResource> storage = ParentColony.GetStorage();
                     storage["wood"].Amount += efficiency;
                     ParentColony.SetStorage(storage);
