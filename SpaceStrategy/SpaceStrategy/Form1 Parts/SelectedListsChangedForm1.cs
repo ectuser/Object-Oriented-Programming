@@ -12,6 +12,9 @@ namespace SpaceStrategy
 {
     public partial class Form1 : Form
     {
+
+        // I USED ALL THIS STUFF MOSTLY TO GET SELECTED ELEMENT AND SHOW INFO ABOUT IT
+
         private void ColoniesSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ColoniesSelectList.SelectedItem != null)
@@ -25,12 +28,12 @@ namespace SpaceStrategy
                     ShowBuildings(tempColony);
                 }
                 ShowColoniesData(tempColony);
-                //Console.WriteLine(text);
             }
+            else
+                ShowStatus("Select at least one Colony");
         }
         private void PlanetsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            BuildingsSelectList.Items.Clear(); // clear buildings list
             if (PlanetsSelectList.SelectedItem != null)
             {
                 string text = PlanetsSelectList.SelectedItem.ToString();
@@ -41,6 +44,8 @@ namespace SpaceStrategy
                 }
                 ShowPlanetData(planet);
             }
+            else
+                ShowStatus("Select at least one planet");
         }
         private void BuildingsSelectList_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -59,6 +64,8 @@ namespace SpaceStrategy
                     ShowBuildingsData(tempBuilding, tempColony);
                 }
             }
+            else
+                ShowStatus("Select at least one Building");
         }
     }
 }

@@ -10,10 +10,10 @@ namespace SpaceStrategy
     {
         public int Radius { get; }
         public string Name { get; }
-        public readonly SpaceCoordinates coordinates; // check for a future
+        public readonly SpaceCoordinates coordinates;
 
         private List<Colony> _colonyList = new List<Colony>();
-        private readonly List<HeapResource> _heapsOfResources;
+        private readonly List<HeapResource> _heapsOfResources; // These things are heaps physically located on the planet like an object
 
         public Planet(string name)
         {
@@ -47,6 +47,7 @@ namespace SpaceStrategy
         }
         private List<HeapResource> SetResources()
         {
+            // Random number of rundom resource type with random amount of it
             List<HeapResource> heaps = new List<HeapResource>();
             Random rnd = new Random();
             int heapsAmount = rnd.Next(1, 10);

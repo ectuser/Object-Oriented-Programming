@@ -12,6 +12,7 @@ namespace SpaceStrategy
 {
     public partial class Form1 : Form
     {
+        // Just update info. Nothing Interesting
         private void UpdateWindowPlanetsList()
         {
             //PlanetsSelectList.DataSource = null;

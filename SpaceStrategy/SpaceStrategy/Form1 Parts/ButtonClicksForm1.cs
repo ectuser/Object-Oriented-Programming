@@ -70,19 +70,34 @@ namespace SpaceStrategy
         }
         private void RemoveColonyButton_Click(object sender, EventArgs e)
         {
-            string planetName = PlanetsSelectList.SelectedItem.ToString();
-            string colonyName = ColoniesSelectList.SelectedItem.ToString();
-            Planet tempPlanet = DefinePlanetByName(planetName);
-            tempPlanet.RemoveColony(colonyName);
-            UpdateWindowColoniesList(tempPlanet);
+            if (PlanetsSelectList.SelectedItem != null)
+            {
+                string planetName = PlanetsSelectList.SelectedItem.ToString();
+                if (ColoniesSelectList.SelectedItem != null)
+                {
+                    string colonyName = ColoniesSelectList.SelectedItem.ToString();
+                    Planet tempPlanet = DefinePlanetByName(planetName);
+                    tempPlanet.RemoveColony(colonyName);
+                    UpdateWindowColoniesList(tempPlanet);
+                }
+                else
+                    ShowStatus("Select at least one colony");
+            }
+            else
+                ShowStatus("Select at least one colony");
         }
         private void RemovePlanetButton_Click(object sender, EventArgs e)
         {
-            string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
+            if (PlanetsSelectList.SelectedItem != null)
+            {
+                string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
 
-            int index = planetsList.FindIndex(i => i.Name == text);
-            planetsList.RemoveAt(index);
-            UpdateWindowPlanetsList();
+                int index = planetsList.FindIndex(i => i.Name == text);
+                planetsList.RemoveAt(index);
+                UpdateWindowPlanetsList();
+            }
+            else
+                ShowStatus("Select at least one planet");
         }
 
         private void BuyResourcesButton_Click(string amountText, Colony tempColony, Dictionary<string, dynamic> resource)
@@ -116,19 +131,22 @@ namespace SpaceStrategy
 
         private void BuySellButton_Click(object sender, EventArgs e)
         {
+            // there should be selected resources and input shouln't be empty
             if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
             {
                 string resourceType = ResourcesSelectedList.SelectedItem.ToString();
+                // Some planet should be selected
                 if (PlanetsSelectList.SelectedItem != null)
                 {
                     string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
                     Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+                    // Some colony should be selected
                     if (ColoniesSelectList.SelectedItem != null)
                     {
                         string text = ColoniesSelectList.SelectedItem.ToString();
                         Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
 
-                        Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType);
+                        Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType); // get market prices for resource
                         string amountText = ResourceAmountInput.Text;
                         ResourceAmountInput.Text = "";
 
@@ -144,26 +162,43 @@ namespace SpaceStrategy
                         }
 
                     }
+                    else
+                        ShowStatus("Select at least one colony");
                 }
+                else
+                    ShowStatus("Select at least one planet");
             }
+            else
+                ShowStatus("Select at least one resource type or type something in input");
         }
         
         private void RemoveBuildingButton_Click(object sender, EventArgs e)
         {
-            string planetName = PlanetsSelectList.SelectedItem.ToString();
-            string colonyName = ColoniesSelectList.SelectedItem.ToString();
-            if (BuildingsSelectList.SelectedItem != null)
+            if (PlanetsSelectList.SelectedItem != null)
             {
-                string idStr = BuildingsSelectList.SelectedItem.ToString();
-                Planet tempPlanet = DefinePlanetByName(planetName);
-                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
-                if (int.TryParse(idStr, out int id))
+                string planetName = PlanetsSelectList.SelectedItem.ToString();
+                if (ColoniesSelectList.SelectedItem != null)
                 {
-                    tempColony.RemoveBuilding(id);
-                    UpdateWindowBuildingsList(tempColony);
+                    string colonyName = ColoniesSelectList.SelectedItem.ToString();
+                    if (BuildingsSelectList.SelectedItem != null)
+                    {
+                        string idStr = BuildingsSelectList.SelectedItem.ToString();
+                        Planet tempPlanet = DefinePlanetByName(planetName);
+                        Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
+                        if (int.TryParse(idStr, out int id))
+                        {
+                            tempColony.RemoveBuilding(id);
+                            UpdateWindowBuildingsList(tempColony);
+                        }
+                    }
+                    else
+                        ShowStatus("Select at least one Building");
                 }
+                else
+                    ShowStatus("Select at leats one Building");
             }
-
+            else
+                ShowStatus("Select at leats one Building");
         }
     }
 }

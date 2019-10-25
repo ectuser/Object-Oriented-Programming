@@ -36,8 +36,7 @@ namespace SpaceStrategy
                     return planetsList[i];
                 }
             }
-            //Console.WriteLine("error");
-            ShowStatus("error");
+            Console.WriteLine("You have some problems with planets my dude");
             return new Planet("error");
         }
 
@@ -52,7 +51,8 @@ namespace SpaceStrategy
                     return list[i];
                 }
             }
-            return new Building(0, colony);
+            Console.WriteLine("There are issues with your buildings mate");
+            return new Building(0, new Colony("Error", new Planet("error")));
         }
     }
 }

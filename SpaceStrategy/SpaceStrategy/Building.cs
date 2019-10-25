@@ -12,12 +12,12 @@ namespace SpaceStrategy
         public string ResourceExtractionType { get; protected set; }
         public int Id { get; }
         public int Cost { get; set; }
-        public int efficiency { get; } // conventional units of resource / second
+        public int Efficiency { get; } // conventional units of resource / second
         public Colony ParentColony { get; }
 
         public Building(int id, Colony colony)
         {
-            efficiency = 2;
+            Efficiency = 2;
             Id = id;
             ParentColony = colony;
             ParentPlanet = colony.ParentPlanet;
@@ -27,12 +27,12 @@ namespace SpaceStrategy
         {
             for (int i = 0; i < ParentPlanet.GetResources().Count(); i++)
             {
-                Console.WriteLine(ParentPlanet.GetResources()[i].Type + " " + ResourceExtractionType);
+                // if type of the building matches type of the resource building should extract resource
                 if (ParentPlanet.GetResources()[i].Type == ResourceExtractionType && ParentPlanet.GetResources()[i].Amount > 0)
                 {
-                    ParentPlanet.GetResources()[i].Amount -= efficiency;
+                    ParentPlanet.GetResources()[i].Amount -= Efficiency;
                     Dictionary<string, HeapResource> storage = ParentColony.GetStorage();
-                    storage[ResourceExtractionType].Amount += efficiency;
+                    storage[ResourceExtractionType].Amount += Efficiency;
                     ParentColony.SetStorage(storage);
                 }
             }

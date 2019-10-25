@@ -29,6 +29,7 @@ namespace SpaceStrategy
                     return _priceList[i];
                 }
             }
+            Console.WriteLine("Can't define market resource type!");
             Dictionary<string, dynamic> error = new Dictionary<string, dynamic>
             {
                 { "error", "error" }
@@ -66,6 +67,7 @@ namespace SpaceStrategy
         }
         public void SetNewResourceData(Dictionary<string, dynamic> resource)
         {
+            // if something has been changed this method changes particular resource
             for (int i = 0; i < _priceList.Count(); i++)
             {
                 if (_priceList[i]["type"].Type == resource["type"].Type)

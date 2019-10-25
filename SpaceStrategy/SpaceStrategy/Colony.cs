@@ -10,7 +10,7 @@ namespace SpaceStrategy
     {
         private List<Building> _buildingsList = new List<Building>();
         private Dictionary<string, HeapResource> _storage;
-        private int _needFood;
+        private int _needFood; // this thing depends on number of buildings
 
 
         public int Money { get; private set; }
@@ -26,7 +26,6 @@ namespace SpaceStrategy
                 { "stone", new HeapResource(100, new Stone())},
                 { "food", new HeapResource(100, new Food())}
             };
-            Console.WriteLine(_storage["wood"].Type);
             Money = 1000;
             ParentPlanet = planet;
 
@@ -55,7 +54,7 @@ namespace SpaceStrategy
         }
         private Building DefineBuildingType(Building building, Colony colony)
         {
-            // last else need fix
+            
             int id = _buildingsList.Count();
             for (int i = 0; i < _buildingsList.Count(); i++)
             {

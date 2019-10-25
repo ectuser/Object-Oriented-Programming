@@ -21,7 +21,7 @@ namespace SpaceStrategy
 
         private void ResourceExtraction()
         {
-            // need fix
+            // Every Building from every Colony on every Planet extracts Resources
             for (int i = 0; i < planetsList.Count(); i++)
             {
                 List<Colony> colonyList = planetsList[i].GetColonies();
@@ -38,6 +38,7 @@ namespace SpaceStrategy
 
         private void UpdateAllData()
         {
+            // Big function is used to update all shown data every n seconds
             ShowMarketStatus();
             if (PlanetsSelectList.SelectedItem != null)
             {
@@ -64,6 +65,7 @@ namespace SpaceStrategy
         }
         private void ColoniesUseFood()
         {
+            // Planet use food as much as numebr of it's buildings
             for (int i = 0; i < planetsList.Count(); i++)
             {
                 for (int j = 0; j < planetsList[i].GetColonies().Count(); j++)
