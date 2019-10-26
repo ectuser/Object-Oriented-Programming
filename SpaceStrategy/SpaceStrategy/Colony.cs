@@ -84,6 +84,7 @@ namespace SpaceStrategy
         {
             Money -= price;
             _storage[resource["type"].Type].Amount += amount;
+            
         }
         public void SellResource(Dictionary<string, dynamic> resource, int amount, double price)
         {

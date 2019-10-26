@@ -45,21 +45,21 @@ namespace SpaceStrategy
             {
                 { "type", new Wood() },
                 { "amount", 100 },
-                { "buy", 5.0 },
+                //{ "buy", 5.0 },
                 { "sell", 5.0 }
             };
             Dictionary<string, dynamic> stone = new Dictionary<string, dynamic>
             {
                 { "type", new Stone() },
                 { "amount", 100 },
-                { "buy", 5.0 },
+                //{ "buy", 5.0 },
                 { "sell", 5.0 }
             };
             Dictionary<string, dynamic> food = new Dictionary<string, dynamic>
             {
                 { "type", new Food() },
                 { "amount", 100 },
-                { "buy", 5.0 },
+                //{ "buy", 5.0 },
                 { "sell", 5.0 }
             };
             list.Add(wood); list.Add(stone); list.Add(food);
@@ -74,6 +74,22 @@ namespace SpaceStrategy
                 {
                     _priceList[i] = resource;
                 }
+            }
+        }
+
+        public void UpdateMarketValues()
+        {
+            List<Dictionary<string, dynamic>> priceListCopy;
+            priceListCopy = _priceList;
+
+            List<Dictionary<string, dynamic>> standart = PricesInit();
+
+            for (int i = 0; i < priceListCopy.Count(); i++)
+            {
+                Dictionary<string, dynamic> marketElement = priceListCopy[i];
+                Dictionary<string, dynamic> standartElement = standart[i];
+                    
+                
             }
         }
     }

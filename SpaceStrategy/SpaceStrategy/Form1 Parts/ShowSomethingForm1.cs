@@ -32,6 +32,7 @@ namespace SpaceStrategy
         }
         private void ShowMarketStatus()
         {
+            _market.UpdateMarketValues();
             MarketPanel.Controls.Clear();
             _prices = _market.GetPriceList();
             int yPosition = 0;
@@ -49,13 +50,13 @@ namespace SpaceStrategy
                 Height = 30,
                 Width = 50
             };
-            Label buyColumn = new Label
-            {
-                Location = new Point(120, 30 * yPosition),
-                Text = "Buy",
-                Height = 30,
-                Width = 50
-            };
+            //Label buyColumn = new Label
+            //{
+            //    Location = new Point(120, 30 * yPosition),
+            //    Text = "Buy",
+            //    Height = 30,
+            //    Width = 50
+            //};
             Label sellColumn = new Label
             {
                 Location = new Point(180, 30 * yPosition),
@@ -66,7 +67,7 @@ namespace SpaceStrategy
 
             MarketPanel.Controls.Add(typeColumn);
             MarketPanel.Controls.Add(amountColumn);
-            MarketPanel.Controls.Add(buyColumn);
+            //MarketPanel.Controls.Add(buyColumn);
             MarketPanel.Controls.Add(sellColumn);
             yPosition += 1;
             for (int i = 0; i < _prices.Count(); i++)

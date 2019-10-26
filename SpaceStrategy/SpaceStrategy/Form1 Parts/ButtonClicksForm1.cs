@@ -104,11 +104,14 @@ namespace SpaceStrategy
         {
             if (int.TryParse(amountText, out int amount))
             {
-                if (tempColony.Money >= resource["buy"] * amount && resource["amount"] >= amount)
+                if (tempColony.Money >= resource["sell"] * amount && resource["amount"] >= amount)
                 {
-                    double price = resource["buy"] * amount;
+                    double before = resource["amount"];
+                    double price = resource["sell"] * amount;
                     tempColony.BuyResource(resource, amount, price);
                     resource["amount"] -= amount;
+                    double after = resource["amount"];
+                    resource["sell"] *= before / after;
                     _market.SetNewResourceData(resource);
                 }
             }
@@ -120,9 +123,12 @@ namespace SpaceStrategy
             {
                 if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
                 {
+                    double before = resource["amount"];
                     double price = resource["sell"] * amount;
                     tempColony.SellResource(resource, amount, price);
                     resource["amount"] += amount;
+                    double after = resource["amount"];
+                    resource["sell"] *= before / after;
                     _market.SetNewResourceData(resource);
                 }
             }
