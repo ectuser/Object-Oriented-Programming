@@ -106,7 +106,7 @@ namespace SpaceStrategy
             {
                 if (tempColony.Money >= resource["buy"] * amount && resource["amount"] >= amount)
                 {
-                    int price = resource["buy"] * amount;
+                    double price = resource["buy"] * amount;
                     tempColony.BuyResource(resource, amount, price);
                     resource["amount"] -= amount;
                     _market.SetNewResourceData(resource);
@@ -120,7 +120,7 @@ namespace SpaceStrategy
             {
                 if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
                 {
-                    int price = resource["sell"] * amount;
+                    double price = resource["sell"] * amount;
                     tempColony.SellResource(resource, amount, price);
                     resource["amount"] += amount;
                     _market.SetNewResourceData(resource);

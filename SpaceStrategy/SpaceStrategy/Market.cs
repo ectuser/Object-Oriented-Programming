@@ -45,22 +45,22 @@ namespace SpaceStrategy
             {
                 { "type", new Wood() },
                 { "amount", 100 },
-                { "buy", 5 },
-                { "sell", 5 }
+                { "buy", 5.0 },
+                { "sell", 5.0 }
             };
             Dictionary<string, dynamic> stone = new Dictionary<string, dynamic>
             {
                 { "type", new Stone() },
                 { "amount", 100 },
-                { "buy", 5 },
-                { "sell", 5 }
+                { "buy", 5.0 },
+                { "sell", 5.0 }
             };
             Dictionary<string, dynamic> food = new Dictionary<string, dynamic>
             {
                 { "type", new Food() },
                 { "amount", 100 },
-                { "buy", 5 },
-                { "sell", 5 }
+                { "buy", 5.0 },
+                { "sell", 5.0 }
             };
             list.Add(wood); list.Add(stone); list.Add(food);
             return list;

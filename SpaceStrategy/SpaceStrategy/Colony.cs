@@ -13,7 +13,7 @@ namespace SpaceStrategy
         private int _needFood; // this thing depends on number of buildings
 
 
-        public int Money { get; private set; }
+        public double Money { get; private set; }
         public Planet ParentPlanet { get; }
         public string Name { get; }
 
@@ -80,12 +80,12 @@ namespace SpaceStrategy
             _needFood = _buildingsList.Count();
             _storage["food"].Amount -= _needFood;
         }
-        public void BuyResource(Dictionary<string, dynamic> resource, int amount, int price)
+        public void BuyResource(Dictionary<string, dynamic> resource, int amount, double price)
         {
             Money -= price;
             _storage[resource["type"].Type].Amount += amount;
         }
-        public void SellResource(Dictionary<string, dynamic> resource, int amount, int price)
+        public void SellResource(Dictionary<string, dynamic> resource, int amount, double price)
         {
             _storage[resource["type"].Type].Amount -= amount;
             Money += price;
