@@ -40,6 +40,7 @@ namespace SpaceStrategy
                     {
                         if (buildingTypes[i].Type == buildingType)
                         {
+                            // check that colony is able to create new building
                             if (tempColony.AreThereEnoughResources(buildingToBuild: buildingTypes[i]))
                             {
                                 tempColony.CreateBuilding(buildingTypes[i], tempColony);
@@ -47,7 +48,7 @@ namespace SpaceStrategy
                                 break;
                             }
                             else
-                                ShowStatus("You don't have enough money or resources.");
+                                ShowStatus("There's no enough money or resources in colony storage to build this building.");
                         }
                     }
                 }

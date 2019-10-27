@@ -26,18 +26,24 @@ namespace SpaceStrategy
 
         public void ExtractResources()
         {
-            for (int i = 0; i < ParentPlanet.GetResources().Count(); i++)
+            // Colony have enough food to work
+            if (ParentColony.ColonyWorks)
             {
-                // if type of the building matches type of the resource building should extract resource
-                if (ParentPlanet.GetResources()[i].Type == ResourceExtractionType && ParentPlanet.GetResources()[i].Amount > 0)
+                for (int i = 0; i < ParentPlanet.GetResources().Count(); i++)
                 {
-                    ParentPlanet.GetResources()[i].Amount -= Efficiency;
-                    Dictionary<string, HeapResource> storage = ParentColony.GetStorage();
-                    storage[ResourceExtractionType].Amount += Efficiency;
-                    ParentColony.SetStorage(storage);
+                    // if type of the building matches type of the resource building should extract resource
+                    if (ParentPlanet.GetResources()[i].Type == ResourceExtractionType && ParentPlanet.GetResources()[i].Amount > 0)
+                    {
+                        ParentPlanet.GetResources()[i].Amount -= Efficiency;
+                        Dictionary<string, HeapResource> storage = ParentColony.GetStorage();
+                        storage[ResourceExtractionType].Amount += Efficiency;
+                        ParentColony.SetStorage(storage);
+                    }
                 }
             }
         }
+
+        // This function defines how many resources of each type are needed to create the building
         protected List<Dictionary<string, dynamic>> ResourcesNeedToBuild(int woodCost, int stoneCost, int foodCost)
         {
             List<Dictionary<string, dynamic>> list = new List<Dictionary<string, dynamic>>();

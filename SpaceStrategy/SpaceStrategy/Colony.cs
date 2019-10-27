@@ -16,6 +16,7 @@ namespace SpaceStrategy
         public double Money { get; private set; }
         public Planet ParentPlanet { get; }
         public string Name { get; }
+        public bool ColonyWorks { get; private set; }
 
         public Colony(string name, Planet planet)
         {
@@ -83,7 +84,22 @@ namespace SpaceStrategy
         public void UseFood()
         {
             _needFood = _buildingsList.Count();
-            _storage["food"].Amount -= _needFood;
+            // Check if colony has enough food to buildings work
+            if (_needFood < _storage["food"].Amount)
+            {
+                //This IF is for remove previous status if there's enoigh food
+                if (Form1._statusBar.Text.Any(c => "doesn't have enough food to keep working".Contains(c)))
+                    Form1.ShowStatus("");
+
+                _storage["food"].Amount -= _needFood;
+                ColonyWorks = true;
+            }
+            else
+            {
+                ColonyWorks = false;
+                Form1.ShowStatus("Colony " + Name + " doesn't have enough food to keep working.");
+            }
+
         }
         public void BuyResource(Dictionary<string, dynamic> resource, int amount, double price)
         {
@@ -99,12 +115,13 @@ namespace SpaceStrategy
 
         public bool AreThereEnoughResources(Building buildingToBuild)
         {
+            // Check if it is possible to build the building
             List<Dictionary<string, dynamic>> costList = buildingToBuild.ResourcesCost;
             if (Money >= buildingToBuild.Cost)
             {
                 for (int i = 0; i < costList.Count(); i++)
                 {
-                    Console.WriteLine(costList[i]["type"].Type);
+                    // if colony has enough resources of each type to build the building
                     if (_storage[costList[i]["type"].Type].Amount < costList[i]["cost"])
                         return false;
                 }
