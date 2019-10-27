@@ -13,6 +13,7 @@ namespace SpaceStrategy
             Cost = 100;
             Type = "pasture";
             ResourceExtractionType = "food";
+            ResourcesCost = ResourcesNeedToBuild(woodCost: 10, stoneCost: 10, foodCost: 10);
         }
     }
 }

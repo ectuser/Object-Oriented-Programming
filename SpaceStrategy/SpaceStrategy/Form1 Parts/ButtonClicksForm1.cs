@@ -40,9 +40,14 @@ namespace SpaceStrategy
                     {
                         if (buildingTypes[i].Type == buildingType)
                         {
-                            tempColony.CreateBuilding(buildingTypes[i], tempColony);
-                            UpdateWindowBuildingsList(tempColony);
-                            break;
+                            if (tempColony.AreThereEnoughResources(buildingToBuild: buildingTypes[i]))
+                            {
+                                tempColony.CreateBuilding(buildingTypes[i], tempColony);
+                                UpdateWindowBuildingsList(tempColony);
+                                break;
+                            }
+                            else
+                                ShowStatus("You don't have enough money or resources.");
                         }
                     }
                 }
@@ -52,6 +57,7 @@ namespace SpaceStrategy
                 }
             }
         }
+
         private void CreateColonyButton_Click(object sender, EventArgs e)
         {
             if (PlanetsSelectList.SelectedIndex == -1)
@@ -106,12 +112,12 @@ namespace SpaceStrategy
             {
                 if (tempColony.Money >= resource["sell"] * amount && resource["amount"] >= amount)
                 {
-                    double before = resource["amount"];
+                    //double before = resource["amount"];
                     double price = resource["sell"] * amount;
                     tempColony.BuyResource(resource, amount, price);
                     resource["amount"] -= amount;
-                    double after = resource["amount"];
-                    resource["sell"] *= before / after;
+                    //double after = resource["amount"];
+                    //resource["sell"] *= before / after;
                     _market.SetNewResourceData(resource);
                 }
             }
@@ -123,12 +129,12 @@ namespace SpaceStrategy
             {
                 if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
                 {
-                    double before = resource["amount"];
+                    //double before = resource["amount"];
                     double price = resource["sell"] * amount;
                     tempColony.SellResource(resource, amount, price);
                     resource["amount"] += amount;
-                    double after = resource["amount"];
-                    resource["sell"] *= before / after;
+                    //double after = resource["amount"];
+                    //resource["sell"] *= before / after;
                     _market.SetNewResourceData(resource);
                 }
             }

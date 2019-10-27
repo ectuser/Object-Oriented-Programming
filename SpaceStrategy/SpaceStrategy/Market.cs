@@ -77,20 +77,6 @@ namespace SpaceStrategy
             }
         }
 
-        public void UpdateMarketValues()
-        {
-            List<Dictionary<string, dynamic>> priceListCopy;
-            priceListCopy = _priceList;
 
-            List<Dictionary<string, dynamic>> standart = PricesInit();
-
-            for (int i = 0; i < priceListCopy.Count(); i++)
-            {
-                Dictionary<string, dynamic> marketElement = priceListCopy[i];
-                Dictionary<string, dynamic> standartElement = standart[i];
-                    
-                
-            }
-        }
     }
 }

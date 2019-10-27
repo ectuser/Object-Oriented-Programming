@@ -32,7 +32,6 @@ namespace SpaceStrategy
         }
         private void ShowMarketStatus()
         {
-            _market.UpdateMarketValues();
             MarketPanel.Controls.Clear();
             _prices = _market.GetPriceList();
             int yPosition = 0;

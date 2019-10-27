@@ -12,6 +12,7 @@ namespace SpaceStrategy
         public string ResourceExtractionType { get; protected set; }
         public int Id { get; }
         public int Cost { get; set; }
+        public List<Dictionary<string, dynamic>> ResourcesCost { get; protected set; }
         public int Efficiency { get; } // conventional units of resource / second
         public Colony ParentColony { get; }
 
@@ -36,6 +37,29 @@ namespace SpaceStrategy
                     ParentColony.SetStorage(storage);
                 }
             }
+        }
+        protected List<Dictionary<string, dynamic>> ResourcesNeedToBuild(int woodCost, int stoneCost, int foodCost)
+        {
+            List<Dictionary<string, dynamic>> list = new List<Dictionary<string, dynamic>>();
+            Dictionary<string, dynamic> woodNeed = new Dictionary<string, dynamic>
+            {
+                { "type", new Wood() },
+                { "cost", woodCost }
+            };
+            Dictionary<string, dynamic> stoneNeed = new Dictionary<string, dynamic>
+            {
+                { "type", new Stone() },
+                { "cost", stoneCost }
+            };
+            Dictionary<string, dynamic> foodNeed = new Dictionary<string, dynamic>
+            {
+                { "type", new Food() },
+                { "cost", foodCost }
+            };
+            list.Add(woodNeed);
+            list.Add(stoneNeed);
+            list.Add(foodNeed);
+            return list;
         }
     }
 }

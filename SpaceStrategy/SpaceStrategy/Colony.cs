@@ -32,6 +32,11 @@ namespace SpaceStrategy
         }
         public void CreateBuilding(Building building, Colony colony)
         {
+            List<Dictionary<string, dynamic>> costList = building.ResourcesCost;
+            for (int i = 0; i < costList.Count(); i++)
+            {
+                _storage[costList[i]["type"].Type].Amount -= costList[i]["cost"];
+            }
             Money -= building.Cost;
             _buildingsList.Add(DefineBuildingType(building, colony));
         }
@@ -90,6 +95,23 @@ namespace SpaceStrategy
         {
             _storage[resource["type"].Type].Amount -= amount;
             Money += price;
+        }
+
+        public bool AreThereEnoughResources(Building buildingToBuild)
+        {
+            List<Dictionary<string, dynamic>> costList = buildingToBuild.ResourcesCost;
+            if (Money >= buildingToBuild.Cost)
+            {
+                for (int i = 0; i < costList.Count(); i++)
+                {
+                    Console.WriteLine(costList[i]["type"].Type);
+                    if (_storage[costList[i]["type"].Type].Amount < costList[i]["cost"])
+                        return false;
+                }
+                return true;
+            }
+            else
+                return false;
         }
     }
 }
