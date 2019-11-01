@@ -36,14 +36,14 @@ namespace SpaceStrategy
                 if (BuildingTypeSelectList.SelectedItem != null)
                 {
                     string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
-                    for (int i = 0; i < Registry.buildingTypes.Count(); i++)
+                    for (int i = 0; i < Form1._registry.buildingTypes.Count(); i++)
                     {
-                        if (Registry.buildingTypes[i].Type == buildingType)
+                        if (Form1._registry.buildingTypes[i].Type == buildingType)
                         {
                             // check that colony is able to create new building
-                            if (tempColony.AreThereEnoughResources(buildingToBuild: Registry.buildingTypes[i]))
+                            if (tempColony.AreThereEnoughResources(buildingToBuild: _registry.buildingTypes[i]))
                             {
-                                tempColony.CreateBuilding(Registry.buildingTypes[i], tempColony);
+                                tempColony.CreateBuilding(_registry.buildingTypes[i], tempColony);
                                 UpdateWindowBuildingsList(tempColony);
                                 break;
                             }

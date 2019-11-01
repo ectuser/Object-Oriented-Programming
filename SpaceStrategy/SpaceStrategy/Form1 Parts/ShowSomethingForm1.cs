@@ -80,7 +80,6 @@ namespace SpaceStrategy
                 newLabel.Width = 50;
                 xPosition++;
                 MarketPanel.Controls.Add(newLabel);
-                Console.WriteLine(newLabel.Text);
 
                 Label newLabel2 = new Label();
                 newLabel2.Location = new Point(xPosition * 60, 30 * yPosition);
@@ -89,7 +88,6 @@ namespace SpaceStrategy
                 newLabel2.Width = 50;
                 xPosition++;
                 MarketPanel.Controls.Add(newLabel2);
-                Console.WriteLine(newLabel2.Text);
 
                 Label newLabel3 = new Label();
                 newLabel3.Location = new Point(xPosition * 60, 30 * yPosition);
@@ -98,7 +96,6 @@ namespace SpaceStrategy
                 newLabel3.Width = 50;
                 xPosition++;
                 MarketPanel.Controls.Add(newLabel3);
-                Console.WriteLine(newLabel3.Text);
 
                 yPosition++;
             }
