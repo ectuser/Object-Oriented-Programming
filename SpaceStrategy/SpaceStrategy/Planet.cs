@@ -52,8 +52,8 @@ namespace SpaceStrategy
             for (int i = 0; i < heapsAmount; i++)
             {
                 int amount = Registry.rnd.Next(100, 1000);
-                int typeInt = Registry.rnd.Next(0, 3);
-                HeapResource heap = new HeapResource(amount, Form1._registry.resourceTypes[typeInt]);
+                int typeInt = Registry.rnd.Next(0, Form1.resourceTypes.Count());
+                HeapResource heap = new HeapResource(amount, Form1.resourceTypes[typeInt]);
                 heaps.Add(heap);
             }
             return heaps;
