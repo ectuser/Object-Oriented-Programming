@@ -18,9 +18,8 @@ namespace SpaceStrategy
         public Planet(string name)
         {
             Name = name;
-            Random rnd = new Random();
-            Radius = rnd.Next(0, 5);
-            coordinates = new SpaceCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
+            Radius = Registry.rnd.Next(0, 5);
+            coordinates = new SpaceCoordinates(Registry.rnd.Next(0, 100), Registry.rnd.Next(0, 100));
             _heapsOfResources = new List<HeapResource>(SetResources());
         }
 
@@ -49,13 +48,12 @@ namespace SpaceStrategy
         {
             // Random number of rundom resource type with random amount of it
             List<HeapResource> heaps = new List<HeapResource>();
-            Random rnd = new Random();
-            int heapsAmount = rnd.Next(1, 10);
+            int heapsAmount = Registry.rnd.Next(1, 10);
             for (int i = 0; i < heapsAmount; i++)
             {
-                int amount = rnd.Next(100, 1000);
-                int typeInt = rnd.Next(0, 3);
-                HeapResource heap = new HeapResource(amount, Form1.resourceTypes[typeInt]);
+                int amount = Registry.rnd.Next(100, 1000);
+                int typeInt = Registry.rnd.Next(0, 3);
+                HeapResource heap = new HeapResource(amount, Registry.resourceTypes[typeInt]);
                 heaps.Add(heap);
             }
             return heaps;

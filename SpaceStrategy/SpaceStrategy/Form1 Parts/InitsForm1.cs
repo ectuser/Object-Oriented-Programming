@@ -21,9 +21,9 @@ namespace SpaceStrategy
         }
         private void BuildingsListInit()
         {
-            for (int i = 0; i < buildingTypes.Count(); i++)
+            for (int i = 0; i < Registry.buildingTypes.Count(); i++)
             {
-                BuildingTypeSelectList.Items.Add(buildingTypes[i].Type);
+                BuildingTypeSelectList.Items.Add(Registry.buildingTypes[i].Type);
             }
         }
         private void ResourceListInit()

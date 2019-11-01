@@ -19,19 +19,9 @@ namespace SpaceStrategy
         private List<Dictionary<string, dynamic>> _prices; // prices for resources
         public static Label _statusBar;
 
-        public static List<Resource> resourceTypes;
-        public static List<Building> buildingTypes;
-
         public Form1()
         {
             InitializeComponent();
-
-            // Define which types resources and buildings could be
-            Resource[] resourceTypesRaw = { new Wood(), new Stone(), new Food()};
-            resourceTypes = new List<Resource>(resourceTypesRaw);
-
-            Building[] buildingTypesRaw = { new Sawmill(1, new Colony("example", new Planet("example"))), new Quarry(2, new Colony("example", new Planet("example"))), new Pasture(3, new Colony("example", new Planet("example"))) };
-            buildingTypes = new List<Building>(buildingTypesRaw);
 
             _prices = _market.GetPriceList();
             ShowMarketStatus();

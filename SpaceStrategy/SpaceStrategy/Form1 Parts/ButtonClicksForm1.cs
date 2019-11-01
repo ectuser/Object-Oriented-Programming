@@ -36,14 +36,14 @@ namespace SpaceStrategy
                 if (BuildingTypeSelectList.SelectedItem != null)
                 {
                     string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
-                    for (int i = 0; i < buildingTypes.Count(); i++)
+                    for (int i = 0; i < Registry.buildingTypes.Count(); i++)
                     {
-                        if (buildingTypes[i].Type == buildingType)
+                        if (Registry.buildingTypes[i].Type == buildingType)
                         {
                             // check that colony is able to create new building
-                            if (tempColony.AreThereEnoughResources(buildingToBuild: buildingTypes[i]))
+                            if (tempColony.AreThereEnoughResources(buildingToBuild: Registry.buildingTypes[i]))
                             {
-                                tempColony.CreateBuilding(buildingTypes[i], tempColony);
+                                tempColony.CreateBuilding(Registry.buildingTypes[i], tempColony);
                                 UpdateWindowBuildingsList(tempColony);
                                 break;
                             }
@@ -75,6 +75,7 @@ namespace SpaceStrategy
                 UpdateWindowColoniesList(planet);
             }
         }
+
         private void RemoveColonyButton_Click(object sender, EventArgs e)
         {
             if (PlanetsSelectList.SelectedItem != null)
@@ -93,6 +94,7 @@ namespace SpaceStrategy
             else
                 ShowStatus("Select at least one colony");
         }
+
         private void RemovePlanetButton_Click(object sender, EventArgs e)
         {
             if (PlanetsSelectList.SelectedItem != null)

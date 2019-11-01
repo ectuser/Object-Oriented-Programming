@@ -13,8 +13,7 @@ namespace SpaceStrategy
 
         public PlanetObject()
         {
-            Random rnd = new Random();
-            _objectCoordinates = new PlanetCoordinates(rnd.Next(0, 100), rnd.Next(0, 100));
+            _objectCoordinates = new PlanetCoordinates(Registry.rnd.Next(0, 100), Registry.rnd.Next(0, 100));
         }
     }
 }
