@@ -18,10 +18,6 @@ namespace SpaceStrategy
         private Market _market = new Market();
         private List<MarketStorageElement> _prices; // prices for resources
         public static Label _statusBar;
-        public static Random rnd = new Random();
-
-        public static List<Resource> resourceTypes = new List<Resource>(new Resource[] { new Wood(), new Stone(), new Food() });
-        public static List<Building> buildingTypes = new List<Building>(new Building[] { new Sawmill(1, new Colony("example", new Planet("example"))), new Quarry(2, new Colony("example", new Planet("example"))), new Pasture(3, new Colony("example", new Planet("example"))) });
 
         public Form1()
         {

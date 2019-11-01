@@ -58,10 +58,12 @@ namespace SpaceStrategy
         // This function defines how many resources of each type are needed to create the building
         protected List<ResourceNeed> ResourcesNeedToBuild(int woodCost, int stoneCost, int foodCost)
         {
-            List<ResourceNeed> list = new List<ResourceNeed>();
-            list.Add(new ResourceNeed(new Wood(), woodCost));
-            list.Add(new ResourceNeed(new Stone(), stoneCost));
-            list.Add(new ResourceNeed(new Food(), foodCost));
+            List<ResourceNeed> list = new List<ResourceNeed>
+            {
+                new ResourceNeed(new Wood(), woodCost),
+                new ResourceNeed(new Stone(), stoneCost),
+                new ResourceNeed(new Food(), foodCost)
+            };
             return list;
         }
     }

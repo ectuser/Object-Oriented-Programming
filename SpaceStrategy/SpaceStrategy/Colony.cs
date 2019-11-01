@@ -85,11 +85,14 @@ namespace SpaceStrategy
         {
             _needFood = _buildingsList.Count();
             // Check if colony has enough food to buildings work
-            if (_needFood < _storage["food"].Amount)
+            if (_needFood > _storage["food"].Amount)
             {
                 //This IF is for remove previous status if there's enoigh food
-                if (Form1._statusBar.Text.Any(c => "doesn't have enough food to keep working".Contains(c)))
+                string str = "doesn't have enough food to keep working.";
+                if (Form1._statusBar.Text.Contains(str))
+                {
                     Form1.ShowStatus("");
+                }
 
                 _storage["food"].Amount -= _needFood;
                 ColonyWorks = true;

@@ -20,41 +20,36 @@ namespace SpaceStrategy
         }
         private void CreateBuildingButton_Click(object sender, EventArgs e)
         {
-            // check that there's selected colony
-            if (ColoniesSelectList.SelectedIndex == -1)
+            // check that there's selected colony or planet
+            if (ColoniesSelectList.SelectedIndex == -1 || PlanetsSelectList.SelectedItem == null)
             {
-                ShowStatus("Select at least one planet");
+                ShowStatus("Excuse me. Select at least one fucking planet or colony. Thank you.");
+                return;
             }
-            else
+            string planetName = PlanetsSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(planetName);
+            string colonyName = ColoniesSelectList.SelectedItem.ToString();
+            Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
+            // Same check as before
+            if (BuildingTypeSelectList.SelectedItem == null)
             {
-                // Define some shit like Planets and Colonies to create Building for a particular colony
-                string planetName = PlanetsSelectList.SelectedItem.ToString();
-                Planet tempPlanet = DefinePlanetByName(planetName);
-                string colonyName = ColoniesSelectList.SelectedItem.ToString();
-                Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
-                // Same check as before
-                if (BuildingTypeSelectList.SelectedItem != null)
+                ShowStatus("Excuse me. Select at least one fucking building type. OK? Thank you.");
+                return;
+            }
+            string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
+            for (int i = 0; i < buildingTypes.Count(); i++)
+            {
+                if (buildingTypes[i].Type == buildingType)
                 {
-                    string buildingType = BuildingTypeSelectList.SelectedItem.ToString();
-                    for (int i = 0; i < Form1.buildingTypes.Count(); i++)
+                    // check that colony is able to create new building
+                    if ( !(tempColony.AreThereEnoughResources(buildingToBuild: buildingTypes[i])))
                     {
-                        if (Form1.buildingTypes[i].Type == buildingType)
-                        {
-                            // check that colony is able to create new building
-                            if (tempColony.AreThereEnoughResources(buildingToBuild: Form1.buildingTypes[i]))
-                            {
-                                tempColony.CreateBuilding(Form1.buildingTypes[i], tempColony);
-                                UpdateWindowBuildingsList(tempColony);
-                                break;
-                            }
-                            else
-                                ShowStatus("There's no enough money or resources in colony storage to build this building.");
-                        }
+                        ShowStatus("Ha Ha. You're too poor to create this building or don't have enough resources.");
+                        return;
                     }
-                }
-                else
-                {
-                    ShowStatus("Select at least 1 type of building");
+                    tempColony.CreateBuilding(buildingTypes[i], tempColony);
+                    UpdateWindowBuildingsList(tempColony);
+                    break;
                 }
             }
         }
@@ -63,157 +58,139 @@ namespace SpaceStrategy
         {
             if (PlanetsSelectList.SelectedIndex == -1)
             {
-                ShowStatus("Select at least one planet");
+                ShowStatus("Excuse me. Select at least one fucking planet or colony. Thank you.");
+                return;
             }
-            else
-            {
-                string planetName = PlanetsSelectList.SelectedItem.ToString();
-                Planet planet = DefinePlanetByName(planetName);
-                string colonyName = ColonyInput.Text;
-                ColonyInput.Text = "";
-                planet.CreateColony(colonyName, planet);
-                UpdateWindowColoniesList(planet);
-            }
+            string planetName = PlanetsSelectList.SelectedItem.ToString();
+            Planet planet = DefinePlanetByName(planetName);
+            string colonyName = ColonyInput.Text;
+            ColonyInput.Text = "";
+            planet.CreateColony(colonyName);
+            UpdateWindowColoniesList(planet);
         }
 
         private void RemoveColonyButton_Click(object sender, EventArgs e)
         {
-            if (PlanetsSelectList.SelectedItem != null)
+            if (PlanetsSelectList.SelectedIndex == -1 || ColoniesSelectList.SelectedItem == null)
             {
-                string planetName = PlanetsSelectList.SelectedItem.ToString();
-                if (ColoniesSelectList.SelectedItem != null)
-                {
-                    string colonyName = ColoniesSelectList.SelectedItem.ToString();
-                    Planet tempPlanet = DefinePlanetByName(planetName);
-                    tempPlanet.RemoveColony(colonyName);
-                    UpdateWindowColoniesList(tempPlanet);
-                }
-                else
-                    ShowStatus("Select at least one colony");
+                ShowStatus("Excuse me. Select at least one fucking planet or colony. Thank you.");
+                return;
             }
-            else
-                ShowStatus("Select at least one colony");
+            string planetName = PlanetsSelectList.SelectedItem.ToString();
+            string colonyName = ColoniesSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(planetName);
+            tempPlanet.RemoveColony(colonyName);
+            UpdateWindowColoniesList(tempPlanet);
         }
 
         private void RemovePlanetButton_Click(object sender, EventArgs e)
         {
-            if (PlanetsSelectList.SelectedItem != null)
+            if (PlanetsSelectList.SelectedItem == null)
             {
-                string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
-
-                int index = planetsList.FindIndex(i => i.Name == text);
-                planetsList.RemoveAt(index);
-                UpdateWindowPlanetsList();
+                ShowStatus("Excuse me. Select at least one fucking planet or colony. Thank you.");
+                return;
             }
-            else
-                ShowStatus("Select at least one planet");
+            string text = PlanetsSelectList.GetItemText(PlanetsSelectList.SelectedItem);
+            var planetToRemove = planetsList.Single(i => i.Name == text);
+            planetsList.Remove(planetToRemove);
+            UpdateWindowPlanetsList();
         }
 
-        private void BuyResourcesButton_Click(string amountText, Colony tempColony, MarketStorageElement resource)
+        private void BuyResourcesButton_Click(int amount, Colony tempColony, MarketStorageElement resource)
         {
-            if (int.TryParse(amountText, out int amount))
+            if (tempColony.Money < resource.Sell * amount || resource.Amount < amount)
             {
-                if (tempColony.Money >= resource.Sell * amount && resource.Amount >= amount)
-                {
-                    //double before = resource["amount"];
-                    double price = resource.Sell * amount;
-                    tempColony.BuyResource(resource, amount, price);
-                    resource.Amount -= amount;
-                    //double after = resource["amount"];
-                    //resource["sell"] *= before / after;
-                    _market.SetNewResourceData(resource);
-                }
+                ShowStatus("Excuse me there are no damn resources or you're just poor fuck. Good luck!");
+                return;
             }
+            //double before = resource["amount"];
+            double price = resource.Sell * amount;
+            tempColony.BuyResource(resource, amount, price);
+            resource.Amount -= amount;
+            //double after = resource["amount"];
+            //resource["sell"] *= before / after;
+            _market.SetNewResourceData(resource);
         }
 
-        private void SellResourcesButton_Click(string amountText, Colony tempColony, MarketStorageElement resource)
+        private void SellResourcesButton_Click(int amount, Colony tempColony, MarketStorageElement resource)
         {
-            if (int.TryParse(amountText, out int amount))
+            if (tempColony.GetStorage()[resource.ResType.TypeString].Amount < amount)
             {
-                if (tempColony.GetStorage()[resource.ResType.TypeString].Amount >= amount)
-                {
-                    //double before = resource["amount"];
-                    double price = resource.Sell * amount;
-                    tempColony.SellResource(resource, amount, price);
-                    resource.Amount += amount;
-                    //double after = resource["amount"];
-                    //resource["sell"] *= before / after;
-                    _market.SetNewResourceData(resource);
-                }
+                ShowStatus("Excuse me this f*cking colony doesn't have enough resources to sell them");
+                return;
             }
-                
+            //double before = resource["amount"];
+            double price = resource.Sell * amount;
+            tempColony.SellResource(resource, amount, price);
+            resource.Amount += amount;
+            //double after = resource["amount"];
+            //resource["sell"] *= before / after;
+            _market.SetNewResourceData(resource);
         }
 
         private void BuySellButton_Click(object sender, EventArgs e)
         {
             // there should be selected resources and input shouln't be empty
-            if (ResourcesSelectedList.SelectedItem != null && ResourceAmountInput.Text != "")
+            if (ResourcesSelectedList.SelectedItem == null || ResourceAmountInput.Text == "")
             {
-                string resourceType = ResourcesSelectedList.SelectedItem.ToString();
-                // Some planet should be selected
-                if (PlanetsSelectList.SelectedItem != null)
+                ShowStatus("You didn't select any fucking resource or didn't type any text.");
+                return;
+            }
+            string resourceType = ResourcesSelectedList.SelectedItem.ToString();
+            // Some planet should be selected
+            if (PlanetsSelectList.SelectedItem == null || ColoniesSelectList.SelectedItem == null)
+            {
+                ShowStatus("Excuse me. Select at least one fucking planet or colony. Thank you.");
+                return;
+            }
+            string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(tempPlanetName);
+            string text = ColoniesSelectList.SelectedItem.ToString();
+            Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
+
+            MarketStorageElement resource = _market.DefineResourceType(resourceType); // get market prices for resource
+            string amountText = ResourceAmountInput.Text;
+            ResourceAmountInput.Text = "";
+            if (int.TryParse(amountText, out int amount))
+            {
+                if (amount < 0)
                 {
-                    string tempPlanetName = PlanetsSelectList.SelectedItem.ToString();
-                    Planet tempPlanet = DefinePlanetByName(tempPlanetName);
-                    // Some colony should be selected
-                    if (ColoniesSelectList.SelectedItem != null)
-                    {
-                        string text = ColoniesSelectList.SelectedItem.ToString();
-                        Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
-
-                        MarketStorageElement resource = _market.DefineResourceType(resourceType); // get market prices for resource
-                        string amountText = ResourceAmountInput.Text;
-                        ResourceAmountInput.Text = "";
-
-                        var btn = (Button)sender;
-                        string name = (btn.Name);
-                        if (name == "BuyResourcesButton")
-                        {
-                            BuyResourcesButton_Click(amountText, tempColony, resource);
-                        }
-                        else if (name == "SellResourcesButton")
-                        {
-                            SellResourcesButton_Click(amountText, tempColony, resource);
-                        }
-
-                    }
-                    else
-                        ShowStatus("Select at least one colony");
+                    ShowStatus("Excuse me your you typed some shit with minus. Please try again.");
+                    return;
                 }
-                else
-                    ShowStatus("Select at least one planet");
+                var btn = (Button)sender;
+                string name = (btn.Name);
+                if (name == "BuyResourcesButton")
+                {
+                    BuyResourcesButton_Click(amount, tempColony, resource);
+                }
+                else if (name == "SellResourcesButton")
+                {
+                    SellResourcesButton_Click(amount, tempColony, resource);
+                }
             }
             else
-                ShowStatus("Select at least one resource type or type something in input");
+                ShowStatus("Excuse me you typed some shit. Not a number");
         }
+
         
         private void RemoveBuildingButton_Click(object sender, EventArgs e)
         {
-            if (PlanetsSelectList.SelectedItem != null)
+            if (PlanetsSelectList.SelectedItem == null || ColoniesSelectList.SelectedItem == null || BuildingsSelectList.SelectedItem == null)
             {
-                string planetName = PlanetsSelectList.SelectedItem.ToString();
-                if (ColoniesSelectList.SelectedItem != null)
-                {
-                    string colonyName = ColoniesSelectList.SelectedItem.ToString();
-                    if (BuildingsSelectList.SelectedItem != null)
-                    {
-                        string idStr = BuildingsSelectList.SelectedItem.ToString();
-                        Planet tempPlanet = DefinePlanetByName(planetName);
-                        Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
-                        if (int.TryParse(idStr, out int id))
-                        {
-                            tempColony.RemoveBuilding(id);
-                            UpdateWindowBuildingsList(tempColony);
-                        }
-                    }
-                    else
-                        ShowStatus("Select at least one Building");
-                }
-                else
-                    ShowStatus("Select at leats one Building");
+                ShowStatus("Select some shit from other windows please.");
+                return;
             }
-            else
-                ShowStatus("Select at leats one Building");
+            string planetName = PlanetsSelectList.SelectedItem.ToString();
+            string colonyName = ColoniesSelectList.SelectedItem.ToString();
+            string idStr = BuildingsSelectList.SelectedItem.ToString();
+            Planet tempPlanet = DefinePlanetByName(planetName);
+            Colony tempColony = DefineColonyByName(colonyName, tempPlanet.GetColonies(), tempPlanet);
+            if (int.TryParse(idStr, out int id))
+            {
+                tempColony.RemoveBuilding(id);
+                UpdateWindowBuildingsList(tempColony);
+            }
         }
     }
 }

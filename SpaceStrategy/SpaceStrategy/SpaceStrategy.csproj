@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Buildings\Building.cs" />
     <Compile Include="Colony.cs" />
-    <Compile Include="Registry.cs" />
+    <Compile Include="Form1 Parts\Registry.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Resources\Food.cs" />
     <Compile Include="Form1 Parts\ButtonClicksForm1.cs">
       <SubType>Form</SubType>
