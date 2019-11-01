@@ -46,7 +46,6 @@ namespace SpaceStrategy
                     // if type of the building matches type of the resource building should extract resource
                     if (ParentPlanet.GetResources()[i].Type.TypeString == ResourceExtractionType.TypeString && ParentPlanet.GetResources()[i].Amount > 0)
                     {
-                        Console.WriteLine("here");
                         ParentPlanet.GetResources()[i].Amount -= Efficiency;
                         Dictionary<string, HeapResource> storage = ParentColony.GetStorage();
                         storage[ResourceExtractionType.TypeString].Amount += Efficiency;

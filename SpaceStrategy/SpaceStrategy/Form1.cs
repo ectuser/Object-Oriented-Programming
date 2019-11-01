@@ -16,7 +16,7 @@ namespace SpaceStrategy
         private List<Planet> planetsList = new List<Planet>();
         private Timer timer1;
         private Market _market = new Market();
-        private List<Dictionary<string, dynamic>> _prices; // prices for resources
+        private List<MarketStorageElement> _prices; // prices for resources
         public static Label _statusBar;
 
         public Form1()

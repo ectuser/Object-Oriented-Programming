@@ -109,16 +109,16 @@ namespace SpaceStrategy
                 ShowStatus("Select at least one planet");
         }
 
-        private void BuyResourcesButton_Click(string amountText, Colony tempColony, Dictionary<string, dynamic> resource)
+        private void BuyResourcesButton_Click(string amountText, Colony tempColony, MarketStorageElement resource)
         {
             if (int.TryParse(amountText, out int amount))
             {
-                if (tempColony.Money >= resource["sell"] * amount && resource["amount"] >= amount)
+                if (tempColony.Money >= resource.Sell * amount && resource.Amount >= amount)
                 {
                     //double before = resource["amount"];
-                    double price = resource["sell"] * amount;
+                    double price = resource.Sell * amount;
                     tempColony.BuyResource(resource, amount, price);
-                    resource["amount"] -= amount;
+                    resource.Amount -= amount;
                     //double after = resource["amount"];
                     //resource["sell"] *= before / after;
                     _market.SetNewResourceData(resource);
@@ -126,16 +126,16 @@ namespace SpaceStrategy
             }
         }
 
-        private void SellResourcesButton_Click(string amountText, Colony tempColony, Dictionary<string, dynamic> resource)
+        private void SellResourcesButton_Click(string amountText, Colony tempColony, MarketStorageElement resource)
         {
             if (int.TryParse(amountText, out int amount))
             {
-                if (tempColony.GetStorage()[resource["type"].TypeString].Amount >= amount)
+                if (tempColony.GetStorage()[resource.ResType.TypeString].Amount >= amount)
                 {
                     //double before = resource["amount"];
-                    double price = resource["sell"] * amount;
+                    double price = resource.Sell * amount;
                     tempColony.SellResource(resource, amount, price);
-                    resource["amount"] += amount;
+                    resource.Amount += amount;
                     //double after = resource["amount"];
                     //resource["sell"] *= before / after;
                     _market.SetNewResourceData(resource);
@@ -161,7 +161,7 @@ namespace SpaceStrategy
                         string text = ColoniesSelectList.SelectedItem.ToString();
                         Colony tempColony = DefineColonyByName(text, tempPlanet.GetColonies(), tempPlanet);
 
-                        Dictionary<string, dynamic> resource = _market.DefineResourceType(resourceType); // get market prices for resource
+                        MarketStorageElement resource = _market.DefineResourceType(resourceType); // get market prices for resource
                         string amountText = ResourceAmountInput.Text;
                         ResourceAmountInput.Text = "";
 

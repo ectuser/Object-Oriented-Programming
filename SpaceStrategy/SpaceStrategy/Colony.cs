@@ -101,15 +101,15 @@ namespace SpaceStrategy
             }
 
         }
-        public void BuyResource(Dictionary<string, dynamic> resource, int amount, double price)
+        public void BuyResource(MarketStorageElement resource, int amount, double price)
         {
             Money -= price;
-            _storage[resource["type"].TypeString].Amount += amount;
+            _storage[resource.ResType.TypeString].Amount += amount;
             
         }
-        public void SellResource(Dictionary<string, dynamic> resource, int amount, double price)
+        public void SellResource(MarketStorageElement resource, int amount, double price)
         {
-            _storage[resource["type"].TypeString].Amount -= amount;
+            _storage[resource.ResType.TypeString].Amount -= amount;
             Money += price;
         }
 

@@ -6,71 +6,66 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
+    public struct MarketStorageElement
+    {
+        public Resource ResType { get; }
+        public int Amount { get; set; }
+        //public int amount { get; }
+        public int Sell { get; }
+
+        public MarketStorageElement(Resource type, int amount, int sell)
+        {
+            ResType = type;
+            Amount = amount;
+            Sell = sell;
+        }
+
+    }
+
     public class Market
     {
-        private List<Dictionary<string, dynamic>> _priceList;
+        private List<MarketStorageElement> _priceList;
 
         public Market()
         {
             _priceList = PricesInit();
         }
 
-        public List<Dictionary<string, dynamic>> GetPriceList()
+        public List<MarketStorageElement> GetPriceList()
         {
             return _priceList;
         }
 
-        public Dictionary<string, dynamic> DefineResourceType(string type)
+        public MarketStorageElement DefineResourceType(string type)
         {
             for (int i = 0; i < _priceList.Count(); i++)
             {
-                if (_priceList[i]["type"].TypeString == type)
+                if (_priceList[i].ResType.TypeString == type)
                 {
                     return _priceList[i];
                 }
             }
             Console.WriteLine("Can't define market resource type!");
-            Dictionary<string, dynamic> error = new Dictionary<string, dynamic>
-            {
-                { "error", "error" }
-            };
+            MarketStorageElement error = new MarketStorageElement();
             return error;
         }
 
 
-        private List<Dictionary<string, dynamic>> PricesInit()
+        private List<MarketStorageElement> PricesInit()
         {
-            List<Dictionary<string, dynamic>> list = new List<Dictionary<string, dynamic>>();
-            Dictionary<string, dynamic> wood = new Dictionary<string, dynamic>
-            {
-                { "type", new Wood() },
-                { "amount", 100 },
-                //{ "buy", 5.0 },
-                { "sell", 5.0 }
-            };
-            Dictionary<string, dynamic> stone = new Dictionary<string, dynamic>
-            {
-                { "type", new Stone() },
-                { "amount", 100 },
-                //{ "buy", 5.0 },
-                { "sell", 5.0 }
-            };
-            Dictionary<string, dynamic> food = new Dictionary<string, dynamic>
-            {
-                { "type", new Food() },
-                { "amount", 100 },
-                //{ "buy", 5.0 },
-                { "sell", 5.0 }
-            };
+            List<MarketStorageElement> list = new List<MarketStorageElement>();
+            MarketStorageElement wood = new MarketStorageElement(type: new Wood(), amount: 100, sell: 5);
+            MarketStorageElement stone = new MarketStorageElement(type: new Stone(), amount: 100, sell: 5);
+            MarketStorageElement food = new MarketStorageElement(type: new Food(), amount: 100, sell: 5);
             list.Add(wood); list.Add(stone); list.Add(food);
             return list;
         }
-        public void SetNewResourceData(Dictionary<string, dynamic> resource)
+        public void SetNewResourceData(MarketStorageElement resource)
         {
             // if something has been changed this method changes particular resource
             for (int i = 0; i < _priceList.Count(); i++)
             {
-                if (_priceList[i]["type"].TypeString == resource["type"].TypeString)
+                if (_priceList[i].ResType.TypeString == resource.ResType.TypeString)
                 {
                     _priceList[i] = resource;
                 }

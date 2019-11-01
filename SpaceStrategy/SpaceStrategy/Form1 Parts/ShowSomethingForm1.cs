@@ -72,24 +72,34 @@ namespace SpaceStrategy
             for (int i = 0; i < _prices.Count(); i++)
             {
                 int xPosition = 0;
-                Dictionary<string, dynamic> el = _prices[i];
-                foreach (KeyValuePair<string, dynamic> keyValue in el)
-                {
-                    Label newLabel = new Label();
-                    newLabel.Location = new Point(xPosition * 60, 30 * yPosition);
-                    if (keyValue.Key == "type")
-                    {
-                        newLabel.Text = keyValue.Value.TypeString;
-                    }
-                    else
-                    {
-                        newLabel.Text = keyValue.Value.ToString();
-                    }
-                    newLabel.Height = 30;
-                    newLabel.Width = 50;
-                    xPosition++;
-                    MarketPanel.Controls.Add(newLabel);
-                }
+                MarketStorageElement el = _prices[i];
+                Label newLabel = new Label();
+                newLabel.Location = new Point(xPosition * 60, 30 * yPosition);
+                newLabel.Text = el.ResType.TypeString;
+                newLabel.Height = 30;
+                newLabel.Width = 50;
+                xPosition++;
+                MarketPanel.Controls.Add(newLabel);
+                Console.WriteLine(newLabel.Text);
+
+                Label newLabel2 = new Label();
+                newLabel2.Location = new Point(xPosition * 60, 30 * yPosition);
+                newLabel2.Text = el.Amount.ToString();
+                newLabel2.Height = 30;
+                newLabel2.Width = 50;
+                xPosition++;
+                MarketPanel.Controls.Add(newLabel2);
+                Console.WriteLine(newLabel2.Text);
+
+                Label newLabel3 = new Label();
+                newLabel3.Location = new Point(xPosition * 60, 30 * yPosition);
+                newLabel3.Text = el.Sell.ToString();
+                newLabel3.Height = 30;
+                newLabel3.Width = 50;
+                xPosition++;
+                MarketPanel.Controls.Add(newLabel3);
+                Console.WriteLine(newLabel3.Text);
+
                 yPosition++;
             }
         }

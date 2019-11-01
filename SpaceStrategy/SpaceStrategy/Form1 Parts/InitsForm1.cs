@@ -30,8 +30,8 @@ namespace SpaceStrategy
         {
             for (int i = 0; i < _prices.Count(); i++)
             {
-                Dictionary<string, dynamic> el = _prices[i];
-                ResourcesSelectedList.Items.Add(el["type"].TypeString);
+                MarketStorageElement el = _prices[i];
+                ResourcesSelectedList.Items.Add(el.ResType.TypeString);
             }
         }
     }
