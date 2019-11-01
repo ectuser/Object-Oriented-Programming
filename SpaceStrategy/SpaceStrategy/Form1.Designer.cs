@@ -78,7 +78,8 @@
             // StatusBar
             // 
             this.StatusBar.AutoSize = true;
-            this.StatusBar.Location = new System.Drawing.Point(91, 400);
+            this.StatusBar.ForeColor = System.Drawing.Color.Red;
+            this.StatusBar.Location = new System.Drawing.Point(740, 27);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(48, 17);
             this.StatusBar.TabIndex = 5;
