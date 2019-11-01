@@ -10,7 +10,7 @@ namespace SpaceStrategy
     {
         public Stone() : base()
         {
-            Type = "stone";
+            TypeString = "stone";
         }
     }
 }

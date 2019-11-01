@@ -130,7 +130,7 @@ namespace SpaceStrategy
         {
             if (int.TryParse(amountText, out int amount))
             {
-                if (tempColony.GetStorage()[resource["type"].Type].Amount >= amount)
+                if (tempColony.GetStorage()[resource["type"].TypeString].Amount >= amount)
                 {
                     //double before = resource["amount"];
                     double price = resource["sell"] * amount;

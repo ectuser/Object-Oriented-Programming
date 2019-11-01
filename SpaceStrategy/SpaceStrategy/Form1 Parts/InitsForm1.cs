@@ -31,7 +31,7 @@ namespace SpaceStrategy
             for (int i = 0; i < _prices.Count(); i++)
             {
                 Dictionary<string, dynamic> el = _prices[i];
-                ResourcesSelectedList.Items.Add(el["type"].Type);
+                ResourcesSelectedList.Items.Add(el["type"].TypeString);
             }
         }
     }

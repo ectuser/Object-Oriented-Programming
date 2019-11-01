@@ -9,12 +9,13 @@ namespace SpaceStrategy
     public class HeapResource : PlanetObject
     {
         public int Amount { get; set; }
-        public string Type { get; }
+        //public string Type { get; }
+        public Resource Type { get; }
 
         public HeapResource(int amount, Resource resource)
         {
             Amount = amount;
-            Type = resource.Type;
+            Type = resource;
             
         }
     }

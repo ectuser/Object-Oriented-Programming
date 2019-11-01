@@ -12,7 +12,7 @@ namespace SpaceStrategy
         {
             Cost = 100;
             Type = "pasture";
-            ResourceExtractionType = "food";
+            ResourceExtractionType = new Food();
             ResourcesCost = ResourcesNeedToBuild(woodCost: 10, stoneCost: 10, foodCost: 10);
         }
     }

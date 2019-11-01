@@ -8,7 +8,7 @@ namespace SpaceStrategy
 {
     public abstract class Resource
     {
-        public string Type { get; protected set; }
+        public string TypeString { get; protected set; }
         public Resource()
         {
         }

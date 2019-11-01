@@ -79,7 +79,7 @@ namespace SpaceStrategy
                     newLabel.Location = new Point(xPosition * 60, 30 * yPosition);
                     if (keyValue.Key == "type")
                     {
-                        newLabel.Text = keyValue.Value.Type;
+                        newLabel.Text = keyValue.Value.TypeString;
                     }
                     else
                     {
@@ -108,7 +108,7 @@ namespace SpaceStrategy
             List<HeapResource> list = planet.GetResources();
             for (int i = 0; i < list.Count(); i++)
             {
-                resourcesData += list[i].Amount + " of " + list[i].Type + "\n";
+                resourcesData += list[i].Amount + " of " + list[i].Type.TypeString + "\n";
             }
             data = nameData + radiusData + coordinatesData + coloniesData + resourcesData;
             PlanetInfoData.Text = data;

@@ -33,10 +33,10 @@ namespace SpaceStrategy
         }
         public void CreateBuilding(Building building, Colony colony)
         {
-            List<Dictionary<string, dynamic>> costList = building.ResourcesCost;
+            List<ResourceNeed> costList = building.ResourcesCost;
             for (int i = 0; i < costList.Count(); i++)
             {
-                _storage[costList[i]["type"].Type].Amount -= costList[i]["cost"];
+                _storage[costList[i].ResType.TypeString].Amount -= costList[i].ResCost;
             }
             Money -= building.Cost;
             _buildingsList.Add(DefineBuildingType(building, colony));
@@ -104,25 +104,25 @@ namespace SpaceStrategy
         public void BuyResource(Dictionary<string, dynamic> resource, int amount, double price)
         {
             Money -= price;
-            _storage[resource["type"].Type].Amount += amount;
+            _storage[resource["type"].TypeString].Amount += amount;
             
         }
         public void SellResource(Dictionary<string, dynamic> resource, int amount, double price)
         {
-            _storage[resource["type"].Type].Amount -= amount;
+            _storage[resource["type"].TypeString].Amount -= amount;
             Money += price;
         }
 
         public bool AreThereEnoughResources(Building buildingToBuild)
         {
             // Check if it is possible to build the building
-            List<Dictionary<string, dynamic>> costList = buildingToBuild.ResourcesCost;
+            List<ResourceNeed> costList = buildingToBuild.ResourcesCost;
             if (Money >= buildingToBuild.Cost)
             {
                 for (int i = 0; i < costList.Count(); i++)
                 {
                     // if colony has enough resources of each type to build the building
-                    if (_storage[costList[i]["type"].Type].Amount < costList[i]["cost"])
+                    if (_storage[costList[i].ResType.TypeString].Amount < costList[i].ResCost)
                         return false;
                 }
                 return true;

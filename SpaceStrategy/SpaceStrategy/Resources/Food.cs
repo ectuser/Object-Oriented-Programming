@@ -10,7 +10,7 @@ namespace SpaceStrategy
     {
         public Food() : base()
         {
-            Type = "food";
+            TypeString = "food";
         }
     }
 }

@@ -24,7 +24,7 @@ namespace SpaceStrategy
         {
             for (int i = 0; i < _priceList.Count(); i++)
             {
-                if (_priceList[i]["type"].Type == type)
+                if (_priceList[i]["type"].TypeString == type)
                 {
                     return _priceList[i];
                 }
@@ -70,7 +70,7 @@ namespace SpaceStrategy
             // if something has been changed this method changes particular resource
             for (int i = 0; i < _priceList.Count(); i++)
             {
-                if (_priceList[i]["type"].Type == resource["type"].Type)
+                if (_priceList[i]["type"].TypeString == resource["type"].TypeString)
                 {
                     _priceList[i] = resource;
                 }
