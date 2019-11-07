@@ -21,7 +21,6 @@ namespace SpaceStrategy
     public class Colony
     {
         private List<Building> _buildingsList = new List<Building>();
-        private Dictionary<string, HeapResource> _storage;
         private List<ColonyStorage> storage;
         private int _needFood; // this thing depends on number of buildings
 
@@ -34,12 +33,6 @@ namespace SpaceStrategy
         public Colony(string name, Planet planet)
         {
             Name = name;
-            _storage = new Dictionary<string, HeapResource>
-            {
-                { "wood", new HeapResource(100, new Wood())},
-                { "stone", new HeapResource(100, new Stone())},
-                { "food", new HeapResource(100, new Food())}
-            };
             Money = 1000;
             ParentPlanet = planet;
             storage = InitColonyStorage();
@@ -49,7 +42,15 @@ namespace SpaceStrategy
             List<ResourceNeed> costList = building.ResourcesCost;
             for (int i = 0; i < costList.Count(); i++)
             {
-                _storage[costList[i].ResType.TypeString].Amount -= costList[i].ResCost;
+                for (int j = 0; j < storage.Count(); j++)
+                {
+                    if (storage[j].Type.TypeString == costList[i].ResType.TypeString)
+                    {
+                        ColonyStorage stor = storage[j];
+                        stor.Amount -= costList[i].ResCost;
+                        storage[j] = stor;
+                    }
+                }
             }
             Money -= building.Cost;
             Building selectedBuilding = DefineBuildingType(building, colony);
@@ -64,13 +65,13 @@ namespace SpaceStrategy
         {
             return _buildingsList;
         }
-        public Dictionary<string, HeapResource> GetStorage()
+        public List<ColonyStorage> GetStorage()
         {
-            return _storage;
+            return storage;
         }
-        public void SetStorage(Dictionary<string, HeapResource> newStorage)
+        public void SetStorage(List<ColonyStorage> newStorage)
         {
-            _storage = newStorage;
+            storage = newStorage;
         }
         private Building DefineBuildingType(Building building, Colony colony)
         {
@@ -98,34 +99,52 @@ namespace SpaceStrategy
         public void UseFood()
         {
             _needFood = _buildingsList.Count();
+            string str = "doesn't have enough food to keep working.";
             // Check if colony has enough food to buildings work
-            if (_needFood > _storage["food"].Amount)
+            if (_needFood > storage[2].Amount)
             {
-                Console.WriteLine(_needFood + " " + _storage["food"].Amount);
                 //This IF is for remove previous status if there's enoigh food
-                string str = "doesn't have enough food to keep working.";
                 ColonyWorks = false;
                 Form1.ShowStatus("Colony " + Name + " doesn't have enough food to keep working.");
+
+
+            }
+            else
+            {
+                storage[2] = ChangeStorage(storage[2], -_needFood);
                 if (Form1._statusBar.Text.Contains(str))
                 {
                     Form1.ShowStatus("");
                 }
-
-
+                //ColonyStorage stor = storage[2];
+                //stor.Amount -= _needFood;
+                //storage[2] = stor;
+                ColonyWorks = true;
             }
-            _storage["food"].Amount -= _needFood;
-            ColonyWorks = true;
 
         }
         public void BuyResource(MarketStorageElement resource, int amount, double price)
         {
             Money -= price;
-            _storage[resource.ResType.TypeString].Amount += amount;
+            for (int i = 0; i < storage.Count(); i++)
+            {
+                if (resource.ResType.TypeString == storage[i].Type.TypeString)
+                {
+                    storage[i] = ChangeStorage(storage[i], amount);
+                }
+            }
             
         }
         public void SellResource(MarketStorageElement resource, int amount, double price)
         {
-            _storage[resource.ResType.TypeString].Amount -= amount;
+            for (int i = 0; i < storage.Count(); i++)
+            {
+                if (resource.ResType.TypeString == storage[i].Type.TypeString)
+                {
+                    storage[i] = ChangeStorage(storage[i], -amount);
+                }
+            }
+            //_storage[resource.ResType.TypeString].Amount -= amount;
             Money += price;
         }
 
@@ -138,8 +157,15 @@ namespace SpaceStrategy
                 for (int i = 0; i < costList.Count(); i++)
                 {
                     // if colony has enough resources of each type to build the building
-                    if (_storage[costList[i].ResType.TypeString].Amount < costList[i].ResCost)
-                        return false;
+                    for (int j = 0; j < storage.Count(); j++)
+                    {
+                        if (storage[j].Amount < costList[i].ResCost)
+                        {
+                            return false;
+                        }
+                    }
+                    //if (_storage[costList[i].ResType.TypeString].Amount < costList[i].ResCost)
+                    //    return false;
                 }
                 return true;
             }
@@ -157,6 +183,13 @@ namespace SpaceStrategy
             list.Add(stone);
             list.Add(food);
             return list;
+        }
+
+        private ColonyStorage ChangeStorage(ColonyStorage el, int changeAmount)
+        {
+            ColonyStorage tempStorage = el;
+            tempStorage.Amount += changeAmount;
+            return tempStorage;
         }
     }
 }

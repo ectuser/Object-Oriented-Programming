@@ -36,7 +36,7 @@ namespace SpaceStrategy
             ParentPlanet = colony.ParentPlanet;
         }
 
-        public void ExtractResources()
+        public void ExtractResources(Colony ParentColony)
         {
             // Colony have enough food to work
             if (ParentColony.ColonyWorks)
@@ -47,8 +47,17 @@ namespace SpaceStrategy
                     if (ParentPlanet.GetResources()[i].Type.TypeString == ResourceExtractionType.TypeString && ParentPlanet.GetResources()[i].Amount > 0)
                     {
                         ParentPlanet.GetResources()[i].Amount -= Efficiency;
-                        Dictionary<string, HeapResource> storage = ParentColony.GetStorage();
-                        storage[ResourceExtractionType.TypeString].Amount += Efficiency;
+                        List<ColonyStorage> storage = ParentColony.GetStorage();
+                        for (int j = 0; j < storage.Count(); j++)
+                        {
+                            if (storage[j].Type.TypeString == ResourceExtractionType.TypeString)
+                            {
+                                ColonyStorage temp = storage[j];
+                                temp.Amount += Efficiency;
+                                storage[j] = temp;
+                            }
+                        }
+                        //storage[ResourceExtractionType.TypeString].Amount += Efficiency;
                         ParentColony.SetStorage(storage);
                     }
                 }

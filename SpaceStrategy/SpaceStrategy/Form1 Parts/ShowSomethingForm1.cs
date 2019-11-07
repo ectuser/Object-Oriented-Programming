@@ -124,16 +124,15 @@ namespace SpaceStrategy
         {
             string data = "";
             string nameData = "Name : " + colony.Name + "\n";
-            string parentPlanet = "Parent planet : " + colony.ParentPlanet.Name + "\n";
             string moneyData = "Money : " + colony.Money + "\n";
             string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             string resourcesData = "Resources : \n";
-            Dictionary<string, HeapResource> tempList = colony.GetStorage();
-            foreach (KeyValuePair<string, HeapResource> keyValue in tempList)
+            List<ColonyStorage> tempList = colony.GetStorage();
+            for (int i = 0; i < tempList.Count(); i++)
             {
-                resourcesData += keyValue.Value.Amount + " of " + keyValue.Key + "\n";
+                resourcesData += tempList[i].Amount + " of " + tempList[i].Type.TypeString + "\n";
             }
-            data = nameData + parentPlanet + moneyData + buildingsData + resourcesData;
+            data = nameData + moneyData + buildingsData + resourcesData;
             ColonyInfoData.Text = data;
         }
         private void ShowBuildingsData(Building building, Colony colony)

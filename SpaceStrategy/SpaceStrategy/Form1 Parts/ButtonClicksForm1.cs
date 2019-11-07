@@ -114,10 +114,18 @@ namespace SpaceStrategy
 
         private void SellResourcesButton_Click(int amount, Colony tempColony, MarketStorageElement resource)
         {
-            if (tempColony.GetStorage()[resource.ResType.TypeString].Amount < amount)
+            List<ColonyStorage> storage = tempColony.GetStorage();
+            for (int i = 0; i < storage.Count(); i++)
             {
-                ShowStatus("Excuse me this f*cking colony doesn't have enough resources to sell them");
-                return;
+                if (storage[i].Type.TypeString == resource.ResType.TypeString)
+                {
+                    if (storage[i].Amount < amount)
+                    {
+                        Console.WriteLine(storage[i].Amount + " " + resource.Amount);
+                        ShowStatus("Excuse me this f*cking colony doesn't have enough resources to sell them");
+                        return;
+                    }
+                }
             }
             //double before = resource["amount"];
             double price = resource.Sell * amount;
