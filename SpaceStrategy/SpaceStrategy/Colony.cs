@@ -6,22 +6,10 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    public struct ColonyStorage
-    {
-        public Resource Type { get; set; }
-        public int Amount { get; set; }
-
-        public ColonyStorage(Resource type, int amount)
-        {
-            Type = type;
-            Amount = amount;
-        }
-    }
-
     public class Colony
     {
         private List<Building> _buildingsList = new List<Building>();
-        private List<ColonyStorage> storage;
+        private List<ResourceInt> storage;
         private int _needFood; // this thing depends on number of buildings
 
 
@@ -37,16 +25,17 @@ namespace SpaceStrategy
         }
         public void CreateBuilding(Building building, Colony colony)
         {
-            List<ResourceNeed> costList = building.ResourcesCost;
+            List<ResourceInt> costList = building.ResourcesCost;
             for (int i = 0; i < costList.Count(); i++)
             {
                 for (int j = 0; j < storage.Count(); j++)
                 {
-                    if (storage[j].Type.TypeString == costList[i].ResType.TypeString)
+                    if (storage[j].Type.TypeString == costList[i].Type.TypeString)
                     {
-                        ColonyStorage stor = storage[j];
-                        stor.Amount -= costList[i].ResCost;
-                        storage[j] = stor;
+                        storage[j] = ChangeStorage(storage[j], -costList[i].Number);
+                        //ResourceInt stor = storage[j];
+                        //stor.Number -= costList[i].ResCost;
+                        //storage[j] = stor;
                     }
                 }
             }
@@ -63,11 +52,11 @@ namespace SpaceStrategy
         {
             return _buildingsList;
         }
-        public List<ColonyStorage> GetStorage()
+        public List<ResourceInt> GetStorage()
         {
             return storage;
         }
-        public void SetStorage(List<ColonyStorage> newStorage)
+        public void SetStorage(List<ResourceInt> newStorage)
         {
             storage = newStorage;
         }
@@ -99,7 +88,7 @@ namespace SpaceStrategy
             _needFood = _buildingsList.Count();
             string str = "doesn't have enough food to keep working.";
             // Check if colony has enough food to buildings work
-            if (_needFood > storage[2].Amount)
+            if (_needFood > storage[2].Number)
             {
                 //This IF is for remove previous status if there's enoigh food
                 ColonyWorks = false;
@@ -149,7 +138,7 @@ namespace SpaceStrategy
         public bool AreThereEnoughResources(Building buildingToBuild)
         {
             // Check if it is possible to build the building
-            List<ResourceNeed> costList = buildingToBuild.ResourcesCost;
+            List<ResourceInt> costList = buildingToBuild.ResourcesCost;
             if (Money >= buildingToBuild.Cost)
             {
                 for (int i = 0; i < costList.Count(); i++)
@@ -157,7 +146,7 @@ namespace SpaceStrategy
                     // if colony has enough resources of each type to build the building
                     for (int j = 0; j < storage.Count(); j++)
                     {
-                        if (storage[j].Amount < costList[i].ResCost)
+                        if (storage[j].Number < costList[i].Number)
                         {
                             return false;
                         }
@@ -171,22 +160,22 @@ namespace SpaceStrategy
                 return false;
         }
 
-        private List<ColonyStorage> InitColonyStorage()
+        private List<ResourceInt> InitColonyStorage()
         {
-            List<ColonyStorage> list = new List<ColonyStorage>();
-            ColonyStorage wood = new ColonyStorage(new Wood(), 100);
-            ColonyStorage stone = new ColonyStorage(new Stone(), 100);
-            ColonyStorage food = new ColonyStorage(new Food(), 100);
+            List<ResourceInt> list = new List<ResourceInt>();
+            ResourceInt wood = new ResourceInt(new Wood(), 100);
+            ResourceInt stone = new ResourceInt(new Stone(), 100);
+            ResourceInt food = new ResourceInt(new Food(), 100);
             list.Add(wood);
             list.Add(stone);
             list.Add(food);
             return list;
         }
 
-        private ColonyStorage ChangeStorage(ColonyStorage el, int changeAmount)
+        private ResourceInt ChangeStorage(ResourceInt el, int changeAmount)
         {
-            ColonyStorage tempStorage = el;
-            tempStorage.Amount += changeAmount;
+            ResourceInt tempStorage = el;
+            tempStorage.Number += changeAmount;
             return tempStorage;
         }
     }

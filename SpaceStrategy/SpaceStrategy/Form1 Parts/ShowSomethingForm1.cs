@@ -127,10 +127,10 @@ namespace SpaceStrategy
             string moneyData = "Money : " + colony.Money + "\n";
             string buildingsData = "Number of buildings : " + colony.GetBuildings().Count() + "\n";
             string resourcesData = "Resources : \n";
-            List<ColonyStorage> tempList = colony.GetStorage();
+            List<ResourceInt> tempList = colony.GetStorage();
             for (int i = 0; i < tempList.Count(); i++)
             {
-                resourcesData += tempList[i].Amount + " of " + tempList[i].Type.TypeString + "\n";
+                resourcesData += tempList[i].Number + " of " + tempList[i].Type.TypeString + "\n";
             }
             data = nameData + moneyData + buildingsData + resourcesData;
             ColonyInfoData.Text = data;

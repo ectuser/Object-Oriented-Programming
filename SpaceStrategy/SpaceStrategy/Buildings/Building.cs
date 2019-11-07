@@ -6,17 +6,6 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
-    public struct ResourceNeed
-    {
-        public Resource ResType { get; }
-        public int ResCost { get; }
-
-        public ResourceNeed(Resource res, int cost)
-        {
-            ResType = res;
-            ResCost = cost;
-        }
-    }
 
     public class Building : PlanetObject
     {
@@ -24,7 +13,7 @@ namespace SpaceStrategy
         public Resource ResourceExtractionType { get; protected set; }
         public int Id { get; }
         public int Cost { get; set; }
-        public List<ResourceNeed> ResourcesCost { get; protected set; }
+        public List<ResourceInt> ResourcesCost { get; protected set; }
         public int Efficiency { get; } // conventional units of resource / second
 
         public Building(int id, Colony colony)
@@ -44,13 +33,13 @@ namespace SpaceStrategy
                     if (parentPlanet.GetResources()[i].Type.TypeString == ResourceExtractionType.TypeString && parentPlanet.GetResources()[i].Amount > 0)
                     {
                         parentPlanet.GetResources()[i].Amount -= Efficiency;
-                        List<ColonyStorage> storage = parentColony.GetStorage();
+                        List<ResourceInt> storage = parentColony.GetStorage();
                         for (int j = 0; j < storage.Count(); j++)
                         {
                             if (storage[j].Type.TypeString == ResourceExtractionType.TypeString)
                             {
-                                ColonyStorage temp = storage[j];
-                                temp.Amount += Efficiency;
+                                ResourceInt temp = storage[j];
+                                temp.Number += Efficiency;
                                 storage[j] = temp;
                             }
                         }
@@ -62,13 +51,13 @@ namespace SpaceStrategy
         }
 
         // This function defines how many resources of each type are needed to create the building
-        protected List<ResourceNeed> ResourcesNeedToBuild(int woodCost, int stoneCost, int foodCost)
+        protected List<ResourceInt> ResourcesNeedToBuild(int woodCost, int stoneCost, int foodCost)
         {
-            List<ResourceNeed> list = new List<ResourceNeed>
+            List<ResourceInt> list = new List<ResourceInt>
             {
-                new ResourceNeed(new Wood(), woodCost),
-                new ResourceNeed(new Stone(), stoneCost),
-                new ResourceNeed(new Food(), foodCost)
+                new ResourceInt(new Wood(), woodCost),
+                new ResourceInt(new Stone(), stoneCost),
+                new ResourceInt(new Food(), foodCost)
             };
             return list;
         }
