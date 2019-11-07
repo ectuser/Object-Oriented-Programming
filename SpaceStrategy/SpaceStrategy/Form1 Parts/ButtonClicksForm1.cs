@@ -98,17 +98,14 @@ namespace SpaceStrategy
 
         private void BuyResourcesButton_Click(int amount, Colony tempColony, MarketStorageElement resource)
         {
-            if (tempColony.Money < resource.Sell * amount || resource.Amount < amount)
+            if (tempColony.Money < resource.Buy * amount || resource.Amount < amount)
             {
                 ShowStatus("Excuse me there are no damn resources or you're just poor fuck. Good luck!");
                 return;
             }
-            //double before = resource["amount"];
-            double price = resource.Sell * amount;
+            double price = resource.Buy * amount;
             tempColony.BuyResource(resource, amount, price);
             resource.Amount -= amount;
-            //double after = resource["amount"];
-            //resource["sell"] *= before / after;
             _market.SetNewResourceData(resource);
         }
 

@@ -49,13 +49,13 @@ namespace SpaceStrategy
                 Height = 30,
                 Width = 50
             };
-            //Label buyColumn = new Label
-            //{
-            //    Location = new Point(120, 30 * yPosition),
-            //    Text = "Buy",
-            //    Height = 30,
-            //    Width = 50
-            //};
+            Label buyColumn = new Label
+            {
+                Location = new Point(120, 30 * yPosition),
+                Text = "Buy",
+                Height = 30,
+                Width = 50
+            };
             Label sellColumn = new Label
             {
                 Location = new Point(180, 30 * yPosition),
@@ -66,7 +66,7 @@ namespace SpaceStrategy
 
             MarketPanel.Controls.Add(typeColumn);
             MarketPanel.Controls.Add(amountColumn);
-            //MarketPanel.Controls.Add(buyColumn);
+            MarketPanel.Controls.Add(buyColumn);
             MarketPanel.Controls.Add(sellColumn);
             yPosition += 1;
             for (int i = 0; i < _prices.Count(); i++)
@@ -91,11 +91,19 @@ namespace SpaceStrategy
 
                 Label newLabel3 = new Label();
                 newLabel3.Location = new Point(xPosition * 60, 30 * yPosition);
-                newLabel3.Text = el.Sell.ToString();
+                newLabel3.Text = el.Buy.ToString();
                 newLabel3.Height = 30;
                 newLabel3.Width = 50;
                 xPosition++;
                 MarketPanel.Controls.Add(newLabel3);
+
+                Label newLabel4 = new Label();
+                newLabel4.Location = new Point(xPosition * 60, 30 * yPosition);
+                newLabel4.Text = el.Sell.ToString();
+                newLabel4.Height = 30;
+                newLabel4.Width = 50;
+                xPosition++;
+                MarketPanel.Controls.Add(newLabel4);
 
                 yPosition++;
             }

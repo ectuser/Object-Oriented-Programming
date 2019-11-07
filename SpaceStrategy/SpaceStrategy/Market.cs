@@ -10,13 +10,14 @@ namespace SpaceStrategy
     {
         public Resource ResType { get; }
         public int Amount { get; set; }
-        //public int amount { get; }
-        public int Sell { get; }
+        public double Buy { get; set; }
+        public double Sell { get; set; }
 
-        public MarketStorageElement(Resource type, int amount, int sell)
+        public MarketStorageElement(Resource type, int amount, int buy, int sell)
         {
             ResType = type;
             Amount = amount;
+            Buy = buy;
             Sell = sell;
         }
 
@@ -25,10 +26,12 @@ namespace SpaceStrategy
     public class Market
     {
         private List<MarketStorageElement> _priceList;
+        private List<MarketStorageElement> _prevPriceList;
 
         public Market()
         {
             _priceList = PricesInit();
+            _prevPriceList = _priceList;
         }
 
         public List<MarketStorageElement> GetPriceList()
@@ -54,9 +57,9 @@ namespace SpaceStrategy
         private List<MarketStorageElement> PricesInit()
         {
             List<MarketStorageElement> list = new List<MarketStorageElement>();
-            MarketStorageElement wood = new MarketStorageElement(type: new Wood(), amount: 100, sell: 5);
-            MarketStorageElement stone = new MarketStorageElement(type: new Stone(), amount: 100, sell: 5);
-            MarketStorageElement food = new MarketStorageElement(type: new Food(), amount: 100, sell: 5);
+            MarketStorageElement wood = new MarketStorageElement(type: new Wood(), amount: 100, buy:6 , sell: 5);
+            MarketStorageElement stone = new MarketStorageElement(type: new Stone(), amount: 100, buy:6 , sell: 5);
+            MarketStorageElement food = new MarketStorageElement(type: new Food(), amount: 100, buy:6 , sell: 5);
             list.Add(wood); list.Add(stone); list.Add(food);
             return list;
         }
@@ -72,6 +75,24 @@ namespace SpaceStrategy
             }
         }
 
+        public void ChangeBuySell()
+        {
+            for (int i = 0; i < _priceList.Count(); i++)
+            {
+                double before = _prevPriceList[i].Amount;
+                double after = _priceList[i].Amount;
+
+                double k = after / before;
+
+                MarketStorageElement el;
+                el = _priceList[i];
+                Console.WriteLine(el.Sell + " " + k);
+                el.Sell *= k;
+                Console.WriteLine(el.Sell);
+                SetNewResourceData(el);
+            }
+            _prevPriceList = _priceList;
+        }
 
     }
 }
