@@ -68,9 +68,10 @@ namespace SpaceStrategy
             // Planet use food as much as numebr of it's buildings
             for (int i = 0; i < planetsList.Count(); i++)
             {
-                for (int j = 0; j < planetsList[i].GetColonies().Count(); j++)
+                List<Colony> tempColonies = planetsList[i].GetColonies();
+                for (int j = 0; j < tempColonies.Count(); j++)
                 {
-                    planetsList[i].GetColonies()[j].UseFood();
+                    tempColonies[j].UseFood();
                 }
             }
         }

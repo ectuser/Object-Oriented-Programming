@@ -6,10 +6,23 @@ using System.Threading.Tasks;
 
 namespace SpaceStrategy
 {
+    public struct ColonyStorage
+    {
+        public Resource Type { get; set; }
+        public int Amount { get; set; }
+
+        public ColonyStorage(Resource type, int amount)
+        {
+            Type = type;
+            Amount = amount;
+        }
+    }
+
     public class Colony
     {
         private List<Building> _buildingsList = new List<Building>();
         private Dictionary<string, HeapResource> _storage;
+        private List<ColonyStorage> storage;
         private int _needFood; // this thing depends on number of buildings
 
 
@@ -29,7 +42,7 @@ namespace SpaceStrategy
             };
             Money = 1000;
             ParentPlanet = planet;
-
+            storage = InitColonyStorage();
         }
         public void CreateBuilding(Building building, Colony colony)
         {
@@ -132,6 +145,18 @@ namespace SpaceStrategy
             }
             else
                 return false;
+        }
+
+        private List<ColonyStorage> InitColonyStorage()
+        {
+            List<ColonyStorage> list = new List<ColonyStorage>();
+            ColonyStorage wood = new ColonyStorage(new Wood(), 100);
+            ColonyStorage stone = new ColonyStorage(new Stone(), 100);
+            ColonyStorage food = new ColonyStorage(new Food(), 100);
+            list.Add(wood);
+            list.Add(stone);
+            list.Add(food);
+            return list;
         }
     }
 }
