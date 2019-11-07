@@ -9,7 +9,6 @@ namespace SpaceStrategy
     public abstract class PlanetObject
     {
         protected PlanetCoordinates _objectCoordinates;
-        public Planet ParentPlanet;
 
         public PlanetObject()
         {

@@ -30,7 +30,7 @@ namespace SpaceStrategy
                     List<Building> buildingList = colonyList[j].GetBuildings();
                     for (int h = 0; h < buildingList.Count(); h++)
                     {
-                        buildingList[h].ExtractResources(colonyList[j]);
+                        buildingList[h].ExtractResources(colonyList[j], planetsList[i]);
                     }
                 }
             }

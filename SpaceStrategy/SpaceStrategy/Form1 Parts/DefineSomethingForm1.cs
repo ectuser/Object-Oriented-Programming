@@ -22,7 +22,7 @@ namespace SpaceStrategy
                 }
             }
             ShowStatus("error");
-            return new Colony("error", planet);
+            return new Colony("error");
         }
 
 
@@ -52,7 +52,7 @@ namespace SpaceStrategy
                 }
             }
             Console.WriteLine("There are issues with your buildings mate");
-            return new Building(0, new Colony("Error", new Planet("error")));
+            return new Building(0, new Colony("Error"));
         }
     }
 }

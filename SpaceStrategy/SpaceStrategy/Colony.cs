@@ -26,15 +26,13 @@ namespace SpaceStrategy
 
 
         public double Money { get; private set; }
-        public Planet ParentPlanet { get; }
         public string Name { get; }
         public bool ColonyWorks { get; private set; }
 
-        public Colony(string name, Planet planet)
+        public Colony(string name)
         {
             Name = name;
             Money = 1000;
-            ParentPlanet = planet;
             storage = InitColonyStorage();
         }
         public void CreateBuilding(Building building, Colony colony)
@@ -93,7 +91,7 @@ namespace SpaceStrategy
             else
             {
                 Console.WriteLine("CAN'T DEFINE BUILDING BY TYPE!");
-                return new Sawmill(id, new Colony("error", new Planet("error")));
+                return new Sawmill(id, new Colony("error"));
             }
         }
         public void UseFood()

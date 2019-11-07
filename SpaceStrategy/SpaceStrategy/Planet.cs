@@ -27,7 +27,7 @@ namespace SpaceStrategy
         {
             if (_colonyList.All(x => x.Name != name))
             {
-                Colony tempColony = new Colony(name, this);
+                Colony tempColony = new Colony(name);
                 _colonyList.Add(tempColony);
             }
             else

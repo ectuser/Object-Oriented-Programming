@@ -26,28 +26,25 @@ namespace SpaceStrategy
         public int Cost { get; set; }
         public List<ResourceNeed> ResourcesCost { get; protected set; }
         public int Efficiency { get; } // conventional units of resource / second
-        public Colony ParentColony { get; }
 
         public Building(int id, Colony colony)
         {
             Efficiency = 2;
             Id = id;
-            ParentColony = colony;
-            ParentPlanet = colony.ParentPlanet;
         }
 
-        public void ExtractResources(Colony ParentColony)
+        public void ExtractResources(Colony parentColony, Planet parentPlanet)
         {
             // Colony have enough food to work
-            if (ParentColony.ColonyWorks)
+            if (parentColony.ColonyWorks)
             {
-                for (int i = 0; i < ParentPlanet.GetResources().Count(); i++)
+                for (int i = 0; i < parentPlanet.GetResources().Count(); i++)
                 {
                     // if type of the building matches type of the resource building should extract resource
-                    if (ParentPlanet.GetResources()[i].Type.TypeString == ResourceExtractionType.TypeString && ParentPlanet.GetResources()[i].Amount > 0)
+                    if (parentPlanet.GetResources()[i].Type.TypeString == ResourceExtractionType.TypeString && parentPlanet.GetResources()[i].Amount > 0)
                     {
-                        ParentPlanet.GetResources()[i].Amount -= Efficiency;
-                        List<ColonyStorage> storage = ParentColony.GetStorage();
+                        parentPlanet.GetResources()[i].Amount -= Efficiency;
+                        List<ColonyStorage> storage = parentColony.GetStorage();
                         for (int j = 0; j < storage.Count(); j++)
                         {
                             if (storage[j].Type.TypeString == ResourceExtractionType.TypeString)
@@ -58,7 +55,7 @@ namespace SpaceStrategy
                             }
                         }
                         //storage[ResourceExtractionType.TypeString].Amount += Efficiency;
-                        ParentColony.SetStorage(storage);
+                        parentColony.SetStorage(storage);
                     }
                 }
             }
