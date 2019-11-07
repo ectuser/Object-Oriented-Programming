@@ -39,7 +39,8 @@ namespace SpaceStrategy
                 _storage[costList[i].ResType.TypeString].Amount -= costList[i].ResCost;
             }
             Money -= building.Cost;
-            _buildingsList.Add(DefineBuildingType(building, colony));
+            Building selectedBuilding = DefineBuildingType(building, colony);
+            _buildingsList.Add(selectedBuilding);
         }
         public void RemoveBuilding(int id)
         {
@@ -87,21 +88,20 @@ namespace SpaceStrategy
             // Check if colony has enough food to buildings work
             if (_needFood > _storage["food"].Amount)
             {
+                Console.WriteLine(_needFood + " " + _storage["food"].Amount);
                 //This IF is for remove previous status if there's enoigh food
                 string str = "doesn't have enough food to keep working.";
+                ColonyWorks = false;
+                Form1.ShowStatus("Colony " + Name + " doesn't have enough food to keep working.");
                 if (Form1._statusBar.Text.Contains(str))
                 {
                     Form1.ShowStatus("");
                 }
 
-                _storage["food"].Amount -= _needFood;
-                ColonyWorks = true;
+
             }
-            else
-            {
-                ColonyWorks = false;
-                Form1.ShowStatus("Colony " + Name + " doesn't have enough food to keep working.");
-            }
+            _storage["food"].Amount -= _needFood;
+            ColonyWorks = true;
 
         }
         public void BuyResource(MarketStorageElement resource, int amount, double price)
