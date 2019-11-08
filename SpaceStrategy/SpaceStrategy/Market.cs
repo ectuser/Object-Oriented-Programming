@@ -75,24 +75,24 @@ namespace SpaceStrategy
             }
         }
 
-        public void ChangeBuySell()
-        {
-            for (int i = 0; i < _priceList.Count(); i++)
-            {
-                double before = _prevPriceList[i].Amount;
-                double after = _priceList[i].Amount;
+        //public void ChangeBuySell()
+        //{
+        //    for (int i = 0; i < _priceList.Count(); i++)
+        //    {
+        //        double before = _prevPriceList[i].Amount;
+        //        double after = _priceList[i].Amount;
 
-                double k = after / before;
+        //        double k = after / before;
 
-                MarketStorageElement el;
-                el = _priceList[i];
-                Console.WriteLine(el.Sell + " " + k);
-                el.Sell *= k;
-                Console.WriteLine(el.Sell);
-                SetNewResourceData(el);
-            }
-            _prevPriceList = _priceList;
-        }
+        //        MarketStorageElement el;
+        //        el = _priceList[i];
+        //        Console.WriteLine(el.Sell + " " + k);
+        //        el.Sell *= k;
+        //        Console.WriteLine(el.Sell);
+        //        SetNewResourceData(el);
+        //    }
+        //    _prevPriceList = _priceList;
+        //}
 
     }
 }

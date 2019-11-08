@@ -15,7 +15,7 @@ namespace SpaceStrategy
         private void TimerTick(object sender, EventArgs e)
         {
             ResourceExtraction();
-            _market.ChangeBuySell();
+            //_market.ChangeBuySell();
             UpdateAllData();
             ColoniesUseFood();
         }

@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace SpaceStrategy
 {
-    public partial class Form1 : Form
+    public partial class Form1
     {
         // REGISTRY
         public static Random rnd = new Random();
